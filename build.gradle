@@ -62,6 +62,37 @@ sourceSets {
   main.java.srcDirs += 'src/main/java'
 }
 
+checkstyle {
+  checkstyleTest.enabled = false
+  toolVersion = '8.18'
+}
+
+checkstyleMain {
+  configFile = new File("$rootDir/config/checkstyle/google_checks.xml")
+}
+
+spotbugs {
+  spotbugsTest.enabled = false
+  toolVersion = '3.1.12'
+  ignoreFailures = true
+}
+
+spotbugsMain {
+  reports {
+    html.enabled = true
+    xml.enabled = false
+  }
+}
+
+pmd {
+  pmdTest.enabled = false
+}
+
+pmdMain {
+  ignoreFailures = true
+  ruleSets = ["category/java/errorprone.xml", "category/java/bestpractices.xml", "category/java/design.xml"]
+}
+
 wrapper {
   gradleVersion = "5.2.1"
   distributionType = Wrapper.DistributionType.ALL
