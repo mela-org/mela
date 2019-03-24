@@ -2,8 +2,8 @@ package com.github.stupremee.mela.configuration;
 
 import io.vavr.control.Option;
 import java.util.Collection;
-import java.util.Collections;
 import org.jetbrains.annotations.NotNull;
+import reactor.core.publisher.Flux;
 
 /**
  * https://github.com/Stupremee
@@ -11,7 +11,19 @@ import org.jetbrains.annotations.NotNull;
  * @author Stu
  * @since 23.03.2019
  */
+@SuppressWarnings("unused")
 public interface Configuration {
+
+  char SEPARATOR = '.';
+
+  /**
+   * Creates an empty configuration.
+   *
+   * @return The empty configuration
+   */
+  static Configuration empty() {
+    return EmptyConfiguration.instance();
+  }
 
   /**
    * Creates a new {@link Configuration} from all the key/value pairs that can be found in the
@@ -22,6 +34,26 @@ public interface Configuration {
    */
   @NotNull
   Configuration section(String path);
+
+  /**
+   * Sets the value at the dotted path.
+   *
+   * @param path The dotted path
+   * @param value The value
+   */
+  void set(String path, Object value);
+
+  /**
+   * Returns the value at the dotted path as {@link T}.
+   *
+   * @param path The dotted path to the value
+   * @param <T> The type of the value that at the dotted path
+   * @return The value as {@link T}
+   */
+  @NotNull
+  default <T> Option<T> get(String path) {
+    return get(path, this.<T>defaultValue(path).getOrNull());
+  }
 
   /**
    * Returns the value at the dotted path as {@link T}.
@@ -36,26 +68,13 @@ public interface Configuration {
   <T> Option<T> get(String path, T def);
 
   /**
-   * Returns a list of objects at the dotted path.
+   * Returns a list as {@link Flux} of unknown objects at the dotted path.
    *
    * @param path The dotted path to the value
-   * @return The list of objects or an empty list if the key does not exists
-   * @see #list(String, Collection)
+   * @return The list of objects as {@link Flux} or an empty list if the key does not exists
    */
   @NotNull
-  default Collection<Object> list(String path) {
-    return list(path, Collections.emptyList());
-  }
-
-  /**
-   * Returns a list of objects that can be found at the dotted path.
-   *
-   * @param path The dotted path to the value
-   * @param def The default will be returned if the key does not exist
-   * @return The list of objects or an empty list if the key does not exists
-   */
-  @NotNull
-  Collection<Object> list(String path, Collection<?> def);
+  Collection<?> list(String path);
 
   /**
    * Checks if a key-value pair exists.
@@ -73,7 +92,7 @@ public interface Configuration {
    */
   @NotNull
   default Option<Object> object(String path) {
-    return object(path, null);
+    return object(path, this.defaultValue(path).getOrNull());
   }
 
   /**
@@ -88,24 +107,13 @@ public interface Configuration {
   Option<Object> object(String path, Object def);
 
   /**
-   * Returns {@link #object(String, Object)} with an empty and immutable list as default.
+   * Returns a list of objects as a {@link Flux}.
    *
-   * @see #objects(String, Collection)
+   * @param path The dotted path
+   * @return The list as a {@link Flux}
    */
   @NotNull
-  default Collection<Object> objects(String path) {
-    return objects(path, Collections.emptyList());
-  }
-
-  /**
-   * Returns a list of object.
-   *
-   * @param path The dotted path to the key-value pair
-   * @param def The default list that will be returned
-   * @return The list of objects or an empty list if the key-value pair doesn't exist.
-   */
-  @NotNull
-  Collection<Object> objects(String path, Collection<Object> def);
+  Collection<Object> objects(String path);
 
   /**
    * Returns {@link #string(String, String)} with an empty string as the default parameter.
@@ -114,7 +122,7 @@ public interface Configuration {
    */
   @NotNull
   default Option<String> string(String path) {
-    return string(path, "");
+    return string(path, this.<String>defaultValue(path).getOrNull());
   }
 
   /**
@@ -129,25 +137,13 @@ public interface Configuration {
   Option<String> string(String path, String def);
 
   /**
-   * Returns {@link #strings(String, Collection)} with an empty and immutable list as the default
-   * parameter.
+   * Returns a list of strings as a {@link Flux}.
    *
-   * @see #strings(String, Collection)
+   * @param path The dotted path
+   * @return The list as a {@link Flux}
    */
   @NotNull
-  default Collection<String> strings(String path) {
-    return strings(path, Collections.emptyList());
-  }
-
-  /**
-   * Returns a list of strings. Values that aren't a string will be ignored.
-   *
-   * @param path The dotted path to the key-value pair
-   * @param def The default list that will be returned
-   * @return The list of strings or an empty list if the key-value pair doesn't exist.
-   */
-  @NotNull
-  Collection<String> strings(String path, Collection<String> def);
+  Collection<String> strings(String path);
 
   /**
    * Returns {@link #number(String, Number)} with 0 as the default parameter.
@@ -156,7 +152,7 @@ public interface Configuration {
    */
   @NotNull
   default Option<Number> number(String path) {
-    return number(path, 0);
+    return number(path, this.<Number>defaultValue(path).getOrNull());
   }
 
   /**
@@ -171,25 +167,13 @@ public interface Configuration {
   Option<Number> number(String path, Number def);
 
   /**
-   * Returns {@link #numbers(String, Collection)} with an empty and immutable list as the default
-   * parameter.
+   * Returns a list of numbers as a {@link Flux}.
    *
-   * @see #numbers(String, Collection)
+   * @param path The dotted path
+   * @return The list as a {@link Flux}
    */
   @NotNull
-  default Collection<Number> numbers(String path) {
-    return numbers(path, Collections.emptyList());
-  }
-
-  /**
-   * Returns a list of numbers. Values that aren't a number will be ignored.
-   *
-   * @param path The dotted path to the key-value pair
-   * @param def The default list that will be returned
-   * @return The list of numbers or an empty list if the key-value pair doesn't exist.
-   */
-  @NotNull
-  Collection<Number> numbers(String path, Collection<Number> def);
+  Collection<Number> numbers(String path);
 
   /**
    * Returns {@link #bool(String, Boolean)} with <code>false</code> as the default parameter.
@@ -198,7 +182,7 @@ public interface Configuration {
    */
   @NotNull
   default Option<Boolean> bool(String path) {
-    return bool(path, false);
+    return bool(path, this.<Boolean>defaultValue(path).getOrNull());
   }
 
   /**
@@ -213,23 +197,34 @@ public interface Configuration {
   Option<Boolean> bool(String path, Boolean def);
 
   /**
-   * Returns {@link #bools(String, Collection)} with an empty and immutable list as the default
-   * parameter.
+   * Returns a list of booleans as a {@link Flux}.
    *
-   * @see #bools(String, Collection)
+   * @param path The dotted path
+   * @return The list as a {@link Flux}
    */
   @NotNull
-  default Collection<Boolean> bools(String path) {
-    return bools(path, Collections.emptyList());
-  }
+  Collection<Boolean> bools(String path);
 
   /**
-   * Returns a list of booleans. Values that aren't a boolean will be ignored.
+   * Returns all keys in the current configuration.
    *
-   * @param path The dotted path to the key-value pair
-   * @param def The default list that will be returned
-   * @return The list of booleans or an empty list if the key-value pair doesn't exist.
+   * @return The list of keys
    */
   @NotNull
-  Collection<Boolean> bools(String path, Collection<Boolean> def);
+  Collection<String> keys();
+
+  /**
+   * Deletes the key-value pair at the dotted path.
+   *
+   * @param path The dotted path to the pair
+   */
+  void remove(String path);
+
+  /**
+   * Returns the value at the dotted path that comes from the defaults.
+   *
+   * @param path The dotted path
+   * @return The object taken from the defaults
+   */
+  <T> Option<T> defaultValue(String path);
 }
