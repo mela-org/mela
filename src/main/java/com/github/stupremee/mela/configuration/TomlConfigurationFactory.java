@@ -1,6 +1,5 @@
 package com.github.stupremee.mela.configuration;
 
-import com.github.stupremee.mela.util.Loggers;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -8,7 +7,8 @@ import java.io.Reader;
 import java.util.Map;
 import me.grison.jtoml.impl.Toml;
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
+import reactor.util.Logger;
+import reactor.util.Loggers;
 
 /**
  * https://github.com/Stupremee
@@ -18,7 +18,7 @@ import org.slf4j.Logger;
  */
 public class TomlConfigurationFactory implements ConfigurationFactory {
 
-  private final Logger log = Loggers.logger();
+  private final Logger log = Loggers.getLogger(TomlConfigurationFactory.class);
   private Configuration defaults;
 
   private TomlConfigurationFactory() {

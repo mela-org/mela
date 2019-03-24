@@ -1,8 +1,8 @@
 package com.github.stupremee.mela.configuration;
 
-import com.github.stupremee.mela.util.Loggers;
 import io.vavr.control.Option;
 import io.vavr.control.Try;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -11,9 +11,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
+import reactor.util.Logger;
+import reactor.util.Loggers;
 
 /**
  * https://github.com/Stupremee
@@ -21,10 +21,10 @@ import org.slf4j.Logger;
  * @author Stu
  * @since 23.03.2019
  */
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "Duplicates"})
 final class MemoryConfiguration implements Configuration {
 
-  private final Logger log = Loggers.logger();
+  private final Logger log = Loggers.getLogger(MemoryConfiguration.class);
   private final Map<String, Object> map;
   private final Configuration defaults;
 
@@ -45,7 +45,7 @@ final class MemoryConfiguration implements Configuration {
       Object def = defaults.object(path);
       Configuration defaults = def instanceof Configuration ? (Configuration) def
           : new MemoryConfiguration(defaultsOrEmpty(path));
-      return (Configuration) get(path, defaults);
+      return get(path, defaults).getOrNull();
     }).onFailure(errorHandler("Error while getting section.")).getOrElse(Configuration.empty());
   }
 
@@ -54,7 +54,11 @@ final class MemoryConfiguration implements Configuration {
   public void set(String path, Object value) {
     Object val = value;
 
-    if (value instanceof Map) {
+    if (val.getClass().isArray()) {
+      val = Arrays.asList((Object[]) value);
+    }
+
+    if (val instanceof Map) {
       val = new MemoryConfiguration((Map) val, defaultsOrEmpty(path));
     }
 
@@ -138,13 +142,7 @@ final class MemoryConfiguration implements Configuration {
   @Override
   public Collection<String> strings(String path) {
     return list(path).stream().filter(Objects::nonNull)
-        .flatMap(o -> {
-          if (o instanceof List<?>) {
-            return ((List<String>) o).stream();
-          } else {
-            return Stream.of(o);
-          }
-        })
+        .filter(o -> o instanceof String)
         .map(o -> (String) o)
         .collect(Collectors.toList());
   }
@@ -158,16 +156,12 @@ final class MemoryConfiguration implements Configuration {
   @NotNull
   @Override
   public Collection<Number> numbers(String path) {
-    return list(path).stream().filter(Objects::nonNull)
-        .flatMap(o -> {
-          if (o instanceof List<?>) {
-            return ((List<Number>) o).stream();
-          } else {
-            return Stream.of(o);
-          }
-        })
+    var res = list(path).stream()
+        .filter(Objects::nonNull)
+        .filter(o -> o instanceof Number)
         .map(o -> (Number) o)
         .collect(Collectors.toList());
+    return res;
   }
 
   @NotNull
@@ -180,13 +174,7 @@ final class MemoryConfiguration implements Configuration {
   @Override
   public Collection<Boolean> bools(String path) {
     return list(path).stream().filter(Objects::nonNull)
-        .flatMap(o -> {
-          if (o instanceof List<?>) {
-            return ((List<Boolean>) o).stream();
-          } else {
-            return Stream.of(o);
-          }
-        })
+        .filter(o -> o instanceof Boolean)
         .map(o -> (Boolean) o)
         .collect(Collectors.toList());
   }
