@@ -18,6 +18,8 @@ ext {
   junit_version = "4.12"
   vavr_version = "0.9.3"
   annotations_version = "17.0.0"
+  datastax_version = "3.6.0"
+  jtoml_version = "1.0.0"
 }
 
 repositories {
@@ -33,7 +35,7 @@ dependencies {
   implementation "io.vavr:vavr:$vavr_version"
 
   // Cava-Toml to parse Toml files
-  implementation "me.grison:jtoml:1.0.0"
+  implementation "me.grison:jtoml:$jtoml_version"
 
   // Jetbrains Annotations for better docs
   implementation "org.jetbrains:annotations:$annotations_version"
@@ -41,6 +43,11 @@ dependencies {
   // Immutables
   implementation "org.immutables:value:$immutables_version"
   annotationProcessor "org.immutables:value:$immutables_version"
+
+  // Database
+  implementation "com.datastax.cassandra:cassandra-driver-core:$datastax_version"
+  implementation "com.datastax.cassandra:cassandra-driver-mapping:$datastax_version"
+  implementation "com.datastax.cassandra:cassandra-driver-extras:$datastax_version"
 
   //                                           //
   // ----------- Test Dependencies ----------- //

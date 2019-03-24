@@ -64,11 +64,7 @@ final class MemoryConfiguration implements Configuration {
 
     Configuration section = sectionFor(path);
     if (section == this) {
-      if (val == null) {
-        remove(path);
-      } else {
-        map.put(path, val);
-      }
+      map.put(path, val);
     } else {
       section.set(child(path), val);
     }
@@ -156,12 +152,11 @@ final class MemoryConfiguration implements Configuration {
   @NotNull
   @Override
   public Collection<Number> numbers(String path) {
-    var res = list(path).stream()
+    return list(path).stream()
         .filter(Objects::nonNull)
         .filter(o -> o instanceof Number)
         .map(o -> (Number) o)
         .collect(Collectors.toList());
-    return res;
   }
 
   @NotNull

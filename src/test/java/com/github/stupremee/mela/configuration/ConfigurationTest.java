@@ -127,7 +127,8 @@ public class ConfigurationTest {
         + "]\n";
     Configuration cfg = factory.load(toml);
     cfg.set("set", new Boolean[]{false, false});
-    assertArrayEquals(cfg.objects("strings").toArray(Boolean[]::new), new Boolean[]{true, false, true});
+    assertArrayEquals(cfg.objects("strings").toArray(Boolean[]::new),
+        new Boolean[]{true, false, true});
     assertArrayEquals(cfg.objects("more").toArray(Boolean[]::new), new Boolean[]{true, false});
     assertArrayEquals(cfg.objects("set").toArray(Boolean[]::new), new Boolean[]{false, false});
   }
