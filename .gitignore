@@ -30,7 +30,6 @@ hs_err_pid*
 
 # User-specific stuff
 .idea
-.idea/**/libraries
 
 # CMake
 cmake-build-debug/
