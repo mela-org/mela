@@ -95,4 +95,34 @@ wrapper {
   distributionType = Wrapper.DistributionType.ALL
 }
 
+javadoc {
+  failOnError = false
+  options.memberLevel = JavadocMemberLevel.PUBLIC
+  options.encoding = 'UTF-8'
+  options.addStringOption('-html5')
+  setDestinationDir(new File("${buildDir}/docs/"))
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+  classifier = 'sources'
+  from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+  classifier = 'javadoc'
+  from javadoc.destinationDir
+}
+
+build {
+  dependsOn jar
+  dependsOn javadocJar
+  dependsOn sourcesJar
+  dependsOn shadowJar
+
+  jar.mustRunAfter clean
+  javadocJar.mustRunAfter jar
+  sourcesJar.mustRunAfter javadocJar
+  shadowJar.mustRunAfter sourcesJar
+}
+
 compileJava.options.encoding = 'UTF-8'
