@@ -4,11 +4,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import me.grison.jtoml.impl.Toml;
 import org.jetbrains.annotations.NotNull;
-import reactor.util.Logger;
-import reactor.util.Loggers;
 
 /**
  * https://github.com/Stupremee
@@ -16,9 +15,8 @@ import reactor.util.Loggers;
  * @author Stu
  * @since 23.03.2019
  */
-public class TomlConfigurationFactory implements ConfigurationFactory {
+public final class TomlConfigurationFactory implements ConfigurationFactory {
 
-  private final Logger log = Loggers.getLogger(TomlConfigurationFactory.class);
   private Configuration defaults;
 
   private TomlConfigurationFactory() {
@@ -41,19 +39,21 @@ public class TomlConfigurationFactory implements ConfigurationFactory {
 
   @Override
   public Configuration load(File file) throws IOException {
-    return load(new FileReader(file));
+    try (FileReader reader = new FileReader(file, StandardCharsets.UTF_8)) {
+      return load(reader);
+    }
   }
 
   @Override
   @SuppressWarnings("unchecked")
   public Configuration load(Reader reader) throws IOException {
-    int c;
-    StringBuilder string = new StringBuilder();
-    while ((c = reader.read()) != -1) {
-      string.append((char) c);
+    StringBuilder buffer = new StringBuilder();
+    for (int i = 0; i != -1; i = reader.read()) {
+      buffer.append((char) i);
     }
+    reader.close();
 
-    Toml toml = Toml.parse(string.toString());
+    Toml toml = Toml.parse(buffer.toString());
 
     Map<String, Object> map = toml.getMap("");
     map.forEach((key, value) -> {

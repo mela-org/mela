@@ -55,7 +55,7 @@ public interface Cassandra {
   MappingManager mapper();
 
   /**
-   * Creates a new {@link ObjectMapper} from the clazz that is given in the paramter.
+   * Creates a new {@link ObjectMapper} from the clazz that is given in the parameter.
    *
    * @param clazz The {@link Class} that the {@link ObjectMapper} should map
    * @return The {@link ObjectMapper}

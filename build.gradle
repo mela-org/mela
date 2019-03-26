@@ -22,6 +22,7 @@ ext {
   datastax_version = "3.6.0"
   jtoml_version = "1.0.0"
   d4j_version = "3.0.1"
+  genson_version = "1.6"
 }
 
 repositories {
@@ -32,6 +33,9 @@ repositories {
 dependencies {
   // D4J for wrapping the DiscordAPI
   implementation "com.discord4j:discord4j-core:$d4j_version"
+
+  // Genson for Json Parsing
+  implementation "com.owlike:genson:$genson_version"
 
   // Vavr for classes like Option, Try and many more useful stuff
   implementation "io.vavr:vavr:$vavr_version"
@@ -110,7 +114,8 @@ javadoc {
         "https://docs.oracle.com/en/java/javase/11/docs/api/",
         "https://static.javadoc.io/com.discord4j/discord4j-core/3.0.1",
         "https://static.javadoc.io/doc/io.vavr/vavr/0.10.0",
-        "https://docs.datastax.com/en/drivers/java/3.0/"
+        "https://docs.datastax.com/en/drivers/java/3.0/",
+        "http://genson.io/Documentation/Javadoc/"
     ]
   }
 
