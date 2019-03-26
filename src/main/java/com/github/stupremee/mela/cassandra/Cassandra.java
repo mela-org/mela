@@ -3,10 +3,10 @@ package com.github.stupremee.mela.cassandra;
 import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.PreparedStatement;
 import com.datastax.driver.core.ResultSet;
+import com.datastax.driver.core.ResultSetFuture;
 import com.datastax.driver.core.Session;
 import com.datastax.driver.mapping.MappingManager;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import reactor.core.publisher.Mono;
 
 /**
  * https://github.com/Stupremee
@@ -26,12 +26,13 @@ public interface Cassandra {
   ResultSet execute(PreparedStatement statement);
 
   /**
-   * Executes a CQL Statement asynchronously and returns the result set in a {@link Mono}.
+   * Executes a CQL Statement asynchronously and returns the result set as a {@link
+   * ResultSetFuture}.
    *
    * @param statement The CQL Statement as {@link PreparedStatement}
-   * @return The Result set in a {@link Mono}
+   * @return The Result set as a {@link ResultSetFuture}
    */
-  Mono<ResultSet> executeAsync(PreparedStatement statement);
+  ResultSetFuture executeAsync(PreparedStatement statement);
 
   /**
    * Returns the cluster from the cassandra database.
