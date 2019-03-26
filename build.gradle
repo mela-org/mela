@@ -22,7 +22,7 @@ ext {
   datastax_version = "3.6.0"
   jtoml_version = "1.0.0"
   d4j_version = "3.0.1"
-  genson_version = "1.6"
+  genson_version = "1.5"
 }
 
 repositories {
