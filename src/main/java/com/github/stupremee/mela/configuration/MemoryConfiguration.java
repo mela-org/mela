@@ -24,7 +24,7 @@ import reactor.util.Loggers;
 @SuppressWarnings({"unused", "Duplicates"})
 final class MemoryConfiguration implements Configuration {
 
-  private final static Logger log = Loggers.getLogger(MemoryConfiguration.class);
+  private static final Logger log = Loggers.getLogger(MemoryConfiguration.class);
   private final Map<String, Object> map;
   private final Configuration defaults;
 
