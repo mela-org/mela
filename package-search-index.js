@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"com.github.stupremee.mela"},{"l":"com.github.stupremee.mela.cassandra"},{"l":"com.github.stupremee.mela.configuration"}]
