@@ -4,6 +4,7 @@ plugins {
   id 'checkstyle'
   id 'pmd'
   id 'com.github.spotbugs' version '1.7.1'
+  id "org.danilopianini.javadoc.io-linker" version "0.1.4-700fdb6"
 }
 
 group 'com.github.stupremee.mela'
@@ -16,10 +17,11 @@ ext {
   logback_version = "1.2.3"
   immutables_version = "2.7.4"
   junit_version = "4.12"
-  vavr_version = "0.9.3"
+  vavr_version = "0.10.0"
   annotations_version = "17.0.0"
   datastax_version = "3.6.0"
   jtoml_version = "1.0.0"
+  d4j_version = "3.0.1"
 }
 
 repositories {
@@ -29,7 +31,7 @@ repositories {
 
 dependencies {
   // D4J for wrapping the DiscordAPI
-  implementation 'com.discord4j:discord4j-core:3.0.1'
+  implementation "com.discord4j:discord4j-core:$d4j_version"
 
   // Vavr for classes like Option, Try and many more useful stuff
   implementation "io.vavr:vavr:$vavr_version"
@@ -97,9 +99,21 @@ wrapper {
 
 javadoc {
   failOnError = false
-  options.memberLevel = JavadocMemberLevel.PUBLIC
-  options.encoding = 'UTF-8'
-  options.addStringOption('-html5')
+
+  options {
+    memberLevel = JavadocMemberLevel.PUBLIC
+    encoding = 'UTF-8'
+    addStringOption 'Xdoclint:none', '-quiet'
+    addStringOption 'encoding', 'UTF-8'
+    links = [
+        "https://docs.oracle.com/javase/10/docs/api/",
+        "https://docs.oracle.com/en/java/javase/11/docs/api/",
+        "https://static.javadoc.io/com.discord4j/discord4j-core/3.0.1",
+        "https://static.javadoc.io/doc/io.vavr/vavr/0.10.0",
+        "https://docs.datastax.com/en/drivers/java/3.0/"
+    ]
+  }
+
   setDestinationDir(new File("${buildDir}/docs/"))
 }
 
