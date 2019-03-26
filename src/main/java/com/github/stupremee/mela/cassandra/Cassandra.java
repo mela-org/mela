@@ -1,12 +1,15 @@
 package com.github.stupremee.mela.cassandra;
 
 import com.datastax.driver.core.Cluster;
-import com.datastax.driver.core.PreparedStatement;
+import com.datastax.driver.core.CodecRegistry;
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.ResultSetFuture;
 import com.datastax.driver.core.Session;
+import com.datastax.driver.core.Statement;
+import com.datastax.driver.mapping.Mapper;
 import com.datastax.driver.mapping.MappingManager;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.jetbrains.annotations.NotNull;
+import reactor.core.publisher.Mono;
 
 /**
  * https://github.com/Stupremee
@@ -18,50 +21,72 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public interface Cassandra {
 
   /**
+   * Connects asynchronously to the database with the given credentials.
+   *
+   * @return The {@link Session} in a {@link Mono}
+   * @throws IllegalStateException if the Database is already connected
+   */
+  Mono<Session> connectAsync();
+
+  /**
+   * Connects synchronously to the database with the given credentials.
+   *
+   * @return The {@link Session}
+   * @throws IllegalStateException if the Database is already connected
+   */
+  Session connect();
+
+  /**
    * Executes a CQL Statement synchronously and returns the result set.
    *
-   * @param statement The CQL Statement as {@link PreparedStatement}
+   * @param statement The CQL Statement as {@link Statement}
    * @return The Result set
+   * @throws IllegalStateException if the Database is not connected
    */
-  ResultSet execute(PreparedStatement statement);
+  ResultSet execute(Statement statement);
 
   /**
    * Executes a CQL Statement asynchronously and returns the result set as a {@link
    * ResultSetFuture}.
    *
-   * @param statement The CQL Statement as {@link PreparedStatement}
+   * @param statement The CQL Statement as {@link Statement}
    * @return The Result set as a {@link ResultSetFuture}
+   * @throws IllegalStateException if the Database is not connected
    */
-  ResultSetFuture executeAsync(PreparedStatement statement);
+  ResultSetFuture executeAsync(Statement statement);
 
   /**
    * Returns the cluster from the cassandra database.
    *
    * @return The {@link Cluster}
    */
+  @NotNull
   Cluster cluster();
 
   /**
    * Returns the session.
    *
    * @return The {@link Session}
+   * @throws IllegalStateException if the Database is not connected
    */
   Session session();
 
   /**
-   * Returns the mapping manager to create accessors, {@link ObjectMapper ObjectMappers} etc.
+   * Returns the mapping manager to create accessors, {@link Mapper Mappers} etc.
    *
    * @return The {@link MappingManager}
+   * @throws IllegalStateException if the Database is not connected
    */
   MappingManager mapper();
 
   /**
-   * Creates a new {@link ObjectMapper} from the clazz that is given in the parameter.
+   * Creates a new {@link Mapper} from the clazz that is given in the parameter.
    *
-   * @param clazz The {@link Class} that the {@link ObjectMapper} should map
-   * @return The {@link ObjectMapper}
+   * @param clazz The {@link Class} that the {@link Mapper} should map
+   * @return The {@link Mapper}
+   * @throws IllegalStateException if the Database is not connected
    */
-  ObjectMapper mapper(Class<?> clazz);
+  <T> Mapper<T> mapper(Class<T> clazz);
 
   /**
    * Creates a accessor via the {@link MappingManager}
@@ -69,6 +94,15 @@ public interface Cassandra {
    * @param clazz The accessor class
    * @param <T> The type of the class
    * @return The accessor
+   * @throws IllegalStateException if the Database is not connected
    */
   <T> T accessor(Class<T> clazz);
+
+  /**
+   * Returns the {@link CodecRegistry} that the cluster will use to convert data types.
+   *
+   * @return The {@link CodecRegistry}
+   */
+  @NotNull
+  CodecRegistry codecRegistry();
 }

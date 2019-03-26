@@ -1,5 +1,6 @@
 package com.github.stupremee.mela.configuration;
 
+import com.github.stupremee.mela.util.Loggers;
 import io.vavr.control.Option;
 import io.vavr.control.Try;
 import java.util.Arrays;
@@ -12,8 +13,7 @@ import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import org.jetbrains.annotations.NotNull;
-import reactor.util.Logger;
-import reactor.util.Loggers;
+import org.slf4j.Logger;
 
 /**
  * https://github.com/Stupremee
@@ -24,7 +24,7 @@ import reactor.util.Loggers;
 @SuppressWarnings({"unused", "Duplicates"})
 final class MemoryConfiguration implements Configuration {
 
-  private static final Logger log = Loggers.getLogger(MemoryConfiguration.class);
+  private static final Logger log = Loggers.logger("MemoryConfiguration");
   private final Map<String, Object> map;
   private final Configuration defaults;
 

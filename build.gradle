@@ -22,6 +22,7 @@ ext {
   datastax_version = "3.6.0"
   jtoml_version = "1.0.0"
   d4j_version = "3.0.1"
+  logback_version = "1.2.3"
 }
 
 repositories {
@@ -33,6 +34,10 @@ dependencies {
   // D4J for wrapping the DiscordAPI
   implementation "com.discord4j:discord4j-core:$d4j_version"
 
+  // Logback as slf4j implementation
+  implementation "ch.qos.logback:logback-core:$logback_version"
+  implementation "ch.qos.logback:logback-classic:$logback_version"
+
   // Vavr for classes like Option, Try and many more useful stuff
   implementation "io.vavr:vavr:$vavr_version"
 
@@ -41,6 +46,9 @@ dependencies {
 
   // Jetbrains Annotations for better docs
   implementation "org.jetbrains:annotations:$annotations_version"
+
+  // Used to convert futures
+  implementation "net.javacrumbs.future-converter:future-converter-java8-guava:1.2.0"
 
   // Immutables
   implementation "org.immutables:value:$immutables_version"
