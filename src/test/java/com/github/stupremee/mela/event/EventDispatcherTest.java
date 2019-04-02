@@ -42,18 +42,6 @@ public class EventDispatcherTest {
     assertEquals("YUS", test.get());
   }
 
-  @Test
-  public void reactorTest() {
-    AtomicReference<String> test = new AtomicReference<>();
-    dispatcher.on(TestEvent.class)
-        .doOnNext(event -> test.set(event.testing))
-        .blockFirst();
-
-    dispatcher.call(new TestEvent("Hello"));
-    assertEquals("Hello", test.get());
-
-  }
-
   private static class TestEvent extends Event {
 
     private final String testing;
