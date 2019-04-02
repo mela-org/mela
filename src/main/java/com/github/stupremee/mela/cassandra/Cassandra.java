@@ -23,10 +23,10 @@ public interface Cassandra {
   /**
    * Connects asynchronously to the database with the given credentials.
    *
-   * @return The {@link Session} in a {@link Mono}
+   * @return The {@link Cassandra} in a {@link Mono}
    * @throws IllegalStateException if the Database is already connected
    */
-  Mono<Session> connectAsync();
+  Mono<Cassandra> connectAsync();
 
   /**
    * Connects synchronously to the database with the given credentials.
@@ -56,28 +56,28 @@ public interface Cassandra {
   ResultSetFuture executeAsync(Statement statement);
 
   /**
-   * Returns the cluster from the cassandra database.
+   * Returns the getCluster from the cassandra database.
    *
    * @return The {@link Cluster}
    */
   @NotNull
-  Cluster cluster();
+  Cluster getCluster();
 
   /**
-   * Returns the session.
+   * Returns the getSession.
    *
    * @return The {@link Session}
    * @throws IllegalStateException if the Database is not connected
    */
-  Session session();
+  Session getSession();
 
   /**
-   * Returns the mapping manager to create accessors, {@link Mapper Mappers} etc.
+   * Returns the mapping manager to getInstance accessors, {@link Mapper Mappers} etc.
    *
    * @return The {@link MappingManager}
    * @throws IllegalStateException if the Database is not connected
    */
-  MappingManager mapper();
+  MappingManager getMapper();
 
   /**
    * Creates a new {@link Mapper} from the clazz that is given in the parameter.
@@ -86,23 +86,23 @@ public interface Cassandra {
    * @return The {@link Mapper}
    * @throws IllegalStateException if the Database is not connected
    */
-  <T> Mapper<T> mapper(Class<T> clazz);
+  <T> Mapper<T> getMapper(Class<T> clazz);
 
   /**
-   * Creates a accessor via the {@link MappingManager}
+   * Creates a getAccessor via the {@link MappingManager}
    *
-   * @param clazz The accessor class
+   * @param clazz The getAccessor class
    * @param <T> The type of the class
-   * @return The accessor
+   * @return The getAccessor
    * @throws IllegalStateException if the Database is not connected
    */
-  <T> T accessor(Class<T> clazz);
+  <T> T getAccessor(Class<T> clazz);
 
   /**
-   * Returns the {@link CodecRegistry} that the cluster will use to convert data types.
+   * Returns the {@link CodecRegistry} that the getCluster will use to convert data types.
    *
    * @return The {@link CodecRegistry}
    */
   @NotNull
-  CodecRegistry codecRegistry();
+  CodecRegistry getCodecRegistry();
 }

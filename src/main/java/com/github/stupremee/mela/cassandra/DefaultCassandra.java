@@ -26,7 +26,7 @@ import reactor.core.publisher.Mono;
 @SuppressWarnings("unused")
 public class DefaultCassandra implements Cassandra {
 
-  private static final Logger log = Loggers.logger("Cassandra");
+  private static final Logger log = Loggers.getLogger("Cassandra");
   private final Cluster cluster;
   private final CodecRegistry codecRegistry;
   private final String keyspace;
@@ -44,7 +44,7 @@ public class DefaultCassandra implements Cassandra {
   }
 
   @Override
-  public Mono<Session> connectAsync() {
+  public Mono<Cassandra> connectAsync() {
     if (connected) {
       throw new IllegalStateException("Already connected to a database!");
     }
@@ -53,13 +53,18 @@ public class DefaultCassandra implements Cassandra {
         .doOnSuccess(s -> connected = true)
         .doOnSuccess(s -> session = s)
         .doOnSuccess(s -> mappingManager = new MappingManager(s))
+        .doOnError(t -> log
+            .error("Failed to connect to database.", t))
         .doOnSuccess(s -> log
-            .info("Cassandra successfully connected to {}", s.getCluster().getClusterName()));
+            .info("Database successfully connected to {}", s.getCluster().getClusterName()))
+        .map(s -> this);
   }
 
   @Override
   public Session connect() {
-    return connectAsync().block();
+    return connectAsync()
+        .map(Cassandra::getSession)
+        .block();
   }
 
   @Override
@@ -76,38 +81,38 @@ public class DefaultCassandra implements Cassandra {
 
   @NotNull
   @Override
-  public Cluster cluster() {
+  public Cluster getCluster() {
     checkConnection();
     return cluster;
   }
 
   @Override
-  public Session session() {
+  public Session getSession() {
     checkConnection();
     return session;
   }
 
   @Override
-  public MappingManager mapper() {
+  public MappingManager getMapper() {
     checkConnection();
     return mappingManager;
   }
 
   @Override
-  public <T> Mapper<T> mapper(Class<T> clazz) {
+  public <T> Mapper<T> getMapper(Class<T> clazz) {
     checkConnection();
     return mappingManager.mapper(clazz, keyspace);
   }
 
   @Override
-  public <T> T accessor(Class<T> clazz) {
+  public <T> T getAccessor(Class<T> clazz) {
     checkConnection();
     return mappingManager.createAccessor(clazz);
   }
 
   @NotNull
   @Override
-  public CodecRegistry codecRegistry() {
+  public CodecRegistry getCodecRegistry() {
     return codecRegistry;
   }
 

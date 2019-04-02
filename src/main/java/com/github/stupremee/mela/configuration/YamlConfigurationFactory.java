@@ -1,70 +1,66 @@
 package com.github.stupremee.mela.configuration;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
+import java.util.Collections;
 import java.util.Map;
-import me.grison.jtoml.impl.Toml;
+import java.util.Objects;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * https://github.com/Stupremee
  *
  * @author Stu
- * @since 23.03.2019
+ * @since 02.04.2019
  */
-public final class TomlConfigurationFactory implements ConfigurationFactory {
+public class YamlConfigurationFactory implements ConfigurationFactory {
 
+  private final ObjectMapper mapper;
   private Configuration defaults;
 
-  private TomlConfigurationFactory() {
+  private YamlConfigurationFactory() {
     this.defaults = new MemoryConfiguration(Configuration.empty());
+    this.mapper = new ObjectMapper(new YAMLFactory());
   }
 
-  @NotNull
   @Override
+  @NotNull
   public ConfigurationFactory addDefault(String path, Object value) {
     defaults.set(path, value);
     return this;
   }
 
-  @NotNull
   @Override
-  public ConfigurationFactory defaults(Configuration defaults) {
-    this.defaults = defaults;
+  @NotNull
+  public ConfigurationFactory setDefaults(Configuration defaults) {
+    this.defaults = Objects.requireNonNull(defaults);
     return this;
   }
 
   @Override
   public Configuration load(File file) throws IOException {
-    try (FileReader reader = new FileReader(file, StandardCharsets.UTF_8)) {
-      return load(reader);
-    }
+    return load(new FileReader(file, StandardCharsets.UTF_8));
   }
 
   @Override
   @SuppressWarnings("unchecked")
   public Configuration load(Reader reader) throws IOException {
-    StringBuilder buffer = new StringBuilder();
-    for (int i = 0; i != -1; i = reader.read()) {
-      buffer.append((char) i);
-    }
-    reader.close();
-
-    Toml toml = Toml.parse(buffer.toString());
-
-    Map<String, Object> map = toml.getMap("");
+    Map<String, Object> map = mapper.readValue(reader, java.util.Map.class);
     map.forEach((key, value) -> {
       if (value instanceof Map<?, ?>) {
         map.put(key, new MemoryConfiguration((Map<String, Object>) value, defaults));
       }
     });
+
     return new MemoryConfiguration(map, defaults);
   }
 
   public static ConfigurationFactory create() {
-    return new TomlConfigurationFactory();
+    return new YamlConfigurationFactory();
   }
 }

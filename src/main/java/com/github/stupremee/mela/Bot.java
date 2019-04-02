@@ -7,5 +7,4 @@ package com.github.stupremee.mela;
  * @since 23.03.2019
  */
 public class Bot {
-
 }

@@ -26,13 +26,13 @@ public interface ConfigurationFactory {
   ConfigurationFactory addDefault(String path, Object value);
 
   /**
-   * Overwrites the old defaults with the new one.
+   * Overwrites the old setDefaults with the new one.
    *
-   * @param defaults The new defaults
+   * @param defaults The new setDefaults
    * @return This instance.
    */
   @NotNull
-  ConfigurationFactory defaults(Configuration defaults);
+  ConfigurationFactory setDefaults(Configuration defaults);
 
   /**
    * Loads a {@link Configuration} from raw content.

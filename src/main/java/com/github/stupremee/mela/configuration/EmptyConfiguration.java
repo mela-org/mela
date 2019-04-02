@@ -1,6 +1,7 @@
 package com.github.stupremee.mela.configuration;
 
 import io.vavr.control.Option;
+import java.io.Writer;
 import java.util.Collection;
 import java.util.Collections;
 import org.jetbrains.annotations.NotNull;
@@ -27,7 +28,7 @@ final class EmptyConfiguration implements Configuration {
 
   @NotNull
   @Override
-  public Configuration section(String path) {
+  public Configuration getSection(String path) {
     return new EmptyConfiguration();
   }
 
@@ -44,7 +45,7 @@ final class EmptyConfiguration implements Configuration {
 
   @NotNull
   @Override
-  public Collection<?> list(String path) {
+  public Collection<?> getList(String path) {
     return Collections.emptyList();
   }
 
@@ -55,56 +56,56 @@ final class EmptyConfiguration implements Configuration {
 
   @NotNull
   @Override
-  public Option<Object> object(String path, Object def) {
+  public Option<Object> getObject(String path, Object def) {
     return Option.none();
   }
 
   @NotNull
   @Override
-  public Collection<Object> objects(String path) {
+  public Collection<Object> getObjects(String path) {
     return Collections.emptyList();
   }
 
   @NotNull
   @Override
-  public Option<String> string(String path, String def) {
+  public Option<String> getString(String path, String def) {
     return Option.none();
   }
 
   @NotNull
   @Override
-  public Collection<String> strings(String path) {
+  public Collection<String> getStrings(String path) {
     return Collections.emptyList();
   }
 
   @NotNull
   @Override
-  public Option<Number> number(String path, Number def) {
+  public Option<Number> getNumber(String path, Number def) {
     return Option.none();
   }
 
   @NotNull
   @Override
-  public Collection<Number> numbers(String path) {
+  public Collection<Number> getNumbers(String path) {
     return Collections.emptyList();
   }
 
 
   @NotNull
   @Override
-  public Option<Boolean> bool(String path, Boolean def) {
+  public Option<Boolean> getBool(String path, Boolean def) {
     return Option.none();
   }
 
   @NotNull
   @Override
-  public Collection<Boolean> bools(String path) {
+  public Collection<Boolean> getBools(String path) {
     return Collections.emptyList();
   }
 
   @NotNull
   @Override
-  public Collection<String> keys() {
+  public Collection<String> getKeys() {
     return Collections.emptyList();
   }
 
@@ -114,8 +115,21 @@ final class EmptyConfiguration implements Configuration {
   }
 
   @Override
-  public <T> Option<T> defaultValue(String path) {
+  public <T> Option<T> getDefaultValue(String path) {
     return Option.none();
+  }
+
+
+  @NotNull
+  @Override
+  public String writeToString(ConfigurationParser parser) {
+    // Do nothing
+    return "";
+  }
+
+  @Override
+  public void write(Writer writer, ConfigurationParser parser) {
+    // Do nothing
   }
 
 }

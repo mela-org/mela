@@ -1,8 +1,14 @@
 package com.github.stupremee.mela.configuration;
 
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.github.stupremee.mela.util.Loggers;
 import io.vavr.control.Option;
 import io.vavr.control.Try;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -24,7 +30,7 @@ import org.slf4j.Logger;
 @SuppressWarnings({"unused", "Duplicates"})
 final class MemoryConfiguration implements Configuration {
 
-  private static final Logger log = Loggers.logger("MemoryConfiguration");
+  private static final Logger log = Loggers.getLogger("MemoryConfiguration");
   private final Map<String, Object> map;
   private final Configuration defaults;
 
@@ -40,13 +46,13 @@ final class MemoryConfiguration implements Configuration {
 
   @NotNull
   @Override
-  public Configuration section(String path) {
+  public Configuration getSection(String path) {
     return Try.ofSupplier(() -> {
-      Object def = defaults.object(path);
+      Object def = defaults.getObject(path);
       Configuration defaults = def instanceof Configuration ? (Configuration) def
           : new MemoryConfiguration(defaultsOrEmpty(path));
       return get(path, defaults).getOrNull();
-    }).onFailure(errorHandler("Error while getting section.")).getOrElse(Configuration.empty());
+    }).onFailure(errorHandler("Error while getting getSection.")).getOrElse(Configuration.empty());
   }
 
   @Override
@@ -95,13 +101,13 @@ final class MemoryConfiguration implements Configuration {
     } else {
       res = Try.ofSupplier(() -> value == null ? def : (T) value);
     }
-    return res.onFailure(errorHandler("Error while getting object.")).toOption();
+    return res.onFailure(errorHandler("Error while getting getObject.")).toOption();
   }
 
   @NotNull
   @Override
   @SuppressWarnings("unchecked")
-  public Collection<Object> list(String path) {
+  public Collection<Object> getList(String path) {
     Object value = get(path);
     if (value instanceof Option.Some && ((Option) value).get() instanceof List<?>) {
       return (List<Object>) ((Option) value).get();
@@ -117,27 +123,27 @@ final class MemoryConfiguration implements Configuration {
 
   @NotNull
   @Override
-  public Option<Object> object(String path, Object def) {
+  public Option<Object> getObject(String path, Object def) {
     return get(path, def);
   }
 
   @NotNull
   @Override
-  public Collection<Object> objects(String path) {
-    return list(path).stream().filter(Objects::nonNull)
+  public Collection<Object> getObjects(String path) {
+    return getList(path).stream().filter(Objects::nonNull)
         .collect(Collectors.toList());
   }
 
   @NotNull
   @Override
-  public Option<String> string(String path, String def) {
+  public Option<String> getString(String path, String def) {
     return get(path, def);
   }
 
   @NotNull
   @Override
-  public Collection<String> strings(String path) {
-    return list(path).stream().filter(Objects::nonNull)
+  public Collection<String> getStrings(String path) {
+    return getList(path).stream().filter(Objects::nonNull)
         .filter(o -> o instanceof String)
         .map(o -> (String) o)
         .collect(Collectors.toList());
@@ -145,14 +151,14 @@ final class MemoryConfiguration implements Configuration {
 
   @NotNull
   @Override
-  public Option<Number> number(String path, Number def) {
+  public Option<Number> getNumber(String path, Number def) {
     return get(path, def);
   }
 
   @NotNull
   @Override
-  public Collection<Number> numbers(String path) {
-    return list(path).stream()
+  public Collection<Number> getNumbers(String path) {
+    return getList(path).stream()
         .filter(Objects::nonNull)
         .filter(o -> o instanceof Number)
         .map(o -> (Number) o)
@@ -161,14 +167,14 @@ final class MemoryConfiguration implements Configuration {
 
   @NotNull
   @Override
-  public Option<Boolean> bool(String path, Boolean def) {
+  public Option<Boolean> getBool(String path, Boolean def) {
     return get(path, def);
   }
 
   @NotNull
   @Override
-  public Collection<Boolean> bools(String path) {
-    return list(path).stream().filter(Objects::nonNull)
+  public Collection<Boolean> getBools(String path) {
+    return getList(path).stream().filter(Objects::nonNull)
         .filter(o -> o instanceof Boolean)
         .map(o -> (Boolean) o)
         .collect(Collectors.toList());
@@ -176,7 +182,7 @@ final class MemoryConfiguration implements Configuration {
 
   @NotNull
   @Override
-  public Collection<String> keys() {
+  public Collection<String> getKeys() {
     return map.keySet();
   }
 
@@ -186,8 +192,21 @@ final class MemoryConfiguration implements Configuration {
   }
 
   @Override
-  public <T> Option<T> defaultValue(String path) {
+  public <T> Option<T> getDefaultValue(String path) {
     return defaults.get(path);
+  }
+
+  @NotNull
+  @Override
+  public String writeToString(ConfigurationParser parser) throws IOException {
+    var writer = new StringWriter();
+    write(writer, parser);
+    return writer.toString();
+  }
+
+  @Override
+  public void write(Writer writer, ConfigurationParser parser) throws IOException {
+    parser.serialize(map, writer);
   }
 
   private String child(String path) {
@@ -197,9 +216,10 @@ final class MemoryConfiguration implements Configuration {
 
   private Configuration defaultsOrEmpty(String path) {
     return (defaults instanceof EmptyConfiguration || defaults == null) ? Configuration.empty()
-        : defaults.section(path);
+        : defaults.getSection(path);
   }
 
+  @SuppressWarnings("unchecked")
   private Configuration sectionFor(String path) {
     int index = path.indexOf(SEPARATOR);
     if (index == -1) {
@@ -213,10 +233,32 @@ final class MemoryConfiguration implements Configuration {
       map.put(root, section);
     }
 
+    if (section instanceof Map) {
+      section = new MemoryConfiguration((Map<String, Object>) section,
+          EmptyConfiguration.instance());
+    }
+
     return (Configuration) section;
+  }
+
+  static StdSerializer<MemoryConfiguration> getSerializer() {
+    return new ConfigurationSerializer();
   }
 
   private Consumer<Throwable> errorHandler(String msg) {
     return throwable -> log.error(msg, throwable);
+  }
+
+  private static class ConfigurationSerializer extends StdSerializer<MemoryConfiguration> {
+
+    private ConfigurationSerializer() {
+      super(MemoryConfiguration.class);
+    }
+
+    @Override
+    public void serialize(MemoryConfiguration value, JsonGenerator gen, SerializerProvider provider)
+        throws IOException {
+      gen.writeObject(value.map);
+    }
   }
 }

@@ -15,31 +15,31 @@ public final class Loggers {
   }
 
   /**
-   * Create a logger of the calling class by using {@link LoggerFactory#getLogger(Class)}.
+   * Create a getLogger of the calling class by using {@link LoggerFactory#getLogger(Class)}.
    *
-   * @return the created logger
+   * @return the created getLogger
    */
-  public static Logger logger() {
+  public static Logger getLogger() {
     return LoggerFactory.getLogger(
         StackWalker.getInstance(StackWalker.Option.RETAIN_CLASS_REFERENCE).getCallerClass());
   }
 
   /**
-   * Create a logger of the calling class by using {@link LoggerFactory#getLogger(Class)}.
+   * Create a getLogger of the calling class by using {@link LoggerFactory#getLogger(Class)}.
    *
-   * @return the created logger
+   * @return the created getLogger
    */
-  public static Logger logger(Class<?> clazz) {
+  public static Logger getLogger(Class<?> clazz) {
     return LoggerFactory.getLogger(clazz);
   }
 
   /**
-   * Create a logger of a given name by using {@link LoggerFactory#getLogger(String)}.
+   * Create a getLogger of a given name by using {@link LoggerFactory#getLogger(String)}.
    *
-   * @param name the logger name
-   * @return the created logger
+   * @param name the getLogger name
+   * @return the created getLogger
    */
-  public static Logger logger(String name) {
+  public static Logger getLogger(String name) {
     return LoggerFactory.getLogger(name);
   }
 }

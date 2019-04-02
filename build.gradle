@@ -20,9 +20,10 @@ ext {
   vavr_version = "0.10.0"
   annotations_version = "17.0.0"
   datastax_version = "3.6.0"
-  jtoml_version = "1.0.0"
+  toml4j_version = "0.7.2"
   d4j_version = "3.0.1"
   logback_version = "1.2.3"
+  jacksonyaml_version = "2.9.0"
 }
 
 repositories {
@@ -38,11 +39,11 @@ dependencies {
   implementation "ch.qos.logback:logback-core:$logback_version"
   implementation "ch.qos.logback:logback-classic:$logback_version"
 
+  // Jackson yaml dataformat to parse yaml files
+  implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonyaml_version"
+
   // Vavr for classes like Option, Try and many more useful stuff
   implementation "io.vavr:vavr:$vavr_version"
-
-  // Cava-Toml to parse Toml files
-  implementation "me.grison:jtoml:$jtoml_version"
 
   // Jetbrains Annotations for better docs
   implementation "org.jetbrains:annotations:$annotations_version"
