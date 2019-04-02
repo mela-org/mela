@@ -24,6 +24,7 @@ ext {
   d4j_version = "3.0.1"
   logback_version = "1.2.3"
   jacksonyaml_version = "2.9.0"
+  lettuce_version = "5.1.6.RELEASE"
 }
 
 repositories {
@@ -59,6 +60,9 @@ dependencies {
   implementation "com.datastax.cassandra:cassandra-driver-core:$datastax_version"
   implementation "com.datastax.cassandra:cassandra-driver-mapping:$datastax_version"
   implementation "com.datastax.cassandra:cassandra-driver-extras:$datastax_version"
+
+  // Lettuce for redis support
+  implementation "io.lettuce:lettuce-core:$lettuce_version"
 
   //                                           //
   // ----------- Test Dependencies ----------- //
