@@ -1,4 +1,6 @@
 com.github.stupremee.mela
 com.github.stupremee.mela.cassandra
 com.github.stupremee.mela.configuration
+com.github.stupremee.mela.event
+com.github.stupremee.mela.shard
 com.github.stupremee.mela.util
