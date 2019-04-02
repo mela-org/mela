@@ -184,7 +184,7 @@ public interface ShardManager {
   Flux<Guild> getGuilds();
 
   /**
-   * Returns all users from all shards in a {@link Flux}
+   * Returns all users from all shards in a {@link Flux}.
    *
    * @return A {@link Flux} that contains all users
    */

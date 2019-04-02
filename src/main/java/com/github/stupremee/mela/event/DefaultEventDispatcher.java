@@ -32,7 +32,7 @@ public class DefaultEventDispatcher implements EventDispatcher {
   private final UnicastProcessor<Event> processor;
   private final FluxSink<Event> sink;
   private final Scheduler scheduler;
-  private Map<Class<? extends Event>, Map<Object, List<Method>>> methods = new java.util.HashMap<>();
+  private Map<Class<? extends Event>, Map<Object, List<Method>>> methods = new HashMap<>();
   private Set<Object> listeners = new HashSet<>();
 
   private DefaultEventDispatcher() {
@@ -50,8 +50,7 @@ public class DefaultEventDispatcher implements EventDispatcher {
     do {
       Map<Object, List<Method>> listeners = methods.get(eventClass.get());
       if (listeners != null) {
-        listeners.forEach((key, value) -> value.forEach(method ->
-        {
+        listeners.forEach((key, value) -> value.forEach(method -> {
           try {
             method.setAccessible(true);
             method.invoke(key, event);
@@ -65,8 +64,7 @@ public class DefaultEventDispatcher implements EventDispatcher {
       eventClass =
           eventClass.filter(c -> c == Event.class).isEmpty() ? Option.none()
               : Option.of((Class<? extends Event>) eventClass.get().getSuperclass());
-    }
-    while (!eventClass.isEmpty());
+    } while (!eventClass.isEmpty());
   }
 
   @Override
