@@ -47,7 +47,7 @@ public class EventDispatcherTest {
     AtomicReference<String> test = new AtomicReference<>();
     dispatcher.on(TestEvent.class)
         .doOnNext(event -> test.set(event.testing))
-        .subscribe();
+        .blockFirst();
 
     dispatcher.call(new TestEvent("Hello"));
     assertEquals("Hello", test.get());
