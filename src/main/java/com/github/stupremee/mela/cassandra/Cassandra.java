@@ -53,7 +53,7 @@ public interface Cassandra {
    * @return The Result set as a {@link ResultSetFuture}
    * @throws IllegalStateException if the Database is not connected
    */
-  ResultSetFuture executeAsync(Statement statement);
+  Mono<ResultSet> executeAsync(Statement statement);
 
   /**
    * Returns the getCluster from the cassandra database.
@@ -86,7 +86,7 @@ public interface Cassandra {
    * @return The {@link Mapper}
    * @throws IllegalStateException if the Database is not connected
    */
-  <T> Mapper<T> getMapper(Class<T> clazz);
+  <T> Mapper<T> getMapper(@NotNull Class<T> clazz);
 
   /**
    * Creates a getAccessor via the {@link MappingManager}
@@ -96,7 +96,7 @@ public interface Cassandra {
    * @return The getAccessor
    * @throws IllegalStateException if the Database is not connected
    */
-  <T> T getAccessor(Class<T> clazz);
+  <T> T getAccessor(@NotNull Class<T> clazz);
 
   /**
    * Returns the {@link CodecRegistry} that the getCluster will use to convert data types.

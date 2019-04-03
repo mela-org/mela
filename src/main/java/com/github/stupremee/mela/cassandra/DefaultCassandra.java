@@ -4,12 +4,13 @@ import com.datastax.driver.core.AuthProvider;
 import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.CodecRegistry;
 import com.datastax.driver.core.ResultSet;
-import com.datastax.driver.core.ResultSetFuture;
 import com.datastax.driver.core.Session;
 import com.datastax.driver.core.Statement;
 import com.datastax.driver.mapping.Mapper;
 import com.datastax.driver.mapping.MappingManager;
 import com.github.stupremee.mela.util.Loggers;
+import com.google.common.base.Preconditions;
+import com.google.common.util.concurrent.ListenableFuture;
 import java.net.InetAddress;
 import java.util.Collection;
 import net.javacrumbs.futureconverter.java8guava.FutureConverter;
@@ -74,9 +75,11 @@ public class DefaultCassandra implements Cassandra {
   }
 
   @Override
-  public ResultSetFuture executeAsync(Statement statement) {
+  public Mono<ResultSet> executeAsync(Statement statement) {
     checkConnection();
-    return session.executeAsync(statement);
+    ListenableFuture<ResultSet> executeFuture = session.executeAsync(statement);
+    return Mono.defer(() ->
+        Mono.fromFuture(FutureConverter.toCompletableFuture(executeFuture)));
   }
 
   @NotNull
@@ -99,15 +102,15 @@ public class DefaultCassandra implements Cassandra {
   }
 
   @Override
-  public <T> Mapper<T> getMapper(Class<T> clazz) {
+  public <T> Mapper<T> getMapper(@NotNull Class<T> clazz) {
     checkConnection();
-    return mappingManager.mapper(clazz, keyspace);
+    return mappingManager.mapper(Preconditions.checkNotNull(clazz), keyspace);
   }
 
   @Override
-  public <T> T getAccessor(Class<T> clazz) {
+  public <T> T getAccessor(@NotNull Class<T> clazz) {
     checkConnection();
-    return mappingManager.createAccessor(clazz);
+    return mappingManager.createAccessor(Preconditions.checkNotNull(clazz));
   }
 
   @NotNull
