@@ -28,7 +28,7 @@ import reactor.core.scheduler.Schedulers;
 @SuppressWarnings("unchecked")
 public class DefaultEventDispatcher implements EventDispatcher {
 
-  private static final Logger log = Loggers.getLogger("EventDispatcher");
+  private static final Logger LOGGER = Loggers.getLogger("EventDispatcher");
   private final UnicastProcessor<Event> processor;
   private final FluxSink<Event> sink;
   private final Scheduler scheduler;
@@ -55,9 +55,9 @@ public class DefaultEventDispatcher implements EventDispatcher {
             method.setAccessible(true);
             method.invoke(key, event);
           } catch (IllegalAccessException | InvocationTargetException error) {
-            log.error("Failed to access event listener method.", error);
+            LOGGER.error("Failed to access event listener method.", error);
           } catch (Throwable error) {
-            log.error("One of the event listeners threw an unknown exception.", error);
+            LOGGER.error("One of the event listeners threw an unknown exception.", error);
           }
         }));
       }

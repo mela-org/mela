@@ -30,7 +30,7 @@ import org.slf4j.Logger;
 @SuppressWarnings({"unused", "Duplicates"})
 final class MemoryConfiguration implements Configuration {
 
-  private static final Logger log = Loggers.getLogger("MemoryConfiguration");
+  private static final Logger LOGGER = Loggers.getLogger("MemoryConfiguration");
   private final Map<String, Object> map;
   private final Configuration defaults;
 
@@ -246,7 +246,7 @@ final class MemoryConfiguration implements Configuration {
   }
 
   private Consumer<Throwable> errorHandler(String msg) {
-    return throwable -> log.error(msg, throwable);
+    return throwable -> LOGGER.error(msg, throwable);
   }
 
   private static class ConfigurationSerializer extends StdSerializer<MemoryConfiguration> {

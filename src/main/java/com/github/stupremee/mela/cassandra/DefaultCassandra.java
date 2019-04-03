@@ -26,7 +26,7 @@ import reactor.core.publisher.Mono;
 @SuppressWarnings("unused")
 public class DefaultCassandra implements Cassandra {
 
-  private static final Logger log = Loggers.getLogger("Cassandra");
+  private static final Logger LOGGER = Loggers.getLogger("Cassandra");
   private final Cluster cluster;
   private final CodecRegistry codecRegistry;
   private final String keyspace;
@@ -53,9 +53,9 @@ public class DefaultCassandra implements Cassandra {
         .doOnSuccess(s -> connected = true)
         .doOnSuccess(s -> session = s)
         .doOnSuccess(s -> mappingManager = new MappingManager(s))
-        .doOnError(t -> log
+        .doOnError(t -> LOGGER
             .error("Failed to connect to database.", t))
-        .doOnSuccess(s -> log
+        .doOnSuccess(s -> LOGGER
             .info("Database successfully connected to {}", s.getCluster().getClusterName()))
         .map(s -> this);
   }
