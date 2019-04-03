@@ -25,7 +25,7 @@ import reactor.core.publisher.Mono;
  * @since 02.04.2019
  */
 @SuppressWarnings("unused")
-public interface ShardManager {
+public interface ShardController {
 
   /**
    * Updates the presence for all shards.
