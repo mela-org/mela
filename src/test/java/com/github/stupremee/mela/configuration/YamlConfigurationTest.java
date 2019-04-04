@@ -12,7 +12,7 @@ import java.util.Objects;
 import org.junit.Before;
 import org.junit.Test;
 
-public class ConfigurationTest {
+public class YamlConfigurationTest {
 
   private ConfigurationFactory factory;
 

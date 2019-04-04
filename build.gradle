@@ -24,6 +24,7 @@ ext {
   d4j_version = "3.0.1"
   logback_version = "1.2.3"
   jacksonyaml_version = "2.9.0"
+  jacksonhocon_version = "1.1.1"
   lettuce_version = "5.1.6.RELEASE"
 }
 
@@ -42,6 +43,9 @@ dependencies {
 
   // Jackson yaml dataformat to parse yaml files
   implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonyaml_version"
+
+  // Config for parsing hocon files
+  implementation "org.honton.chas.hocon:jackson-dataformat-hocon:$jacksonhocon_version"
 
   // Vavr for classes like Option, Try and many more useful stuff
   implementation "io.vavr:vavr:$vavr_version"
