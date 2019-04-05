@@ -12,18 +12,18 @@ import java.util.Map;
  * @author Stu
  * @since 04.04.2019
  */
-public abstract class AbstractJacksonConfigurationFactory implements ConfigurationFactory {
+abstract class AbstractJacksonConfigurationFactory implements ConfigurationFactory {
 
-  protected final ObjectMapper mapper;
-  protected Configuration defaults;
+  private final ObjectMapper mapper;
+  Configuration defaults;
 
-  protected AbstractJacksonConfigurationFactory(JsonFactory factory) {
+  AbstractJacksonConfigurationFactory(JsonFactory factory) {
     this.mapper = new ObjectMapper(factory);
     this.defaults = new MemoryConfiguration(Configuration.empty());
   }
 
   @SuppressWarnings("unchecked")
-  protected MemoryConfiguration parseAndMap(Reader reader) throws IOException {
+  MemoryConfiguration parseAndMap(Reader reader) throws IOException {
     Map<String, Object> map = mapper.readValue(reader, java.util.Map.class);
     map.forEach((key, value) -> {
       if (value instanceof Map<?, ?>) {

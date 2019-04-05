@@ -24,9 +24,6 @@ public class YamlConfigurationParser implements ConfigurationParser {
 
   private YamlConfigurationParser() {
     this.mapper = new ObjectMapper(new YAMLFactory());
-    SimpleModule module = new SimpleModule();
-    module.addSerializer(MemoryConfiguration.class, MemoryConfiguration.getSerializer());
-    mapper.registerModule(module);
   }
 
   @Override

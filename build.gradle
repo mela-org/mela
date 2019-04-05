@@ -23,8 +23,9 @@ ext {
   toml4j_version = "0.7.2"
   d4j_version = "3.0.1"
   logback_version = "1.2.3"
-  jacksonyaml_version = "2.9.0"
-  jacksonhocon_version = "1.1.1"
+  jackson_yaml_version = "2.9.8"
+  jackson_hocon_version = "1.1.1"
+  config_version = "1.3.3"
   lettuce_version = "5.1.6.RELEASE"
 }
 
@@ -42,10 +43,13 @@ dependencies {
   implementation "ch.qos.logback:logback-classic:$logback_version"
 
   // Jackson yaml dataformat to parse yaml files
-  implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonyaml_version"
+  implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jackson_yaml_version"
+
+  // Jackson hocon for parsing hocon files via jackson
+  implementation "org.honton.chas.hocon:jackson-dataformat-hocon:$jackson_hocon_version"
 
   // Config for parsing hocon files
-  implementation "org.honton.chas.hocon:jackson-dataformat-hocon:$jacksonhocon_version"
+  implementation "com.typesafe:config:$config_version"
 
   // Vavr for classes like Option, Try and many more useful stuff
   implementation "io.vavr:vavr:$vavr_version"

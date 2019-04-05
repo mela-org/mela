@@ -1,8 +1,7 @@
 package com.github.stupremee.mela.configuration;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import com.typesafe.config.ConfigFactory;
+import com.typesafe.config.ConfigRenderOptions;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Map;
@@ -16,24 +15,27 @@ import org.jetbrains.annotations.NotNull;
  */
 public class HoconConfigurationParser implements ConfigurationParser {
 
+  private final ConfigRenderOptions renderOptions;
+
   private static class Lazy {
 
     private static HoconConfigurationParser INSTANCE = new HoconConfigurationParser();
   }
 
-  private final ObjectMapper mapper;
-
   private HoconConfigurationParser() {
-    this.mapper = new ObjectMapper(new YAMLFactory());
-    SimpleModule module = new SimpleModule();
-    module.addSerializer(MemoryConfiguration.class, MemoryConfiguration.getSerializer());
-    mapper.registerModule(module);
+    this.renderOptions = ConfigRenderOptions.defaults()
+        .setJson(false)
+        .setOriginComments(false)
+        .setComments(true);
   }
 
   @Override
   public void serialize(@NotNull Map<String, Object> config, @NotNull Writer writer)
       throws IOException {
-    mapper.writeValue(writer, config);
+
+    String hocon = ConfigFactory.parseMap(config).root()
+        .render(renderOptions);
+    writer.write(hocon);
   }
 
   public static ConfigurationParser getInstance() {

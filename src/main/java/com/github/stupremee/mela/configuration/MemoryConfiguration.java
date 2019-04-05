@@ -1,8 +1,5 @@
 package com.github.stupremee.mela.configuration;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.github.stupremee.mela.util.Loggers;
 import io.vavr.control.Option;
 import io.vavr.control.Try;
@@ -206,7 +203,17 @@ final class MemoryConfiguration implements Configuration {
 
   @Override
   public void write(Writer writer, ConfigurationParser parser) throws IOException {
-    parser.serialize(map, writer);
+    Map<String, Object> mapToParse = new LinkedHashMap<>(map);
+    replaceConfiguration(mapToParse);
+    parser.serialize(mapToParse, writer);
+  }
+
+  private void replaceConfiguration(Map<String, Object> map) {
+    map.forEach((key, value) -> {
+      if (value instanceof MemoryConfiguration) {
+        map.put(key, ((MemoryConfiguration) value).map);
+      }
+    });
   }
 
   private String child(String path) {
@@ -241,24 +248,7 @@ final class MemoryConfiguration implements Configuration {
     return (Configuration) section;
   }
 
-  static StdSerializer<MemoryConfiguration> getSerializer() {
-    return new ConfigurationSerializer();
-  }
-
   private Consumer<Throwable> errorHandler(String msg) {
     return throwable -> LOGGER.error(msg, throwable);
-  }
-
-  private static class ConfigurationSerializer extends StdSerializer<MemoryConfiguration> {
-
-    private ConfigurationSerializer() {
-      super(MemoryConfiguration.class);
-    }
-
-    @Override
-    public void serialize(MemoryConfiguration value, JsonGenerator gen, SerializerProvider provider)
-        throws IOException {
-      gen.writeObject(value.map);
-    }
   }
 }
