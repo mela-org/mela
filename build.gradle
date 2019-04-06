@@ -27,6 +27,7 @@ ext {
   jackson_hocon_version = "1.1.1"
   config_version = "1.3.3"
   lettuce_version = "5.1.6.RELEASE"
+  mongodb_version = "1.11.0"
 }
 
 repositories {
@@ -64,7 +65,10 @@ dependencies {
   implementation "org.immutables:value:$immutables_version"
   annotationProcessor "org.immutables:value:$immutables_version"
 
-  // Database
+  // MongoDB Reactive Streams as MongoDB Driver
+  implementation "org.mongodb:mongodb-driver-reactivestreams:$mongodb_version"
+
+  // Datastax driver as cassandra driver
   implementation "com.datastax.cassandra:cassandra-driver-core:$datastax_version"
   implementation "com.datastax.cassandra:cassandra-driver-mapping:$datastax_version"
   implementation "com.datastax.cassandra:cassandra-driver-extras:$datastax_version"
