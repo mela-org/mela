@@ -19,6 +19,6 @@ import org.immutables.value.Value.Style.ImplementationVisibility;
     get = {"is*", "get*"},
     init = "set*",
     visibility = ImplementationVisibility.PUBLIC)
-public @interface Bean {
+public @interface ImmutableBean {
 
 }

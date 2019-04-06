@@ -1,7 +1,7 @@
 package com.github.stupremee.mela.cassandra;
 
 import com.datastax.driver.core.AuthProvider;
-import com.github.stupremee.mela.annotations.Bean;
+import com.github.stupremee.mela.annotations.ImmutableBean;
 import com.github.stupremee.mela.cassandra.ImmutableCassandraCredentials.Builder;
 import java.net.InetAddress;
 import java.util.Collection;
@@ -15,7 +15,7 @@ import org.immutables.value.Value.Immutable;
  * @since 06.04.2019
  */
 @Immutable
-@Bean
+@ImmutableBean
 @SuppressWarnings("unused")
 public interface CassandraCredentials {
 
