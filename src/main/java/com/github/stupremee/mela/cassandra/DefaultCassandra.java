@@ -1,6 +1,5 @@
 package com.github.stupremee.mela.cassandra;
 
-import com.datastax.driver.core.AuthProvider;
 import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.CodecRegistry;
 import com.datastax.driver.core.ResultSet;
@@ -11,8 +10,6 @@ import com.datastax.driver.mapping.MappingManager;
 import com.github.stupremee.mela.util.Loggers;
 import com.google.common.base.Preconditions;
 import com.google.common.util.concurrent.ListenableFuture;
-import java.net.InetAddress;
-import java.util.Collection;
 import net.javacrumbs.futureconverter.java8guava.FutureConverter;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -35,12 +32,12 @@ public class DefaultCassandra implements Cassandra {
   private Session session;
   private MappingManager mappingManager;
 
-  DefaultCassandra(Collection<InetAddress> addresses, AuthProvider authProvider, String keyspace) {
+  DefaultCassandra(CassandraCredentials credentials) {
     this.codecRegistry = new CodecRegistry();
-    this.keyspace = keyspace;
+    this.keyspace = credentials.getKeyspace();
     this.cluster = Cluster.builder()
-        .addContactPoints(addresses)
-        .withAuthProvider(authProvider)
+        .addContactPoints(credentials.getContactPoints())
+        .withAuthProvider(credentials.getAuthProvider())
         .build();
   }
 
