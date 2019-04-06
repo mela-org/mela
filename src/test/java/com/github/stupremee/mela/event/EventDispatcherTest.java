@@ -9,11 +9,11 @@ import org.junit.Test;
 
 public class EventDispatcherTest {
 
-  private DefaultEventDispatcher dispatcher;
+  private EventDispatcher dispatcher;
 
   @Before
   public void setUp() {
-    this.dispatcher = (DefaultEventDispatcher) DefaultEventDispatcher.create();
+    this.dispatcher = DefaultEventDispatcher.create();
   }
 
   @Test
