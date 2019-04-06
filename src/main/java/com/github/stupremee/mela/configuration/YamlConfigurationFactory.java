@@ -37,7 +37,9 @@ public class YamlConfigurationFactory extends AbstractJacksonConfigurationFactor
 
   @Override
   public Configuration load(File file) throws IOException {
-    return load(new FileReader(file, StandardCharsets.UTF_8));
+    try (var reader = new FileReader(file, StandardCharsets.UTF_8)) {
+      return load(reader);
+    }
   }
 
   @Override

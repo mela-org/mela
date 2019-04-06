@@ -72,6 +72,7 @@ public class RedisStore<K extends Comparable<K>, V extends Serializable> impleme
   }
 
   @Override
+  @SuppressWarnings("unchecked")
   public Mono<Void> deleteInRange(K start, K end) {
     return Flux.defer(() -> commands.hkeys(store))
         .filter(key -> findInRangePredicate(start, end).test((K) key))

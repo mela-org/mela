@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -33,7 +34,9 @@ public class HoconConfigurationFactory extends AbstractJacksonConfigurationFacto
 
   @Override
   public Configuration load(File file) throws IOException {
-    return load(new FileReader(file));
+    try (var reader = new FileReader(file, StandardCharsets.UTF_8)) {
+      return load(reader);
+    }
   }
 
   @Override
