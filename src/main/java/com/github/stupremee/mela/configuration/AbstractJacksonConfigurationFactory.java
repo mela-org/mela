@@ -24,7 +24,7 @@ abstract class AbstractJacksonConfigurationFactory implements ConfigurationFacto
 
   @SuppressWarnings("unchecked")
   MemoryConfiguration parseAndMap(Reader reader) throws IOException {
-    Map<String, Object> map = mapper.readValue(reader, java.util.Map.class);
+    Map<String, Object> map = mapper.readValue(reader, Map.class);
     map.forEach((key, value) -> {
       if (value instanceof Map<?, ?>) {
         map.put(key, new MemoryConfiguration((Map<String, Object>) value, defaults));

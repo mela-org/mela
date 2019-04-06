@@ -113,7 +113,7 @@ pmd {
 
 pmdMain {
   ignoreFailures = true
-  ruleSets = ["category/java/errorprone.xml", "category/java/bestpractices.xml", "category/java/design.xml"]
+  ruleSetConfig = project.resources.text.fromFile(file("$projectDir/config/pmd/ruleset.xml"))
 }
 
 wrapper {

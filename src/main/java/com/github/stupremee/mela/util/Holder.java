@@ -1,8 +1,8 @@
 package com.github.stupremee.mela.util;
 
-import com.google.common.base.Preconditions;
 import io.vavr.control.Option;
-import org.jetbrains.annotations.NotNull;
+import java.io.Serializable;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * https://github.com/Stupremee
@@ -11,7 +11,9 @@ import org.jetbrains.annotations.NotNull;
  * @since 06.04.2019
  */
 @SuppressWarnings("unused")
-public class Holder<T> implements Option<T> {
+public final class Holder<T> implements Option<T>, Serializable {
+
+  private static final long serialVersionUID = 2397316429611508241L;
 
   private T value;
 
@@ -44,8 +46,18 @@ public class Holder<T> implements Option<T> {
    *
    * @param value The value the holder should "hold"
    */
-  public void set(@NotNull T value) {
-    this.value = Preconditions.checkNotNull(value);
+  public void setValue(T value) {
+    this.value = value;
+  }
+
+  /**
+   * Returns the value that is currently stored in the holder.
+   *
+   * @return The value
+   */
+  @Nullable
+  public T getValue() {
+    return value;
   }
 
   /**

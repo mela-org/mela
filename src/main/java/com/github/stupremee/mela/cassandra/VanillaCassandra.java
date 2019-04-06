@@ -1,5 +1,7 @@
 package com.github.stupremee.mela.cassandra;
 
+import static net.javacrumbs.futureconverter.java8guava.FutureConverter.toCompletableFuture;
+
 import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.CodecRegistry;
 import com.datastax.driver.core.ResultSet;
@@ -10,8 +12,6 @@ import com.datastax.driver.mapping.MappingManager;
 import com.github.stupremee.mela.util.Holder;
 import com.github.stupremee.mela.util.Loggers;
 import com.google.common.base.Preconditions;
-import com.google.common.util.concurrent.ListenableFuture;
-import net.javacrumbs.futureconverter.java8guava.FutureConverter;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import reactor.core.publisher.Mono;
@@ -50,9 +50,9 @@ public class VanillaCassandra implements Cassandra {
       throw new IllegalStateException("Already connected to a database!");
     }
 
-    return Mono.fromFuture(FutureConverter.toCompletableFuture(cluster.connectAsync(keyspace)))
-        .doOnSuccess(this.session::set)
-        .doOnSuccess(s -> mappingManager.set(new MappingManager(s)))
+    return Mono.fromFuture(toCompletableFuture(cluster.connectAsync(keyspace)))
+        .doOnSuccess(this.session::setValue)
+        .doOnSuccess(s -> mappingManager.setValue(new MappingManager(s)))
         .doOnError(t -> LOGGER
             .error("Failed to connect to database.", t))
         .doOnSuccess(s -> LOGGER
@@ -76,9 +76,10 @@ public class VanillaCassandra implements Cassandra {
   @Override
   public Mono<ResultSet> executeAsync(Statement statement) {
     checkConnection();
-    ListenableFuture<ResultSet> executeFuture = getOrThrow(this.session).executeAsync(statement);
     return Mono.defer(() ->
-        Mono.fromFuture(FutureConverter.toCompletableFuture(executeFuture)));
+        Mono.fromFuture(
+            toCompletableFuture(
+                getOrThrow(this.session).executeAsync(statement))));
   }
 
   @NotNull

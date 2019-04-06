@@ -24,7 +24,7 @@ import org.slf4j.Logger;
  * @author Stu
  * @since 23.03.2019
  */
-@SuppressWarnings({"unused", "Duplicates"})
+@SuppressWarnings({"unused", "Duplicates", "unchecked"})
 final class MemoryConfiguration implements Configuration {
 
   private static final Logger LOGGER = Loggers.getLogger("MemoryConfiguration");
@@ -53,7 +53,6 @@ final class MemoryConfiguration implements Configuration {
   }
 
   @Override
-  @SuppressWarnings("unchecked")
   public void set(String path, Object value) {
     Object val = value;
 
@@ -75,7 +74,6 @@ final class MemoryConfiguration implements Configuration {
 
   @NotNull
   @Override
-  @SuppressWarnings("unchecked")
   public <T> Option<T> get(String path, T def) {
     Configuration section = sectionFor(path);
 
@@ -103,7 +101,6 @@ final class MemoryConfiguration implements Configuration {
 
   @NotNull
   @Override
-  @SuppressWarnings("unchecked")
   public Collection<Object> getList(String path) {
     Object value = get(path);
     if (value instanceof Option.Some && ((Option) value).get() instanceof List<?>) {
@@ -226,7 +223,6 @@ final class MemoryConfiguration implements Configuration {
         : defaults.getSection(path);
   }
 
-  @SuppressWarnings("unchecked")
   private Configuration sectionFor(String path) {
     int index = path.indexOf(SEPARATOR);
     if (index == -1) {
