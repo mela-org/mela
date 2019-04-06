@@ -1,11 +1,15 @@
 <configuration>
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
-        </encoder>
-    </appender>
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+    </encoder>
+  </appender>
 
-    <root level="debug">
-        <appender-ref ref="STDOUT"/>
-    </root>
+  <appender name="async" class="reactor.logback.AsyncAppender">
+    <appender-ref ref="stdout"/>
+  </appender>
+
+  <root level="debug">
+    <appender-ref ref="async"/>
+  </root>
 </configuration>
