@@ -1,7 +1,6 @@
 package com.github.stupremee.mela.repository;
 
 import com.github.stupremee.mela.beans.Bean;
-import com.github.stupremee.mela.repository.specification.Specification;
 import discord4j.core.object.util.Snowflake;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
