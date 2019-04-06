@@ -32,11 +32,4 @@ public interface EventDispatcher {
    * @param listener The listener
    */
   void register(Object listener);
-
-  /**
-   * Unregister a event listener like the JDA Style.
-   *
-   * @param listener The listener to remove
-   */
-  void unregister(Object listener);
 }

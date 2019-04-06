@@ -17,7 +17,7 @@ public class EventDispatcherTest {
   }
 
   @Test
-  public void registerTest() {
+  public void registerTest() throws InterruptedException {
     AtomicReference<String> test = new AtomicReference<>();
 
     dispatcher.register(new Object() {
@@ -32,13 +32,14 @@ public class EventDispatcherTest {
         throw new AssertionError();
       }
 
-      public void failed(TestEvent event, String test) {
+      public void failed(TestEvent event) {
         throw new AssertionError();
       }
 
     });
 
     dispatcher.call(new TestEvent("YUS"));
+    Thread.sleep(5); // Some sleep because it takes some time to call the method.
     assertEquals("YUS", test.get());
   }
 
