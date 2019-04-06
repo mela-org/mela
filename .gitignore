@@ -29,7 +29,7 @@ hs_err_pid*
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
 # User-specific stuff
-.idea
+.idea/*
 
 # CMake
 cmake-build-debug/
@@ -39,6 +39,7 @@ cmake-build-release/
 *.iws
 
 # IntelliJ
+!.idea/codeStyles/*
 out/
 
 # mpeltonen/sbt-idea plugin
@@ -73,4 +74,3 @@ gradle-app.setting
 
 # # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
 # gradle/wrapper/gradle-wrapper.properties
-
