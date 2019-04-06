@@ -1,5 +1,6 @@
 package com.github.stupremee.mela.configuration;
 
+import com.google.common.base.Preconditions;
 import com.jasonclawson.jackson.dataformat.hocon.HoconFactory;
 import java.io.File;
 import java.io.FileReader;
@@ -22,18 +23,22 @@ public class HoconConfigurationFactory extends AbstractJacksonConfigurationFacto
 
   @Override
   public @NotNull ConfigurationFactory addDefault(String path, Object value) {
+    Preconditions.checkNotNull(path, "path can't be null.");
+    Preconditions.checkNotNull(value, "value can't be null.");
     defaults.set(path, value);
     return this;
   }
 
   @Override
   public @NotNull ConfigurationFactory setDefaults(Configuration defaults) {
+    Preconditions.checkNotNull(defaults, "defaults can't be null.");
     this.defaults = defaults;
     return this;
   }
 
   @Override
   public Configuration load(File file) throws IOException {
+    Preconditions.checkNotNull(file, "file can't be null.");
     try (var reader = new FileReader(file, StandardCharsets.UTF_8)) {
       return load(reader);
     }
@@ -41,6 +46,7 @@ public class HoconConfigurationFactory extends AbstractJacksonConfigurationFacto
 
   @Override
   public Configuration load(Reader reader) throws IOException {
+    Preconditions.checkNotNull(reader, "reader can't be null.");
     return this.parseAndMap(reader);
   }
 }

@@ -33,6 +33,7 @@ public class VanillaCassandra implements Cassandra {
   private final Holder<Session> session;
 
   VanillaCassandra(CassandraCredentials credentials) {
+    Preconditions.checkNotNull(credentials, "credentials can't be null");
     this.mappingManager = Holder.empty();
     this.session = Holder.empty();
     this.codecRegistry = new CodecRegistry();
@@ -69,12 +70,14 @@ public class VanillaCassandra implements Cassandra {
 
   @Override
   public ResultSet execute(Statement statement) {
+    Preconditions.checkNotNull(statement, "statement can't be null");
     checkConnection();
     return getOrThrow(this.session).execute(statement);
   }
 
   @Override
   public Mono<ResultSet> executeAsync(Statement statement) {
+    Preconditions.checkNotNull(statement, "statement can't be null");
     checkConnection();
     return Mono.defer(() ->
         Mono.fromFuture(
@@ -103,8 +106,9 @@ public class VanillaCassandra implements Cassandra {
 
   @Override
   public <T> Mapper<T> getMapper(@NotNull Class<T> clazz) {
+    Preconditions.checkNotNull(clazz, "clazz can't be null");
     checkConnection();
-    return getOrThrow(mappingManager).mapper(Preconditions.checkNotNull(clazz), keyspace);
+    return getOrThrow(mappingManager).mapper(clazz, keyspace);
   }
 
   @Override

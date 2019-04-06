@@ -1,6 +1,7 @@
 package com.github.stupremee.mela.event;
 
 import com.github.stupremee.mela.util.Loggers;
+import com.google.common.base.Preconditions;
 import discord4j.core.event.domain.Event;
 import io.vavr.control.Try;
 import java.lang.reflect.Method;
@@ -35,11 +36,13 @@ public class VanillaEventDispatcher implements EventDispatcher {
 
   @Override
   public void call(Event event) {
+    Preconditions.checkNotNull(event, "event can't be null.");
     sink.next(event);
   }
 
   @Override
   public <EventT extends Event> Flux<EventT> on(Class<EventT> eventClass) {
+    Preconditions.checkNotNull(eventClass, "eventClass can't be null.");
     return processor.publishOn(scheduler)
         .ofType(eventClass);
   }
@@ -47,6 +50,7 @@ public class VanillaEventDispatcher implements EventDispatcher {
   @Override
   @SuppressWarnings("unchecked")
   public void register(Object listener) {
+    Preconditions.checkNotNull(listener, "listener can't be null.");
     Stream.of(listener.getClass().getDeclaredMethods())
         .filter(this::validateMethod)
         .map(method -> Tuples.of(method, method.getParameterTypes()[0]))

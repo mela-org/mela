@@ -13,8 +13,9 @@ import discord4j.core.object.entity.User;
 import discord4j.core.object.presence.Presence;
 import discord4j.core.object.util.Snowflake;
 import discord4j.core.spec.UserEditSpec;
-import io.vavr.control.Option;
+import java.util.Optional;
 import java.util.function.Consumer;
+import org.jetbrains.annotations.NotNull;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -32,13 +33,14 @@ public interface ShardController {
    *
    * @param presence The presence that should be placed
    */
-  void updatePresence(Presence presence);
+  void updatePresence(@NotNull Presence presence);
 
   /**
    * Logs in all shards and set the default presences.
    *
    * @return A {@link Flux} that contains all shards.
    */
+  @NotNull
   Flux<DiscordClient> login();
 
   /**
@@ -53,6 +55,7 @@ public interface ShardController {
    *
    * @return A {@link Flux} that contains all logged out shards
    */
+  @NotNull
   Flux<DiscordClient> logout();
 
   /**
@@ -80,7 +83,8 @@ public interface ShardController {
    * @param id The id of the user
    * @return The {@link Mono} contains the fetched user, that completes when the user is fetched.
    */
-  Mono<User> getUserById(Snowflake id);
+  @NotNull
+  Mono<User> getUserById(@NotNull Snowflake id);
 
   /**
    * Tries to retrieve a {@link Channel} and returns it in a {@link Mono}.
@@ -88,7 +92,8 @@ public interface ShardController {
    * @param id The id of the channel
    * @return The {@link Mono} contains the fetched channel, that completes when the user is fetched.
    */
-  Mono<Channel> getChannelById(Snowflake id);
+  @NotNull
+  Mono<Channel> getChannelById(@NotNull Snowflake id);
 
   /**
    * Tries to retrieve a {@link Guild} and returns it in a {@link Mono}.
@@ -96,7 +101,8 @@ public interface ShardController {
    * @param id The id of the guild
    * @return The {@link Mono} contains the fetched guild, that completes when the user is fetched.
    */
-  Mono<Guild> getGuildById(Snowflake id);
+  @NotNull
+  Mono<Guild> getGuildById(@NotNull Snowflake id);
 
   /**
    * Tries to retrieve a {@link Member} from his id and his guildId.
@@ -106,7 +112,8 @@ public interface ShardController {
    * @return The {@link Mono} that contains the {@link Member} and that completes when the member is
    *     fetched
    */
-  Mono<Member> getMemberById(Snowflake guildId, Snowflake userId);
+  @NotNull
+  Mono<Member> getMemberById(@NotNull Snowflake guildId, @NotNull Snowflake userId);
 
   /**
    * Tries to retrieve a message from the channel id and the message id.
@@ -116,7 +123,8 @@ public interface ShardController {
    * @return The {@link Mono} that contains the {@link Message} and is completed when the message is
    *     successfully fetched
    */
-  Mono<Message> getMessageById(Snowflake channelId, Snowflake messageId);
+  @NotNull
+  Mono<Message> getMessageById(@NotNull Snowflake channelId, @NotNull Snowflake messageId);
 
   /**
    * Tries to retrieve a {@link GuildEmoji} by the id.
@@ -125,7 +133,8 @@ public interface ShardController {
    * @return A {@link Mono} where, upon successful completion, emits the {@link GuildEmoji *
    *     application info}. If an error is received, it is emitted through the Mono.
    */
-  Mono<GuildEmoji> getEmoteById(Snowflake id);
+  @NotNull
+  Mono<GuildEmoji> getEmoteById(@NotNull Snowflake id);
 
   /**
    * Tries to retrieve a {@link Role} by his id.
@@ -134,7 +143,8 @@ public interface ShardController {
    * @return A {@link Mono} where, upon successful completion, emits the {@link Role * * application
    *     info}. If an error is received, it is emitted through the Mono.
    */
-  Mono<Role> getRoleById(Snowflake id);
+  @NotNull
+  Mono<Role> getRoleById(@NotNull Snowflake id);
 
   /**
    * Requests to edit the current user that is logged in.
@@ -144,7 +154,8 @@ public interface ShardController {
    * @return A {@link Mono} where, upon successful completion, emits the edited {@link User}. If an
    *     error is received, * it is emitted through the {@code Mono}.
    */
-  Mono<User> edit(Consumer<? super UserEditSpec> spec);
+  @NotNull
+  Mono<User> edit(@NotNull Consumer<? super UserEditSpec> spec);
 
   /**
    * Requests to retrieve the application info.
@@ -152,6 +163,7 @@ public interface ShardController {
    * @return A {@link Mono} where, upon successful completion, emits the {@link ApplicationInfo
    *     application info}. If an error is received, it is emitted through the Mono.
    */
+  @NotNull
   Mono<ApplicationInfo> getApplicationInfo();
 
   /**
@@ -167,6 +179,7 @@ public interface ShardController {
    *
    * @return The {@link EventDispatcher}
    */
+  @NotNull
   EventDispatcher getEventDispatcher();
 
   /**
@@ -181,6 +194,7 @@ public interface ShardController {
    *
    * @return A {@link Flux} that contains all guilds
    */
+  @NotNull
   Flux<Guild> getGuilds();
 
   /**
@@ -188,6 +202,7 @@ public interface ShardController {
    *
    * @return A {@link Flux} that contains all users
    */
+  @NotNull
   Flux<User> getUsers();
 
   /**
@@ -195,14 +210,16 @@ public interface ShardController {
    *
    * @return All {@link DiscordClient shards} in a {@link Flux}
    */
+  @NotNull
   Flux<DiscordClient> getShards();
 
   /**
-   * Returns the {@link DiscordClient shard} in an {@link Option} with the given id.
+   * Returns the {@link DiscordClient shard} in an {@link Optional} with the given id.
    *
    * @param id The id of the shard
-   * @return A {@link Option} that contains the shard or is empty if the shard with this id doesn't
-   *     exists
+   * @return A {@link Optional} that contains the shard or is empty if the shard with this id
+   *     doesn't exists
    */
-  Option<DiscordClient> getShardById(int id);
+  @NotNull
+  Optional<DiscordClient> getShardById(int id);
 }

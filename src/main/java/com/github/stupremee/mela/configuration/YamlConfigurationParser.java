@@ -2,6 +2,7 @@ package com.github.stupremee.mela.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import com.google.common.base.Preconditions;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Map;
@@ -16,6 +17,7 @@ import org.jetbrains.annotations.NotNull;
 public class YamlConfigurationParser implements ConfigurationParser {
 
   private static class Lazy {
+
     private static YamlConfigurationParser INSTANCE = new YamlConfigurationParser();
   }
 
@@ -28,6 +30,8 @@ public class YamlConfigurationParser implements ConfigurationParser {
   @Override
   public void serialize(@NotNull Map<String, Object> config, @NotNull Writer writer)
       throws IOException {
+    Preconditions.checkNotNull(config, "config can't be null.");
+    Preconditions.checkNotNull(writer, "writer can't be null.");
     mapper.writeValue(writer, config);
   }
 

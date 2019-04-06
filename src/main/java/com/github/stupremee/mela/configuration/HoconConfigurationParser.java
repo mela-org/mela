@@ -1,5 +1,6 @@
 package com.github.stupremee.mela.configuration;
 
+import com.google.common.base.Preconditions;
 import com.typesafe.config.ConfigFactory;
 import com.typesafe.config.ConfigRenderOptions;
 import java.io.IOException;
@@ -32,6 +33,8 @@ public class HoconConfigurationParser implements ConfigurationParser {
   @Override
   public void serialize(@NotNull Map<String, Object> config, @NotNull Writer writer)
       throws IOException {
+    Preconditions.checkNotNull(config, "config can't be null.");
+    Preconditions.checkNotNull(writer, "writer can't be null.");
 
     String hocon = ConfigFactory.parseMap(config).root()
         .render(renderOptions);
