@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @author Stu
  * @since 06.04.2019
  */
-public abstract class SnowflakeBean implements Serializable {
+public abstract class SnowflakeBean implements Serializable, Bean {
 
   private static final long serialVersionUID = -1945442693247089196L;
 
