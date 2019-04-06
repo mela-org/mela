@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
  */
 public class HoconConfigurationFactory extends AbstractJacksonConfigurationFactory {
 
-  private HoconConfigurationFactory() {
+  HoconConfigurationFactory() {
     super(new HoconFactory());
   }
 
@@ -39,9 +39,5 @@ public class HoconConfigurationFactory extends AbstractJacksonConfigurationFacto
   @Override
   public Configuration load(Reader reader) throws IOException {
     return this.parseAndMap(reader);
-  }
-
-  public static ConfigurationFactory create() {
-    return new HoconConfigurationFactory();
   }
 }

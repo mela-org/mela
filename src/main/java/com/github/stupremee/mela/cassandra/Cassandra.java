@@ -20,6 +20,10 @@ import reactor.core.publisher.Mono;
 @SuppressWarnings("unused")
 public interface Cassandra {
 
+  static Cassandra vanilla(CassandraCredentials credentials) {
+    return new VanillaCassandra(credentials);
+  }
+
   /**
    * Connects asynchronously to the database with the given credentials.
    *

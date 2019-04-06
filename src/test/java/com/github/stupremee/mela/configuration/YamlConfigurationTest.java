@@ -18,7 +18,7 @@ public class YamlConfigurationTest {
 
   @Before
   public void setUp() {
-    factory = YamlConfigurationFactory.create();
+    factory = ConfigurationFactory.yaml();
   }
 
   @Test

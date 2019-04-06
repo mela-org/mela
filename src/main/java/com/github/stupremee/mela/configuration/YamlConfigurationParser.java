@@ -32,7 +32,7 @@ public class YamlConfigurationParser implements ConfigurationParser {
     mapper.writeValue(writer, config);
   }
 
-  public static ConfigurationParser getInstance() {
+  static ConfigurationParser getInstance() {
     return Lazy.INSTANCE;
   }
 }

@@ -19,7 +19,7 @@ public class HoconConfigurationTest {
 
   @Before
   public void setup() {
-    this.factory = HoconConfigurationFactory.create();
+    this.factory = ConfigurationFactory.hocon();
   }
 
   // Just one test because I am too lazy

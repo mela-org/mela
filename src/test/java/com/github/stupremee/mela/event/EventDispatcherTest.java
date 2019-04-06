@@ -13,7 +13,7 @@ public class EventDispatcherTest {
 
   @Before
   public void setUp() {
-    this.dispatcher = DefaultEventDispatcher.create();
+    this.dispatcher = EventDispatcher.vanilla();
   }
 
   @Test

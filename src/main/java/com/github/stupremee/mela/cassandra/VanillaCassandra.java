@@ -22,7 +22,7 @@ import reactor.core.publisher.Mono;
  * @since 26.03.2019
  */
 @SuppressWarnings("unused")
-public class DefaultCassandra implements Cassandra {
+public class VanillaCassandra implements Cassandra {
 
   private static final Logger LOGGER = Loggers.getLogger("Cassandra");
   private final Cluster cluster;
@@ -32,7 +32,7 @@ public class DefaultCassandra implements Cassandra {
   private Session session;
   private MappingManager mappingManager;
 
-  DefaultCassandra(CassandraCredentials credentials) {
+  VanillaCassandra(CassandraCredentials credentials) {
     this.codecRegistry = new CodecRegistry();
     this.keyspace = credentials.getKeyspace();
     this.cluster = Cluster.builder()

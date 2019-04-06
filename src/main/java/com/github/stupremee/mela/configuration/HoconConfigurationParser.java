@@ -38,7 +38,7 @@ public class HoconConfigurationParser implements ConfigurationParser {
     writer.write(hocon);
   }
 
-  public static ConfigurationParser getInstance() {
+  static ConfigurationParser getInstance() {
     return Lazy.INSTANCE;
   }
 }

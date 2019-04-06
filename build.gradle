@@ -80,6 +80,8 @@ dependencies {
 
 sourceSets {
   main.java.srcDirs += 'src/main/java'
+  main.java.srcDirs += "$buildDir/generated"
+  //generated.java.srcDirs += "$buildDir/generated"
 }
 
 checkstyle {
@@ -89,6 +91,7 @@ checkstyle {
 
 checkstyleMain {
   configFile = new File("$rootDir/config/checkstyle/google_checks.xml")
+  configProperties = [config_loc: "$projectDir/config/checkstyle"]
 }
 
 spotbugs {
@@ -121,6 +124,8 @@ wrapper {
 javadoc {
   failOnError = false
 
+  exclude "com/github/stupremee/mela/**/Immutable*"
+
   options {
     memberLevel = JavadocMemberLevel.PUBLIC
     encoding = 'UTF-8'
@@ -137,6 +142,10 @@ javadoc {
   }
 
   setDestinationDir(new File("${buildDir}/docs/"))
+}
+
+tasks.withType(JavaCompile) {
+  options.annotationProcessorGeneratedSourcesDirectory = file("$buildDir/generated/")
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {

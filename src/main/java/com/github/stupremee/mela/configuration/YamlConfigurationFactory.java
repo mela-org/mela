@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
  */
 public class YamlConfigurationFactory extends AbstractJacksonConfigurationFactory {
 
-  private YamlConfigurationFactory() {
+  YamlConfigurationFactory() {
     super(new YAMLFactory());
   }
 
@@ -43,9 +43,5 @@ public class YamlConfigurationFactory extends AbstractJacksonConfigurationFactor
   @Override
   public Configuration load(Reader reader) throws IOException {
     return this.parseAndMap(reader);
-  }
-
-  public static ConfigurationFactory create() {
-    return new YamlConfigurationFactory();
   }
 }

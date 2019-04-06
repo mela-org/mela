@@ -16,6 +16,24 @@ import org.jetbrains.annotations.NotNull;
 public interface ConfigurationFactory {
 
   /**
+   * Creates and returns a new {@link ConfigurationFactory} that parses yaml files.
+   *
+   * @return The {@link ConfigurationFactory} that can parse yaml files
+   */
+  static ConfigurationFactory yaml() {
+    return new YamlConfigurationFactory();
+  }
+
+  /**
+   * Creates and returns a new {@link ConfigurationFactory} that parses hocon files.
+   *
+   * @return The {@link ConfigurationFactory} that can parse hocon files
+   */
+  static ConfigurationFactory hocon() {
+    return new HoconConfigurationFactory();
+  }
+
+  /**
    * Adds a default value to the Configuration.
    *
    * @param path The dotted path

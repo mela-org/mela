@@ -12,6 +12,15 @@ import reactor.core.publisher.Flux;
 public interface EventDispatcher {
 
   /**
+   * Creates a new event dispatcher.
+   *
+   * @return The new event dispatcher
+   */
+  static EventDispatcher vanilla() {
+    return new VanillaEventDispatcher();
+  }
+
+  /**
    * Calls a event, invokes all methods with {@link Subscribe} annotation and executes all
    * subscribed {@link Flux Flux's}.
    */
