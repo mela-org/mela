@@ -2,6 +2,7 @@ package com.github.stupremee.mela.repository;
 
 import com.github.stupremee.mela.beans.Bean;
 import discord4j.core.object.util.Snowflake;
+import org.jetbrains.annotations.NotNull;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -20,7 +21,8 @@ public interface Repository<T extends Bean> {
    * @param query The {@link Specification} the beans should match
    * @return A {@link Flux} containing all found beans
    */
-  Flux<T> query(Specification<T> query);
+  @NotNull
+  Flux<T> query(@NotNull Specification<T> query);
 
   /**
    * Returns the first entity that matches {@link Specification the query} by calling {@link
@@ -29,7 +31,8 @@ public interface Repository<T extends Bean> {
    * @param query The {@link Specification} the beans should match
    * @return A {@link Flux} containing all found beans
    */
-  Mono<T> queryFirst(Specification<T> query);
+  @NotNull
+  Mono<T> queryFirst(@NotNull Specification<T> query);
 
   /**
    * Tries to find a bean with this id.
@@ -37,7 +40,8 @@ public interface Repository<T extends Bean> {
    * @param id The id of the bean
    * @return A {@link Mono} containing the bean that was found or a empty mono if no bean was found
    */
-  Mono<T> findById(Snowflake id);
+  @NotNull
+  Mono<T> findById(@NotNull Snowflake id);
 
   /**
    * Tries to find a bean for every id in the given {@link Iterable}.
@@ -46,22 +50,25 @@ public interface Repository<T extends Bean> {
    * @return A {@link Flux} containing all the beans that was found or a empty flux if no bean was
    *     found
    */
-  Flux<T> findAllById(Iterable<Snowflake> ids);
+  @NotNull
+  Flux<T> findAllById(@NotNull Iterable<Snowflake> ids);
 
   /**
    * Returns all beans that are stored in this repository.
    *
    * @return A {@link Flux} containing all beans
    */
+  @NotNull
   Flux<T> getAll();
 
   /**
    * Deletes a bean by his id.
    *
-   * @param bean The bean to remove
+   * @param bean The bean to delete
    * @return A {@link Mono} that completes when the bean was successfully deleted
    */
-  default Mono<Void> remove(T bean) {
+  @NotNull
+  default Mono<Void> delete(@NotNull T bean) {
     return deleteById(Snowflake.of(bean.getId()));
   }
 
@@ -71,7 +78,8 @@ public interface Repository<T extends Bean> {
    * @param id The id of the bean
    * @return A {@link Mono} that completes when the bean was successfully deleted
    */
-  Mono<Void> deleteById(Snowflake id);
+  @NotNull
+  Mono<Void> deleteById(@NotNull Snowflake id);
 
   /**
    * Deletes all beans that are given in the {@link Iterable}.
@@ -79,11 +87,13 @@ public interface Repository<T extends Bean> {
    * @param beans The beans to delete
    * @return A {@link Mono} that completes when the bean was successfully deleted
    */
-  Mono<Void> deleteAll(Iterable<T> beans);
+  @NotNull
+  Mono<Void> deleteAll(@NotNull Iterable<T> beans);
 
   /**
    * Deletes all beans from this repository.
    */
+  @NotNull
   Mono<Void> deleteAll();
 
   /**
@@ -92,7 +102,8 @@ public interface Repository<T extends Bean> {
    * @param bean The bean
    * @return A {@link Mono} that completes when the bean was successfully deleted
    */
-  Mono<Void> save(T bean);
+  @NotNull
+  Mono<Void> save(@NotNull T bean);
 
   /**
    * Saves all beans that are given to the database.
@@ -100,7 +111,8 @@ public interface Repository<T extends Bean> {
    * @param beans The beans to save
    * @return A {@link Mono} that completes when the bean was successfully deleted
    */
-  Mono<Void> saveMany(Iterable<T> beans);
+  @NotNull
+  Mono<Void> saveMany(@NotNull Iterable<T> beans);
 
   /**
    * Finds a bean by his id and then replaces the old bean with the new given bean.
@@ -108,7 +120,8 @@ public interface Repository<T extends Bean> {
    * @param bean The new bean
    * @return A {@link Mono} that completes when the bean was successfully deleted
    */
-  Mono<Void> update(T bean);
+  @NotNull
+  Mono<Void> update(@NotNull T bean);
 
   /**
    * Saves all beans in the {@link Iterable} to this repository.
@@ -116,7 +129,8 @@ public interface Repository<T extends Bean> {
    * @param beans The beans to save
    * @return A {@link Mono} that completes when the bean was successfully deleted
    */
-  Mono<Void> updateMany(Iterable<T> beans);
+  @NotNull
+  Mono<Void> updateMany(@NotNull Iterable<T> beans);
 
   /**
    * Checks if an bean exists in this repository.
@@ -124,7 +138,8 @@ public interface Repository<T extends Bean> {
    * @param bean The bean to check
    * @return A {@link Mono} that contains the boolean which indicate if the bean exist or not
    */
-  default Mono<Boolean> exists(T bean) {
+  @NotNull
+  default Mono<Boolean> exists(@NotNull T bean) {
     return exists(Snowflake.of(bean.getId()));
   }
 
@@ -134,12 +149,14 @@ public interface Repository<T extends Bean> {
    * @param id The id of the bean
    * @return A {@link Mono} that contains the boolean which indicate if the bean exist or not
    */
-  Mono<Boolean> exists(Snowflake id);
+  @NotNull
+  Mono<Boolean> exists(@NotNull Snowflake id);
 
   /**
    * Counts all beans in this repository.
    *
    * @return A {@link Mono} that contains the number of beans in this repository
    */
+  @NotNull
   Mono<Long> count();
 }

@@ -1,6 +1,7 @@
 package com.github.stupremee.mela.repository;
 
 import com.github.stupremee.mela.beans.Bean;
+import com.github.stupremee.mela.repository.specifications.Specifications;
 import java.util.function.Predicate;
 
 /**
@@ -25,7 +26,9 @@ public interface Specification<T extends Bean> {
    * @param other The right-hand side specifications.
    * @return The new disjunction specifications.
    */
-  Specification<T> or(Specification<T> other);
+  default Specification<T> or(Specification<T> other) {
+    return Specifications.or(this, other);
+  }
 
   /**
    * Returns the new conjunction specifications composed from this and other specifications.
@@ -33,19 +36,25 @@ public interface Specification<T extends Bean> {
    * @param other The right-hand side specifications
    * @return The new conjunction specifications
    */
-  Specification<T> and(Specification<T> other);
+  default Specification<T> and(Specification<T> other) {
+    return Specifications.and(this, other);
+  }
 
   /**
    * Returns the new negation specifications composed from this specifications.
    *
    * @return The new negation specifications.
    */
-  Specification<T> not();
+  default Specification<T> not() {
+    return Specifications.not(this);
+  }
 
   /**
    * Returns this specifications as predicate.
    *
    * @return The specifications as predicate.
    */
-  Predicate<T> toPredicate();
+  default Predicate<T> toPredicate() {
+    return this::isSatisfiedBy;
+  }
 }

@@ -9,6 +9,8 @@ import com.datastax.driver.core.Session;
 import com.datastax.driver.core.Statement;
 import com.datastax.driver.mapping.Mapper;
 import com.datastax.driver.mapping.MappingManager;
+import com.github.stupremee.mela.beans.Bean;
+import com.github.stupremee.mela.repository.Repository;
 import com.github.stupremee.mela.util.Holder;
 import com.github.stupremee.mela.util.Loggers;
 import com.google.common.base.Preconditions;
@@ -140,5 +142,10 @@ public class VanillaCassandra implements Cassandra {
           "Database is not connected! "
               + "Please connect before doing actions that needs a connection.");
     }
+  }
+
+  @Override
+  public <T extends Bean> Repository<T> createRepository(Class<T> type, String name) {
+    return new CassandraRepository<>(name, type, this);
   }
 }

@@ -111,7 +111,7 @@ final class EmptyConfiguration implements Configuration {
 
   @Override
   public void remove(String path) {
-    throw new UnsupportedOperationException("remove is not supported in an EmptyConfiguration.");
+    throw new UnsupportedOperationException("delete is not supported in an EmptyConfiguration.");
   }
 
   @Override

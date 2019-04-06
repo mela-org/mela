@@ -8,6 +8,7 @@ import com.datastax.driver.core.Session;
 import com.datastax.driver.core.Statement;
 import com.datastax.driver.mapping.Mapper;
 import com.datastax.driver.mapping.MappingManager;
+import com.github.stupremee.mela.repository.RepositoryFactory;
 import org.jetbrains.annotations.NotNull;
 import reactor.core.publisher.Mono;
 
@@ -18,7 +19,7 @@ import reactor.core.publisher.Mono;
  * @since 24.03.2019
  */
 @SuppressWarnings("unused")
-public interface Cassandra {
+public interface Cassandra extends RepositoryFactory {
 
   static Cassandra vanilla(CassandraCredentials credentials) {
     return new VanillaCassandra(credentials);
