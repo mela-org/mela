@@ -7,6 +7,7 @@ import com.datastax.driver.core.Session;
 import com.datastax.driver.core.Statement;
 import com.datastax.driver.mapping.Mapper;
 import com.datastax.driver.mapping.MappingManager;
+import com.github.stupremee.mela.util.Holder;
 import com.github.stupremee.mela.util.Loggers;
 import com.google.common.base.Preconditions;
 import com.google.common.util.concurrent.ListenableFuture;
@@ -21,18 +22,19 @@ import reactor.core.publisher.Mono;
  * @author Stu
  * @since 26.03.2019
  */
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused"})
 public class VanillaCassandra implements Cassandra {
 
   private static final Logger LOGGER = Loggers.getLogger("Cassandra");
   private final Cluster cluster;
   private final CodecRegistry codecRegistry;
   private final String keyspace;
-  private boolean connected;
-  private Session session;
-  private MappingManager mappingManager;
+  private final Holder<MappingManager> mappingManager;
+  private final Holder<Session> session;
 
   VanillaCassandra(CassandraCredentials credentials) {
+    this.mappingManager = Holder.empty();
+    this.session = Holder.empty();
     this.codecRegistry = new CodecRegistry();
     this.keyspace = credentials.getKeyspace();
     this.cluster = Cluster.builder()
@@ -43,14 +45,14 @@ public class VanillaCassandra implements Cassandra {
 
   @Override
   public Mono<Cassandra> connectAsync() {
-    if (connected) {
+    var session = getOrThrow(this.session);
+    if (session != null && !session.isClosed()) {
       throw new IllegalStateException("Already connected to a database!");
     }
 
     return Mono.fromFuture(FutureConverter.toCompletableFuture(cluster.connectAsync(keyspace)))
-        .doOnSuccess(s -> connected = true)
-        .doOnSuccess(s -> session = s)
-        .doOnSuccess(s -> mappingManager = new MappingManager(s))
+        .doOnSuccess(this.session::set)
+        .doOnSuccess(s -> mappingManager.set(new MappingManager(s)))
         .doOnError(t -> LOGGER
             .error("Failed to connect to database.", t))
         .doOnSuccess(s -> LOGGER
@@ -68,13 +70,13 @@ public class VanillaCassandra implements Cassandra {
   @Override
   public ResultSet execute(Statement statement) {
     checkConnection();
-    return session.execute(statement);
+    return getOrThrow(this.session).execute(statement);
   }
 
   @Override
   public Mono<ResultSet> executeAsync(Statement statement) {
     checkConnection();
-    ListenableFuture<ResultSet> executeFuture = session.executeAsync(statement);
+    ListenableFuture<ResultSet> executeFuture = getOrThrow(this.session).executeAsync(statement);
     return Mono.defer(() ->
         Mono.fromFuture(FutureConverter.toCompletableFuture(executeFuture)));
   }
@@ -89,25 +91,25 @@ public class VanillaCassandra implements Cassandra {
   @Override
   public Session getSession() {
     checkConnection();
-    return session;
+    return getOrThrow(this.session);
   }
 
   @Override
-  public MappingManager getMapper() {
+  public MappingManager getMappingManager() {
     checkConnection();
-    return mappingManager;
+    return getOrThrow(mappingManager);
   }
 
   @Override
   public <T> Mapper<T> getMapper(@NotNull Class<T> clazz) {
     checkConnection();
-    return mappingManager.mapper(Preconditions.checkNotNull(clazz), keyspace);
+    return getOrThrow(mappingManager).mapper(Preconditions.checkNotNull(clazz), keyspace);
   }
 
   @Override
   public <T> T getAccessor(@NotNull Class<T> clazz) {
     checkConnection();
-    return mappingManager.createAccessor(Preconditions.checkNotNull(clazz));
+    return getOrThrow(mappingManager).createAccessor(Preconditions.checkNotNull(clazz));
   }
 
   @NotNull
@@ -116,7 +118,18 @@ public class VanillaCassandra implements Cassandra {
     return codecRegistry;
   }
 
+  @Override
+  public @NotNull String getKeyspace() {
+    return keyspace;
+  }
+
+  private <T> T getOrThrow(Holder<T> optional) {
+    return optional.toJavaOptional().orElseThrow(
+        () -> new IllegalStateException("Database is not connected or something went wrong."));
+  }
+
   private void checkConnection() {
+    var session = getOrThrow(this.session);
     if (session == null || session.isClosed()) {
       throw new IllegalStateException(
           "Database is not connected! "

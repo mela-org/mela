@@ -81,7 +81,7 @@ public interface Cassandra {
    * @return The {@link MappingManager}
    * @throws IllegalStateException if the Database is not connected
    */
-  MappingManager getMapper();
+  MappingManager getMappingManager();
 
   /**
    * Creates a new {@link Mapper} from the clazz that is given in the parameter.
@@ -109,4 +109,12 @@ public interface Cassandra {
    */
   @NotNull
   CodecRegistry getCodecRegistry();
+
+  /**
+   * Returns the namespace / keyspace that should be used to retrieve data from the database.
+   *
+   * @return The keyspace name
+   */
+  @NotNull
+  String getKeyspace();
 }
