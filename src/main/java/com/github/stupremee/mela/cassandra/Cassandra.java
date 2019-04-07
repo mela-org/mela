@@ -19,7 +19,7 @@ import reactor.core.publisher.Mono;
  * @since 24.03.2019
  */
 @SuppressWarnings("unused")
-public interface Cassandra extends RepositoryFactory {
+public interface Cassandra {
 
   static Cassandra vanilla(CassandraCredentials credentials) {
     return new VanillaCassandra(credentials);

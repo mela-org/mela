@@ -143,9 +143,4 @@ public class VanillaCassandra implements Cassandra {
               + "Please connect before doing actions that needs a connection.");
     }
   }
-
-  @Override
-  public <T extends Bean> Repository<T> createRepository(Class<T> type, String name) {
-    return new CassandraRepository<>(name, type, this);
-  }
 }
