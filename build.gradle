@@ -70,11 +70,6 @@ dependencies {
   // MongoDB Reactive Streams as MongoDB Driver
   implementation "org.mongodb:mongodb-driver-reactivestreams:$mongodb_version"
 
-  // Datastax driver as cassandra driver
-  implementation "com.datastax.cassandra:cassandra-driver-core:$datastax_version"
-  implementation "com.datastax.cassandra:cassandra-driver-mapping:$datastax_version"
-  implementation "com.datastax.cassandra:cassandra-driver-extras:$datastax_version"
-
   // Lettuce for redis support
   implementation "io.lettuce:lettuce-core:$lettuce_version"
 
