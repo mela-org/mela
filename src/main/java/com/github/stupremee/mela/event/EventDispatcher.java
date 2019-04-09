@@ -1,6 +1,7 @@
 package com.github.stupremee.mela.event;
 
 import discord4j.core.event.domain.Event;
+import javax.annotation.Nonnull;
 import reactor.core.publisher.Flux;
 
 /**
@@ -9,6 +10,7 @@ import reactor.core.publisher.Flux;
  * @author Stu
  * @since 02.04.2019
  */
+@SuppressWarnings("unused")
 public interface EventDispatcher {
 
   /**
@@ -16,6 +18,7 @@ public interface EventDispatcher {
    *
    * @return The new event dispatcher
    */
+  @Nonnull
   static EventDispatcher vanilla() {
     return new VanillaEventDispatcher();
   }
@@ -24,7 +27,7 @@ public interface EventDispatcher {
    * Calls a event, invokes all methods with {@link Subscribe} annotation and executes all
    * subscribed {@link Flux Flux's}.
    */
-  void call(Event event);
+  void call(@Nonnull Event event);
 
   /**
    * Retrieves a {@link Flux} with elements of the given {@link Event} type.
@@ -33,12 +36,13 @@ public interface EventDispatcher {
    * @param <EventT> the type of the event class
    * @return a new {@link Flux} with the requested events
    */
-  <EventT extends Event> Flux<EventT> on(Class<EventT> eventClass);
+  @Nonnull
+  <EventT extends Event> Flux<EventT> on(@Nonnull Class<EventT> eventClass);
 
   /**
    * Registers a new event listener like the JDA Style by using the {@link Subscribe} annotation.
    *
    * @param listener The listener
    */
-  void register(Object listener);
+  void register(@Nonnull Object listener);
 }

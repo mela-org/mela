@@ -1,8 +1,9 @@
 package com.github.stupremee.mela.repository.specifications;
 
-import com.github.stupremee.mela.beans.Bean;
+import com.github.stupremee.mela.beans.SnowflakeBean;
 import com.github.stupremee.mela.repository.Specification;
 import java.util.function.Predicate;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * https://github.com/Stupremee
@@ -10,7 +11,7 @@ import java.util.function.Predicate;
  * @author Stu
  * @since 06.04.2019
  */
-final class PredicateSpecification<T extends Bean> implements Specification<T> {
+final class PredicateSpecification<T extends SnowflakeBean> implements Specification<T> {
 
   private final Predicate<T> predicate;
 
@@ -19,10 +20,11 @@ final class PredicateSpecification<T extends Bean> implements Specification<T> {
   }
 
   @Override
-  public boolean isSatisfiedBy(T candidate) {
+  public boolean isSatisfiedBy(@NotNull T candidate) {
     return predicate.test(candidate);
   }
 
+  @NotNull
   @Override
   public Predicate<T> toPredicate() {
     return predicate;

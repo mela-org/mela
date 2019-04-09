@@ -1,6 +1,6 @@
 package com.github.stupremee.mela.repository.specifications;
 
-import com.github.stupremee.mela.beans.Bean;
+import com.github.stupremee.mela.beans.SnowflakeBean;
 import com.github.stupremee.mela.repository.Specification;
 import java.util.List;
 import java.util.Set;
@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
  * @since 06.04.2019
  */
 @SuppressWarnings("unused")
-abstract class CompositeSpecification<T extends Bean> implements Specification<T> {
+abstract class CompositeSpecification<T extends SnowflakeBean> implements Specification<T> {
 
   private final List<Specification<T>> specifications;
 

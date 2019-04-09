@@ -1,8 +1,9 @@
 package com.github.stupremee.mela.repository.specifications;
 
-import com.github.stupremee.mela.beans.Bean;
+import com.github.stupremee.mela.beans.SnowflakeBean;
 import com.github.stupremee.mela.repository.Specification;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * https://github.com/Stupremee
@@ -10,7 +11,7 @@ import java.util.Objects;
  * @author Stu
  * @since 06.04.2019
  */
-final class AlwaysTrueSpecification<T extends Bean> implements Specification<T> {
+final class AlwaysTrueSpecification<T extends SnowflakeBean> implements Specification<T> {
 
   private static class Lazy {
 
@@ -22,13 +23,13 @@ final class AlwaysTrueSpecification<T extends Bean> implements Specification<T> 
   }
 
   @Override
-  public boolean isSatisfiedBy(T candidate) {
+  public boolean isSatisfiedBy(@NotNull T candidate) {
     return true;
   }
 
   @Override
   public boolean equals(Object obj) {
-    return obj instanceof AlwaysFalseSpecification<?>;
+    return obj instanceof AlwaysTrueSpecification<?>;
   }
 
   @Override
@@ -37,7 +38,7 @@ final class AlwaysTrueSpecification<T extends Bean> implements Specification<T> 
   }
 
   @SuppressWarnings("unchecked")
-  static <T extends Bean> Specification<T> getInstance() {
+  static <T extends SnowflakeBean> Specification<T> getInstance() {
     return (Specification<T>) Lazy.INSTANCE;
   }
 }

@@ -1,8 +1,8 @@
 package com.github.stupremee.mela.serialization.serializer;
 
-import com.github.stupremee.mela.beans.Bean;
+import com.github.stupremee.mela.beans.SnowflakeBean;
 import java.io.Writer;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * https://github.com/Stupremee
@@ -27,7 +27,7 @@ public interface BeanSerializer {
    * @param writer The writer to write the string to
    * @param bean The bean to serialize
    */
-  void serialize(@NotNull Writer writer, @NotNull Bean bean);
+  void serialize(@Nonnull Writer writer, @Nonnull SnowflakeBean bean);
 
   /**
    * Serializes a {@link Object} to a string.
@@ -36,6 +36,6 @@ public interface BeanSerializer {
    * @return A {@link String} representing the bean or {@code {}} if a error occurs while
    *     serializing
    */
-  @NotNull
-  String serialize(@NotNull Bean bean);
+  @Nonnull
+  String serialize(@Nonnull SnowflakeBean bean);
 }

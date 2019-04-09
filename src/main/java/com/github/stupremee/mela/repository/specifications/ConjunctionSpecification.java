@@ -1,9 +1,9 @@
 package com.github.stupremee.mela.repository.specifications;
 
-import com.github.stupremee.mela.beans.Bean;
+import com.github.stupremee.mela.beans.SnowflakeBean;
 import com.github.stupremee.mela.repository.Specification;
 import java.util.List;
-import java.util.function.Predicate;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * https://github.com/Stupremee
@@ -11,7 +11,7 @@ import java.util.function.Predicate;
  * @author Stu
  * @since 06.04.2019
  */
-final class ConjunctionSpecification<T extends Bean> extends CompositeSpecification<T> {
+final class ConjunctionSpecification<T extends SnowflakeBean> extends CompositeSpecification<T> {
 
   ConjunctionSpecification(Specification<T> one,
       Specification<T> two) {
@@ -19,22 +19,7 @@ final class ConjunctionSpecification<T extends Bean> extends CompositeSpecificat
   }
 
   @Override
-  public boolean isSatisfiedBy(T candidate) {
+  public boolean isSatisfiedBy(@NotNull T candidate) {
     return getSpecifications().stream().allMatch(s -> s.isSatisfiedBy(candidate));
-  }
-
-  @Override
-  public Specification<T> and(Specification<T> other) {
-    return null;
-  }
-
-  @Override
-  public Specification<T> not() {
-    return null;
-  }
-
-  @Override
-  public Predicate<T> toPredicate() {
-    return null;
   }
 }

@@ -2,12 +2,12 @@ package com.github.stupremee.mela.serialization.serializer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.stupremee.mela.beans.Bean;
+import com.github.stupremee.mela.beans.SnowflakeBean;
 import com.github.stupremee.mela.util.Loggers;
 import com.google.common.base.Preconditions;
 import io.vavr.control.Try;
 import java.io.Writer;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.slf4j.Logger;
 
 /**
@@ -31,7 +31,7 @@ public class JsonBeanSerializer implements BeanSerializer {
   }
 
   @Override
-  public void serialize(@NotNull Writer writer, @NotNull Bean bean) {
+  public void serialize(@Nonnull Writer writer, @Nonnull SnowflakeBean bean) {
     Preconditions.checkNotNull(writer, "writer can't be null.");
     Preconditions.checkNotNull(bean, "bean can't be null.");
 
@@ -41,9 +41,9 @@ public class JsonBeanSerializer implements BeanSerializer {
         .andFinallyTry(writer::close);
   }
 
-  @NotNull
+  @Nonnull
   @Override
-  public String serialize(@NotNull Bean bean) {
+  public String serialize(@Nonnull SnowflakeBean bean) {
     Preconditions.checkNotNull(bean, "bean can't be null.");
 
     try {
@@ -54,6 +54,7 @@ public class JsonBeanSerializer implements BeanSerializer {
     }
   }
 
+  @Nonnull
   static BeanSerializer getInstance() {
     return Lazy.INSTANCE;
   }

@@ -1,14 +1,14 @@
 package com.github.stupremee.mela.serialization.deserializer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.stupremee.mela.beans.Bean;
+import com.github.stupremee.mela.beans.SnowflakeBean;
 import com.github.stupremee.mela.util.Loggers;
 import com.google.common.base.Preconditions;
 import io.vavr.control.Try;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.Optional;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.slf4j.Logger;
 
 /**
@@ -31,10 +31,10 @@ public class JsonBeanDeserializer implements BeanDeserializer {
     this.mapper = new ObjectMapper();
   }
 
-  @NotNull
+  @Nonnull
   @Override
-  public <T extends Bean> Optional<T> deserialize(@NotNull Class<T> beanClass,
-      @NotNull Reader reader) {
+  public <T extends SnowflakeBean> Optional<T> deserialize(@Nonnull Class<T> beanClass,
+      @Nonnull Reader reader) {
     Preconditions.checkNotNull(beanClass, "beanClass can't be null.");
     Preconditions.checkNotNull(reader, "reader can't be null.");
 
@@ -44,13 +44,14 @@ public class JsonBeanDeserializer implements BeanDeserializer {
         .toJavaOptional();
   }
 
-  @NotNull
+  @Nonnull
   @Override
-  public <T extends Bean> Optional<T> deserialize(@NotNull Class<T> beanClass,
-      @NotNull String value) {
+  public <T extends SnowflakeBean> Optional<T> deserialize(@Nonnull Class<T> beanClass,
+      @Nonnull String value) {
     return deserialize(beanClass, new StringReader(value));
   }
 
+  @Nonnull
   static BeanDeserializer getInstance() {
     return Lazy.INSTANCE;
   }

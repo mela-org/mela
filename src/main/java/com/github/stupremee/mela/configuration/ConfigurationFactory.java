@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.nio.file.Path;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * https://github.com/Stupremee
@@ -20,6 +20,7 @@ public interface ConfigurationFactory {
    *
    * @return The {@link ConfigurationFactory} that can parse yaml files
    */
+  @Nonnull
   static ConfigurationFactory yaml() {
     return new YamlConfigurationFactory();
   }
@@ -29,6 +30,7 @@ public interface ConfigurationFactory {
    *
    * @return The {@link ConfigurationFactory} that can parse hocon files
    */
+  @Nonnull
   static ConfigurationFactory hocon() {
     return new HoconConfigurationFactory();
   }
@@ -40,8 +42,8 @@ public interface ConfigurationFactory {
    * @param value The default value
    * @return This instance.
    */
-  @NotNull
-  ConfigurationFactory addDefault(String path, Object value);
+  @Nonnull
+  ConfigurationFactory addDefault(@Nonnull String path, @Nonnull Object value);
 
   /**
    * Overwrites the old setDefaults with the new one.
@@ -49,16 +51,18 @@ public interface ConfigurationFactory {
    * @param defaults The new setDefaults
    * @return This instance.
    */
-  @NotNull
-  ConfigurationFactory setDefaults(Configuration defaults);
+  @Nonnull
+  ConfigurationFactory setDefaults(@Nonnull Configuration defaults);
 
   /**
    * Loads a {@link Configuration} from raw content.
    *
    * @param content The raw toml source.
    * @return The loaded {@link Configuration}
+   * @throws IOException When something went wrong
    */
-  default Configuration load(String content) throws IOException {
+  @Nonnull
+  default Configuration load(@Nonnull String content) throws IOException {
     return load(new StringReader(content));
   }
 
@@ -67,8 +71,10 @@ public interface ConfigurationFactory {
    *
    * @param path The path as {@link Path}
    * @return The loaded {@link Configuration}
+   * @throws IOException When something went wrong
    */
-  default Configuration load(Path path) throws IOException {
+  @Nonnull
+  default Configuration load(@Nonnull Path path) throws IOException {
     return load(path.toFile());
   }
 
@@ -77,14 +83,18 @@ public interface ConfigurationFactory {
    *
    * @param file The file as {@link File}
    * @return The loaded {@link Configuration}
+   * @throws IOException When something went wrong
    */
-  Configuration load(File file) throws IOException;
+  @Nonnull
+  Configuration load(@Nonnull File file) throws IOException;
 
   /**
    * Loads a {@link Configuration} from a {@link Reader}.
    *
    * @param reader The {@link Reader}
    * @return The loaded {@link Configuration}
+   * @throws IOException When something went wrong
    */
-  Configuration load(Reader reader) throws IOException;
+  @Nonnull
+  Configuration load(@Nonnull Reader reader) throws IOException;
 }

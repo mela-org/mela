@@ -6,7 +6,7 @@ import com.google.common.base.Preconditions;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Map;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * https://github.com/Stupremee
@@ -28,7 +28,7 @@ public class YamlConfigurationParser implements ConfigurationParser {
   }
 
   @Override
-  public void serialize(@NotNull Map<String, Object> config, @NotNull Writer writer)
+  public void serialize(@Nonnull Map<String, Object> config, @Nonnull Writer writer)
       throws IOException {
     Preconditions.checkNotNull(config, "config can't be null.");
     Preconditions.checkNotNull(writer, "writer can't be null.");

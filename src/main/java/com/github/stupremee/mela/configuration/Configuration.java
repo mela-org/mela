@@ -4,7 +4,8 @@ import io.vavr.control.Option;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Collection;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import reactor.core.publisher.Flux;
 
 /**
@@ -23,6 +24,7 @@ public interface Configuration {
    *
    * @return The empty configuration
    */
+  @Nonnull
   static Configuration empty() {
     return EmptyConfiguration.instance();
   }
@@ -34,8 +36,8 @@ public interface Configuration {
    * @param path The dotted path as a getString
    * @return The getSection of the path as a {@link Configuration}
    */
-  @NotNull
-  Configuration getSection(String path);
+  @Nonnull
+  Configuration getSection(@Nonnull String path);
 
   /**
    * Sets the value at the dotted path.
@@ -43,7 +45,7 @@ public interface Configuration {
    * @param path The dotted path
    * @param value The value
    */
-  void set(String path, Object value);
+  void set(@Nonnull String path, @Nonnull Object value);
 
   /**
    * Returns the value at the dotted path as {@link T}.
@@ -52,8 +54,8 @@ public interface Configuration {
    * @param <T> The type of the value that at the dotted path
    * @return The value as {@link T}
    */
-  @NotNull
-  default <T> Option<T> get(String path) {
+  @Nonnull
+  default <T> Option<T> get(@Nonnull String path) {
     return get(path, this.<T>getDefaultValue(path).getOrNull());
   }
 
@@ -66,7 +68,8 @@ public interface Configuration {
    * @param <T> The type of the value that at the dotted path
    * @return The value as {@link T}
    */
-  @NotNull <T> Option<T> get(String path, T def);
+  @Nonnull
+  <T> Option<T> get(@Nonnull String path, @Nullable T def);
 
   /**
    * Returns a getList as {@link Flux} of unknown objects at the dotted path.
@@ -74,8 +77,8 @@ public interface Configuration {
    * @param path The dotted path to the value
    * @return The list of objects as a {@link Collection} or an empty list if the key does not exists
    */
-  @NotNull
-  Collection<?> getList(String path);
+  @Nonnull
+  Collection<?> getList(@Nonnull String path);
 
   /**
    * Checks if a key-value pair exists.
@@ -84,15 +87,15 @@ public interface Configuration {
    * @return <code>true</code> if the key-value pair exists and <code>false</code> if the key-value
    *     pair dont exist
    */
-  boolean exists(String path);
+  boolean exists(@Nonnull String path);
 
   /**
    * Tries to cast the value at the dotted path to object and returns it.
    *
    * @see #getObject(String, Object)
    */
-  @NotNull
-  default Option<Object> getObject(String path) {
+  @Nonnull
+  default Option<Object> getObject(@Nonnull String path) {
     return getObject(path, this.getDefaultValue(path).getOrNull());
   }
 
@@ -104,8 +107,8 @@ public interface Configuration {
    * @return The object as {@link Option} or an empty {@link Option} if the key-value pair doesn't
    *     exist.
    */
-  @NotNull
-  Option<Object> getObject(String path, Object def);
+  @Nonnull
+  Option<Object> getObject(@Nonnull String path, @Nullable Object def);
 
   /**
    * Returns a list of objects as a {@link Flux}.
@@ -113,16 +116,16 @@ public interface Configuration {
    * @param path The dotted path
    * @return The getList as a {@link Flux}
    */
-  @NotNull
-  Collection<Object> getObjects(String path);
+  @Nonnull
+  Collection<Object> getObjects(@Nonnull String path);
 
   /**
    * Returns {@link #getString(String, String)} with an empty string as the default parameter.
    *
    * @see #getString(String, String)
    */
-  @NotNull
-  default Option<String> getString(String path) {
+  @Nonnull
+  default Option<String> getString(@Nonnull String path) {
     return getString(path, this.<String>getDefaultValue(path).getOrNull());
   }
 
@@ -134,8 +137,8 @@ public interface Configuration {
    * @return The string as {@link Option} or an empty {@link Option} if the key-value pair doesn't
    *     exist or the value isn't a getString.
    */
-  @NotNull
-  Option<String> getString(String path, String def);
+  @Nonnull
+  Option<String> getString(@Nonnull String path, @Nullable String def);
 
   /**
    * Returns a list of strings as a {@link Flux}.
@@ -143,16 +146,16 @@ public interface Configuration {
    * @param path The dotted path
    * @return The getList as a {@link Flux}
    */
-  @NotNull
-  Collection<String> getStrings(String path);
+  @Nonnull
+  Collection<String> getStrings(@Nonnull String path);
 
   /**
    * Returns {@link #getNumber(String, Number)} with {@code null} as the default parameter.
    *
    * @see #getNumber(String, Number)
    */
-  @NotNull
-  default Option<Number> getNumber(String path) {
+  @Nonnull
+  default Option<Number> getNumber(@Nonnull String path) {
     return getNumber(path, this.<Number>getDefaultValue(path).getOrNull());
   }
 
@@ -164,8 +167,8 @@ public interface Configuration {
    * @return The number as {@link Option} or an empty {@link Option} if the key-value pair doesn't
    *     exist or the value isn't a getNumber.
    */
-  @NotNull
-  Option<Number> getNumber(String path, Number def);
+  @Nonnull
+  Option<Number> getNumber(@Nonnull String path, @Nullable Number def);
 
   /**
    * Returns a list of numbers as a {@link Flux}.
@@ -173,16 +176,16 @@ public interface Configuration {
    * @param path The dotted path
    * @return The getList as a {@link Flux}
    */
-  @NotNull
-  Collection<Number> getNumbers(String path);
+  @Nonnull
+  Collection<Number> getNumbers(@Nonnull String path);
 
   /**
    * Returns {@link #getBool(String, Boolean)} with <code>false</code> as the default parameter.
    *
    * @see #getBool(String, Boolean)
    */
-  @NotNull
-  default Option<Boolean> getBool(String path) {
+  @Nonnull
+  default Option<Boolean> getBool(@Nonnull String path) {
     return getBool(path, this.<Boolean>getDefaultValue(path).getOrNull());
   }
 
@@ -194,8 +197,8 @@ public interface Configuration {
    * @return The boolean as {@link Option} or an empty {@link Option} if the key-value pair doesn't
    *     exist or the value isn't a boolean.
    */
-  @NotNull
-  Option<Boolean> getBool(String path, Boolean def);
+  @Nonnull
+  Option<Boolean> getBool(@Nonnull String path, @Nullable Boolean def);
 
   /**
    * Returns a list of booleans as a {@link Flux}.
@@ -203,15 +206,15 @@ public interface Configuration {
    * @param path The dotted path
    * @return The getList as a {@link Flux}
    */
-  @NotNull
-  Collection<Boolean> getBools(String path);
+  @Nonnull
+  Collection<Boolean> getBools(@Nonnull String path);
 
   /**
    * Returns all keys in the current configuration.
    *
    * @return The getList of getKeys
    */
-  @NotNull
+  @Nonnull
   Collection<String> getKeys();
 
   /**
@@ -219,7 +222,7 @@ public interface Configuration {
    *
    * @param path The dotted path to the pair
    */
-  void remove(String path);
+  void remove(@Nonnull String path);
 
   /**
    * Returns the value at the dotted path that comes from the setDefaults.
@@ -227,7 +230,7 @@ public interface Configuration {
    * @param path The dotted path
    * @return The getObject taken from the setDefaults
    */
-  <T> Option<T> getDefaultValue(String path);
+  <T> Option<T> getDefaultValue(@Nonnull String path);
 
   /**
    * Returns the parsed config as getString by using a {@link java.io.StringWriter} and the given
@@ -237,8 +240,8 @@ public interface Configuration {
    *     Configuration}
    * @return The configuration parsed to a getString
    */
-  @NotNull
-  String writeToString(ConfigurationParser parser) throws IOException;
+  @Nonnull
+  String writeToString(@Nonnull ConfigurationParser parser) throws IOException;
 
   /**
    * Writes the configuration into the writer using the given {@link ConfigurationParser} and will
@@ -248,5 +251,5 @@ public interface Configuration {
    * @param parser The {@link ConfigurationParser} that will be used to serialize the
    *     configuration
    */
-  void write(Writer writer, ConfigurationParser parser) throws IOException;
+  void write(@Nonnull Writer writer, @Nonnull ConfigurationParser parser) throws IOException;
 }

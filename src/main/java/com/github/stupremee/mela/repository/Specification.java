@@ -1,8 +1,9 @@
 package com.github.stupremee.mela.repository;
 
-import com.github.stupremee.mela.beans.Bean;
+import com.github.stupremee.mela.beans.SnowflakeBean;
 import com.github.stupremee.mela.repository.specifications.Specifications;
 import java.util.function.Predicate;
+import javax.annotation.Nonnull;
 
 /**
  * https://github.com/Stupremee
@@ -10,7 +11,7 @@ import java.util.function.Predicate;
  * @author Stu
  * @since 06.04.2019
  */
-public interface Specification<T extends Bean> {
+public interface Specification<T extends SnowflakeBean> {
 
   /**
    * Check if the {@code candidate} is satisfied by the specifications.
@@ -18,7 +19,7 @@ public interface Specification<T extends Bean> {
    * @param candidate an object to test
    * @return {@code true} if the candidate satisfies the specifications otherwise {@code false}
    */
-  boolean isSatisfiedBy(T candidate);
+  boolean isSatisfiedBy(@Nonnull T candidate);
 
   /**
    * Returns the new disjunction specifications composed from this and other specifications.
@@ -26,7 +27,8 @@ public interface Specification<T extends Bean> {
    * @param other The right-hand side specifications.
    * @return The new disjunction specifications.
    */
-  default Specification<T> or(Specification<T> other) {
+  @Nonnull
+  default Specification<T> or(@Nonnull Specification<T> other) {
     return Specifications.or(this, other);
   }
 
@@ -36,7 +38,8 @@ public interface Specification<T extends Bean> {
    * @param other The right-hand side specifications
    * @return The new conjunction specifications
    */
-  default Specification<T> and(Specification<T> other) {
+  @Nonnull
+  default Specification<T> and(@Nonnull Specification<T> other) {
     return Specifications.and(this, other);
   }
 
@@ -45,6 +48,7 @@ public interface Specification<T extends Bean> {
    *
    * @return The new negation specifications.
    */
+  @Nonnull
   default Specification<T> not() {
     return Specifications.not(this);
   }
@@ -54,6 +58,7 @@ public interface Specification<T extends Bean> {
    *
    * @return The specifications as predicate.
    */
+  @Nonnull
   default Predicate<T> toPredicate() {
     return this::isSatisfiedBy;
   }

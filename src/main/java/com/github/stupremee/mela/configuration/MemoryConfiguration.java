@@ -1,6 +1,7 @@
 package com.github.stupremee.mela.configuration;
 
 import com.github.stupremee.mela.util.Loggers;
+import com.google.common.base.Preconditions;
 import io.vavr.control.Option;
 import io.vavr.control.Try;
 import java.io.IOException;
@@ -15,6 +16,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
@@ -31,19 +34,25 @@ final class MemoryConfiguration implements Configuration {
   private final Map<String, Object> map;
   private final Configuration defaults;
 
-  MemoryConfiguration(@NotNull Configuration defaults) {
+  MemoryConfiguration(@Nonnull Configuration defaults) {
     this(new LinkedHashMap<>(), defaults);
   }
 
-  MemoryConfiguration(@NotNull Map<String, Object> map,
-      @NotNull Configuration defaults) {
+  MemoryConfiguration(@Nonnull Map<String, Object> map,
+      @Nonnull Configuration defaults) {
+    Preconditions.checkNotNull(map, "map can't be null.");
+    Preconditions.checkNotNull(defaults, "defaults can't be null.");
+
     this.map = map;
     this.defaults = defaults;
   }
 
   @NotNull
+  @Nonnull
   @Override
-  public Configuration getSection(String path) {
+  public Configuration getSection(@NotNull String path) {
+    Preconditions.checkNotNull(path, "path can't be null.");
+
     return Try.ofSupplier(() -> {
       Object def = defaults.getObject(path);
       Configuration defaults = def instanceof Configuration ? (Configuration) def
@@ -53,7 +62,10 @@ final class MemoryConfiguration implements Configuration {
   }
 
   @Override
-  public void set(String path, Object value) {
+  public void set(@NotNull String path, @NotNull Object value) {
+    Preconditions.checkNotNull(path, "path can't be null.");
+    Preconditions.checkNotNull(value, "value can't be null.");
+
     Object val = value;
 
     if (val.getClass().isArray()) {
@@ -72,9 +84,9 @@ final class MemoryConfiguration implements Configuration {
     }
   }
 
-  @NotNull
+  @Nonnull
   @Override
-  public <T> Option<T> get(String path, T def) {
+  public <T> Option<T> get(@NotNull String path, @Nullable T def) {
     Configuration section = sectionFor(path);
 
     Object value;
@@ -99,9 +111,9 @@ final class MemoryConfiguration implements Configuration {
     return res.onFailure(errorHandler("Error while getting getObject.")).toOption();
   }
 
-  @NotNull
+  @Nonnull
   @Override
-  public Collection<Object> getList(String path) {
+  public Collection<Object> getList(@NotNull String path) {
     Object value = get(path);
     if (value instanceof Option.Some && ((Option) value).get() instanceof List<?>) {
       return (List<Object>) ((Option) value).get();
@@ -111,47 +123,47 @@ final class MemoryConfiguration implements Configuration {
   }
 
   @Override
-  public boolean exists(String path) {
-    return !get(path, null).isEmpty();
+  public boolean exists(@NotNull String path) {
+    return !get(path).isEmpty();
   }
 
-  @NotNull
+  @Nonnull
   @Override
-  public Option<Object> getObject(String path, Object def) {
+  public Option<Object> getObject(@NotNull String path, @Nullable Object def) {
     return get(path, def);
   }
 
-  @NotNull
+  @Nonnull
   @Override
-  public Collection<Object> getObjects(String path) {
+  public Collection<Object> getObjects(@NotNull String path) {
     return getList(path).stream().filter(Objects::nonNull)
         .collect(Collectors.toList());
   }
 
-  @NotNull
+  @Nonnull
   @Override
-  public Option<String> getString(String path, String def) {
+  public Option<String> getString(@NotNull String path, @Nullable String def) {
     return get(path, def);
   }
 
-  @NotNull
+  @Nonnull
   @Override
-  public Collection<String> getStrings(String path) {
+  public Collection<String> getStrings(@NotNull String path) {
     return getList(path).stream().filter(Objects::nonNull)
         .filter(o -> o instanceof String)
         .map(o -> (String) o)
         .collect(Collectors.toList());
   }
 
-  @NotNull
+  @Nonnull
   @Override
-  public Option<Number> getNumber(String path, Number def) {
+  public Option<Number> getNumber(@NotNull String path, @Nullable Number def) {
     return get(path, def);
   }
 
-  @NotNull
+  @Nonnull
   @Override
-  public Collection<Number> getNumbers(String path) {
+  public Collection<Number> getNumbers(@NotNull String path) {
     return getList(path).stream()
         .filter(Objects::nonNull)
         .filter(o -> o instanceof Number)
@@ -159,47 +171,49 @@ final class MemoryConfiguration implements Configuration {
         .collect(Collectors.toList());
   }
 
-  @NotNull
+  @Nonnull
   @Override
-  public Option<Boolean> getBool(String path, Boolean def) {
+  public Option<Boolean> getBool(@NotNull String path, @Nullable Boolean def) {
     return get(path, def);
   }
 
   @NotNull
+  @Nonnull
   @Override
-  public Collection<Boolean> getBools(String path) {
+  public Collection<Boolean> getBools(@NotNull String path) {
     return getList(path).stream().filter(Objects::nonNull)
         .filter(o -> o instanceof Boolean)
         .map(o -> (Boolean) o)
         .collect(Collectors.toList());
   }
 
-  @NotNull
+  @Nonnull
   @Override
   public Collection<String> getKeys() {
     return map.keySet();
   }
 
   @Override
-  public void remove(String path) {
+  public void remove(@NotNull String path) {
     map.remove(path);
   }
 
   @Override
-  public <T> Option<T> getDefaultValue(String path) {
+  public <T> Option<T> getDefaultValue(@NotNull String path) {
     return defaults.get(path);
   }
 
-  @NotNull
+  @Nonnull
   @Override
-  public String writeToString(ConfigurationParser parser) throws IOException {
+  public String writeToString(@NotNull ConfigurationParser parser) throws IOException {
     var writer = new StringWriter();
     write(writer, parser);
     return writer.toString();
   }
 
   @Override
-  public void write(Writer writer, ConfigurationParser parser) throws IOException {
+  public void write(@NotNull Writer writer, @NotNull ConfigurationParser parser)
+      throws IOException {
     Map<String, Object> mapToParse = new LinkedHashMap<>(map);
     replaceConfiguration(mapToParse);
     parser.serialize(mapToParse, writer);

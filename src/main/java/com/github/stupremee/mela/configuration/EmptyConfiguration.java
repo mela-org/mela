@@ -4,7 +4,8 @@ import io.vavr.control.Option;
 import java.io.Writer;
 import java.util.Collection;
 import java.util.Collections;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * https://github.com/Stupremee
@@ -26,109 +27,109 @@ final class EmptyConfiguration implements Configuration {
   private EmptyConfiguration() {
   }
 
-  @NotNull
+  @Nonnull
   @Override
-  public Configuration getSection(String path) {
+  public Configuration getSection(@Nonnull String path) {
     return new EmptyConfiguration();
   }
 
   @Override
-  public void set(String path, Object value) {
+  public void set(@Nonnull String path, @Nonnull Object value) {
     throw new UnsupportedOperationException("set is not supported in an EmptyConfiguration.");
   }
 
-  @NotNull
+  @Nonnull
   @Override
-  public <T> Option<T> get(String path, T def) {
+  public <T> Option<T> get(@Nonnull String path, @Nullable T def) {
     return Option.none();
   }
 
-  @NotNull
+  @Nonnull
   @Override
-  public Collection<?> getList(String path) {
+  public Collection<?> getList(@Nonnull String path) {
     return Collections.emptyList();
   }
 
   @Override
-  public boolean exists(String path) {
+  public boolean exists(@Nonnull String path) {
     return false;
   }
 
-  @NotNull
+  @Nonnull
   @Override
-  public Option<Object> getObject(String path, Object def) {
+  public Option<Object> getObject(@Nonnull String path, @Nullable Object def) {
     return Option.none();
   }
 
-  @NotNull
+  @Nonnull
   @Override
-  public Collection<Object> getObjects(String path) {
+  public Collection<Object> getObjects(@Nonnull String path) {
     return Collections.emptyList();
   }
 
-  @NotNull
+  @Nonnull
   @Override
-  public Option<String> getString(String path, String def) {
+  public Option<String> getString(@Nonnull String path, @Nullable String def) {
     return Option.none();
   }
 
-  @NotNull
+  @Nonnull
   @Override
-  public Collection<String> getStrings(String path) {
+  public Collection<String> getStrings(@Nonnull String path) {
     return Collections.emptyList();
   }
 
-  @NotNull
+  @Nonnull
   @Override
-  public Option<Number> getNumber(String path, Number def) {
+  public Option<Number> getNumber(@Nonnull String path, @Nullable Number def) {
     return Option.none();
   }
 
-  @NotNull
+  @Nonnull
   @Override
-  public Collection<Number> getNumbers(String path) {
+  public Collection<Number> getNumbers(@Nonnull String path) {
     return Collections.emptyList();
   }
 
 
-  @NotNull
+  @Nonnull
   @Override
-  public Option<Boolean> getBool(String path, Boolean def) {
+  public Option<Boolean> getBool(@Nonnull String path, @Nullable Boolean def) {
     return Option.none();
   }
 
-  @NotNull
+  @Nonnull
   @Override
-  public Collection<Boolean> getBools(String path) {
+  public Collection<Boolean> getBools(@Nonnull String path) {
     return Collections.emptyList();
   }
 
-  @NotNull
+  @Nonnull
   @Override
   public Collection<String> getKeys() {
     return Collections.emptyList();
   }
 
   @Override
-  public void remove(String path) {
+  public void remove(@Nonnull String path) {
     throw new UnsupportedOperationException("delete is not supported in an EmptyConfiguration.");
   }
 
   @Override
-  public <T> Option<T> getDefaultValue(String path) {
+  public <T> Option<T> getDefaultValue(@Nonnull String path) {
     return Option.none();
   }
 
 
-  @NotNull
+  @Nonnull
   @Override
-  public String writeToString(ConfigurationParser parser) {
+  public String writeToString(@Nonnull ConfigurationParser parser) {
     // Do nothing
     return "";
   }
 
   @Override
-  public void write(Writer writer, ConfigurationParser parser) {
+  public void write(@Nonnull Writer writer, @Nonnull ConfigurationParser parser) {
     // Do nothing
   }
 

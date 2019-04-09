@@ -1,10 +1,10 @@
 package com.github.stupremee.mela.serialization.deserializer;
 
-import com.github.stupremee.mela.beans.Bean;
+import com.github.stupremee.mela.beans.SnowflakeBean;
 import com.github.stupremee.mela.serialization.serializer.BeanSerializer;
 import java.io.Reader;
 import java.util.Optional;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * https://github.com/Stupremee
@@ -31,8 +31,9 @@ public interface BeanDeserializer {
    * @param <T> The type of the bean
    * @return The deserialized bean
    */
-  @NotNull <T extends Bean> Optional<T> deserialize(@NotNull Class<T> beanClass,
-      @NotNull Reader reader);
+  @Nonnull
+  <T extends SnowflakeBean> Optional<T> deserialize(@Nonnull Class<T> beanClass,
+      @Nonnull Reader reader);
 
   /**
    * Tries to deserialize the given string to a bean.
@@ -42,7 +43,7 @@ public interface BeanDeserializer {
    * @param <T> The type of the bean
    * @return The deserialized bean
    */
-  @NotNull <T extends Bean> Optional<T> deserialize(@NotNull Class<T> beanClass,
-      @NotNull String value);
+  @Nonnull <T extends SnowflakeBean> Optional<T> deserialize(@Nonnull Class<T> beanClass,
+      @Nonnull String value);
 
 }

@@ -1,9 +1,10 @@
 package com.github.stupremee.mela.repository.specifications;
 
-import com.github.stupremee.mela.beans.Bean;
+import com.github.stupremee.mela.beans.SnowflakeBean;
 import com.github.stupremee.mela.repository.Specification;
+import com.google.common.base.Preconditions;
 import java.util.function.Predicate;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * https://github.com/Stupremee
@@ -24,9 +25,11 @@ public final class Specifications {
    * @param <T> The type of the {@link Specification}
    * @return The {@link Specification}
    */
-  @NotNull
-  public static <T extends Bean> Specification<T> or(Specification<T> left,
-      Specification<T> right) {
+  @Nonnull
+  public static <T extends SnowflakeBean> Specification<T> or(@Nonnull Specification<T> left,
+      @Nonnull Specification<T> right) {
+    Preconditions.checkNotNull(left, "left can't be null.");
+    Preconditions.checkNotNull(right, "right can't be null.");
     return new DisjunctionSpecification<>(left, right);
   }
 
@@ -38,9 +41,11 @@ public final class Specifications {
    * @param <T> The type of the {@link Specification}
    * @return The {@link Specification}
    */
-  @NotNull
-  public static <T extends Bean> Specification<T> and(Specification<T> left,
-      Specification<T> right) {
+  @Nonnull
+  public static <T extends SnowflakeBean> Specification<T> and(@Nonnull Specification<T> left,
+      @Nonnull Specification<T> right) {
+    Preconditions.checkNotNull(left, "left can't be null.");
+    Preconditions.checkNotNull(right, "right can't be null.");
     return new ConjunctionSpecification<>(left, right);
   }
 
@@ -49,8 +54,10 @@ public final class Specifications {
    *
    * @return The negation specification.
    */
-  @NotNull
-  public static <T extends Bean> Specification<T> not(Specification<T> specification) {
+  @Nonnull
+  public static <T extends SnowflakeBean> Specification<T> not(
+      @Nonnull Specification<T> specification) {
+    Preconditions.checkNotNull(specification, "specification can't be null.");
     return new NegationSpecification<>(specification);
   }
 
@@ -60,8 +67,8 @@ public final class Specifications {
    * @param <T> The type of the {@link Specification}
    * @return The {@link Specification} that is always false
    */
-  @NotNull
-  public static <T extends Bean> Specification<T> alwaysFalse() {
+  @Nonnull
+  public static <T extends SnowflakeBean> Specification<T> alwaysFalse() {
     return AlwaysFalseSpecification.getInstance();
   }
 
@@ -71,8 +78,8 @@ public final class Specifications {
    * @param <T> The type of the {@link Specification}
    * @return The {@link Specification} that is always true
    */
-  @NotNull
-  public static <T extends Bean> Specification<T> alwaysTrue() {
+  @Nonnull
+  public static <T extends SnowflakeBean> Specification<T> alwaysTrue() {
     return AlwaysTrueSpecification.getInstance();
   }
 
@@ -84,8 +91,10 @@ public final class Specifications {
    * @param <T> The type of the predicate and the {@link Specification}
    * @return The new {@link Specification}
    */
-  @NotNull
-  public static <T extends Bean> Specification<T> ofPredicate(Predicate<T> predicate) {
+  @Nonnull
+  public static <T extends SnowflakeBean> Specification<T> ofPredicate(
+      @Nonnull Predicate<T> predicate) {
+    Preconditions.checkNotNull(predicate, "predicate can't be null.");
     return new PredicateSpecification<>(predicate);
   }
 }

@@ -7,6 +7,7 @@ import io.vavr.control.Try;
 import java.lang.reflect.Method;
 import java.util.concurrent.Executors;
 import java.util.stream.Stream;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.FluxSink;
@@ -35,13 +36,14 @@ public class VanillaEventDispatcher implements EventDispatcher {
   }
 
   @Override
-  public void call(Event event) {
+  public void call(@NotNull Event event) {
     Preconditions.checkNotNull(event, "event can't be null.");
     sink.next(event);
   }
 
+  @NotNull
   @Override
-  public <EventT extends Event> Flux<EventT> on(Class<EventT> eventClass) {
+  public <EventT extends Event> Flux<EventT> on(@NotNull Class<EventT> eventClass) {
     Preconditions.checkNotNull(eventClass, "eventClass can't be null.");
     return processor.publishOn(scheduler)
         .ofType(eventClass);
@@ -49,7 +51,7 @@ public class VanillaEventDispatcher implements EventDispatcher {
 
   @Override
   @SuppressWarnings("unchecked")
-  public void register(Object listener) {
+  public void register(@NotNull Object listener) {
     Preconditions.checkNotNull(listener, "listener can't be null.");
     Stream.of(listener.getClass().getDeclaredMethods())
         .filter(this::validateMethod)

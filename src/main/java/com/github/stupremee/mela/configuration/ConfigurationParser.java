@@ -3,7 +3,7 @@ package com.github.stupremee.mela.configuration;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Map;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * https://github.com/Stupremee
@@ -19,6 +19,7 @@ public interface ConfigurationParser {
    *
    * @return The hocon {@link ConfigurationParser}
    */
+  @Nonnull
   static ConfigurationParser hocon() {
     return HoconConfigurationParser.getInstance();
   }
@@ -29,6 +30,7 @@ public interface ConfigurationParser {
    *
    * @return The yaml {@link ConfigurationParser}
    */
+  @Nonnull
   static ConfigurationParser yaml() {
     return YamlConfigurationParser.getInstance();
   }
@@ -39,5 +41,5 @@ public interface ConfigurationParser {
    * @param config The config as a {@link Map}
    * @param writer The writer the method should write in
    */
-  void serialize(@NotNull Map<String, Object> config, @NotNull Writer writer) throws IOException;
+  void serialize(@Nonnull Map<String, Object> config, @Nonnull Writer writer) throws IOException;
 }

@@ -1,6 +1,7 @@
 package com.github.stupremee.mela.repository;
 
-import com.github.stupremee.mela.beans.Bean;
+import com.github.stupremee.mela.beans.SnowflakeBean;
+import javax.annotation.Nonnull;
 
 /**
  * https://github.com/Stupremee
@@ -19,5 +20,7 @@ public interface RepositoryFactory {
    * @param <T> The type of the {@link Repository}
    * @return The new {@link Repository}
    */
-  <T extends Bean> Repository<T> createRepository(Class<T> type, String name);
+  @Nonnull
+  <T extends SnowflakeBean> Repository<T> createRepository(@Nonnull Class<T> type,
+      @Nonnull String name);
 }

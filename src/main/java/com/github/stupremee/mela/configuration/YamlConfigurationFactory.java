@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
+import javax.annotation.Nonnull;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -22,32 +23,36 @@ public class YamlConfigurationFactory extends AbstractJacksonConfigurationFactor
     super(new YAMLFactory());
   }
 
-  @Override
   @NotNull
-  public ConfigurationFactory addDefault(String path, Object value) {
+  @Override
+  @Nonnull
+  public ConfigurationFactory addDefault(@NotNull String path, @NotNull Object value) {
     Preconditions.checkNotNull(path, "path can't be null.");
     defaults.set(path, value);
     return this;
   }
 
-  @Override
   @NotNull
-  public ConfigurationFactory setDefaults(Configuration defaults) {
+  @Override
+  @Nonnull
+  public ConfigurationFactory setDefaults(@NotNull Configuration defaults) {
     Preconditions.checkNotNull(defaults, "defaults can't be null.");
     this.defaults = Objects.requireNonNull(defaults);
     return this;
   }
 
+  @NotNull
   @Override
-  public Configuration load(File file) throws IOException {
+  public Configuration load(@NotNull File file) throws IOException {
     Preconditions.checkNotNull(file, "file can't be null.");
     try (var reader = new FileReader(file, StandardCharsets.UTF_8)) {
       return load(reader);
     }
   }
 
+  @NotNull
   @Override
-  public Configuration load(Reader reader) throws IOException {
+  public Configuration load(@NotNull Reader reader) throws IOException {
     Preconditions.checkNotNull(reader, "reader can't be null.");
     return this.parseAndMap(reader);
   }
