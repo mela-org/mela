@@ -16,25 +16,6 @@ import reactor.core.publisher.Mono;
 public interface Repository<T extends SnowflakeBean> {
 
   /**
-   * Searches all beans in this repository that matches the {@link Specification}.
-   *
-   * @param query The {@link Specification} the beans should match
-   * @return A {@link Flux} containing all found beans
-   */
-  @Nonnull
-  Flux<T> query(@Nonnull Specification<T> query);
-
-  /**
-   * Returns the first entity that matches {@link Specification the query} by calling {@link
-   * #query(Specification)} and get the first.
-   *
-   * @param query The {@link Specification} the beans should match
-   * @return A {@link Flux} containing all found beans
-   */
-  @Nonnull
-  Mono<T> queryFirst(@Nonnull Specification<T> query);
-
-  /**
    * Tries to find a bean with this id.
    *
    * @param id The id of the bean
