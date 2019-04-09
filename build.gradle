@@ -81,7 +81,8 @@ dependencies {
 
 sourceSets {
   main.java.srcDirs += 'src/main/java'
-  main.java.srcDirs += "$buildDir/generated"
+  main.runtimeClasspath += file("$buildDir/generated")
+  main.compileClasspath += file("$buildDir/generated")
   //generated.java.srcDirs += "$buildDir/generated"
 }
 
