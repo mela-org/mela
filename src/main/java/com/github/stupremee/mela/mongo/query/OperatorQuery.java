@@ -19,7 +19,7 @@ public class OperatorQuery<ElementT> implements Query {
   private final String field;
   private final String operator;
 
-  OperatorQuery(String field, String operator, ElementT value) {
+  OperatorQuery(String operator, String field, ElementT value) {
     this.field = field;
     this.operator = operator;
     this.value = value;
