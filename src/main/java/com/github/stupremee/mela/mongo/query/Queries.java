@@ -1,5 +1,6 @@
 package com.github.stupremee.mela.mongo.query;
 
+import java.util.Arrays;
 import javax.annotation.Nonnull;
 
 /**
@@ -35,7 +36,7 @@ public final class Queries {
    * @param field The name of the field as a {@link String}
    * @param value The value that field should have
    * @param <ValueT> The type of the value
-   * @return The {@link Query} that matches all documents where the field has the given value
+   * @return The {@link Query}
    */
   @Nonnull
   public static <ValueT> Query eq(String field, ValueT value) {
@@ -46,10 +47,10 @@ public final class Queries {
    * Creates a {@link Query} that matches all documents where the value of the given field is
    * greater than the given value.
    *
-   * @param field the field name
-   * @param value the value
-   * @param <ValueT> the value type
-   * @return the filter
+   * @param field The field name
+   * @param value The value
+   * @param <ValueT> The value type
+   * @return The filter
    */
   @Nonnull
   public static <ValueT> Query gt(String field, ValueT value) {
@@ -60,13 +61,40 @@ public final class Queries {
    * Creates a {@link Query} that matches all documents where the value of the given field is
    * greater than or equal to the given value.
    *
-   * @param field the field name
-   * @param value the value
-   * @param <ValueT> the value type
-   * @return the filter
+   * @param field The field name
+   * @param value The value
+   * @param <ValueT> The value type
+   * @return The filter
    */
   @Nonnull
   public static <ValueT> Query gte(String field, ValueT value) {
     return new OperatorQuery<>("$gte", field, value);
+  }
+
+  /**
+   * Creates a {@link Query} that matches all documents where the value of a field equals any value
+   * in the list of specified values.
+   *
+   * @param field The field name
+   * @param values The list of values
+   * @param <ValueT> The value type
+   * @return The {@link Query}
+   */
+  @SafeVarargs
+  public static <ValueT> Query in(String field, ValueT... values) {
+    return in(field, Arrays.asList(values));
+  }
+
+  /**
+   * Creates a {@link Query} that matches all documents where the value of a field equals any value
+   * in the list of specified values.
+   *
+   * @param field The field name
+   * @param values The list of values
+   * @param <ValueT> The value type
+   * @return The {@link Query}
+   */
+  public static <ValueT> Query in(String field, Iterable<ValueT> values) {
+    return new IterableOperatorQuery<>("$in", field, values);
   }
 }
