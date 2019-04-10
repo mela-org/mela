@@ -2,6 +2,8 @@ package com.github.stupremee.mela.mongo.query;
 
 import com.github.stupremee.mela.mongo.DocumentWriter;
 import com.google.common.base.Preconditions;
+import io.vavr.collection.Stream;
+import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.conversions.Bson;
@@ -12,30 +14,31 @@ import org.bson.conversions.Bson;
  * @author Stu
  * @since 10.04.2019
  */
-final class IterableOperatorQuery<ValueT> implements Query {
+final class ConjunctionQuery implements Query {
 
-  private final String operator;
-  private final String field;
-  private final Iterable<ValueT> values;
+  private final Iterable<Query> queries;
 
-  IterableOperatorQuery(String operator, String field, Iterable<ValueT> values) {
-    this.operator = operator;
-    this.field = field;
-    this.values = values;
+  ConjunctionQuery(Iterable<Query> queries) {
+    this.queries = queries;
   }
 
   @Override
   public Bson toBson(@Nonnull CodecRegistry codecRegistry) {
     Preconditions.checkNotNull(codecRegistry, "codecRegistry can't be null.");
-    
+
     return DocumentWriter.create(codecRegistry)
-        .name(field)
-        .startDocument()
-        .name(operator)
+        .name("$and")
         .startArray()
-        .values(values)
+        .values(mapQueries(queries, codecRegistry))
         .endArray()
-        .endDocument()
         .write();
+  }
+
+  private Iterable<? extends Bson> mapQueries(Iterable<Query> queries,
+      CodecRegistry codecRegistry) {
+    // TODO: Map better to get a better query result
+    return Stream.ofAll(queries)
+        .map(query -> query.toBson(codecRegistry))
+        .collect(Collectors.toList());
   }
 }

@@ -12,7 +12,7 @@ import org.bson.conversions.Bson;
  * @author Stu
  * @since 10.04.2019
  */
-public class KeyValueQuery<ValueT> implements Query {
+final class KeyValueQuery<ValueT> implements Query {
 
   private final ValueT value;
   private final String field;
