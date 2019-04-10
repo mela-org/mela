@@ -1,4 +1,4 @@
-package com.github.stupremee.mela.mongo.criteria;
+package com.github.stupremee.mela.mongo.query;
 
 import com.mongodb.MongoClientSettings;
 import javax.annotation.Nonnull;
@@ -11,23 +11,23 @@ import org.bson.conversions.Bson;
  * @author Stu
  * @since 10.04.2019
  */
-public interface Criteria {
+public interface Query {
 
   /**
-   * Converts the {@link Criteria} by calling {@link #toBson(CodecRegistry)} with the default {@link
+   * Converts the {@link Query} by calling {@link #toBson(CodecRegistry)} with the default {@link
    * CodecRegistry} that comes from {@link MongoClientSettings#getDefaultCodecRegistry()}.
    *
-   * @return The {@link Bson} representing the {@link Criteria}
+   * @return The {@link Bson} representing the {@link Query}
    */
   default Bson toBson() {
     return toBson(MongoClientSettings.getDefaultCodecRegistry());
   }
 
   /**
-   * Converts the Criteria to a {@link Bson Bson Filter} that can be used to find the object.
+   * Converts the Query to a {@link Bson Bson Filter} that can be used to find the object.
    *
    * @param codecRegistry The {@link CodecRegistry} that is used to encode values
-   * @return The {@link Criteria} as a {@link Bson}
+   * @return The {@link Query} as a {@link Bson}
    */
   Bson toBson(@Nonnull CodecRegistry codecRegistry);
 

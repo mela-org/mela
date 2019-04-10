@@ -1,4 +1,4 @@
-package com.github.stupremee.mela.mongo.criteria;
+package com.github.stupremee.mela.mongo.query;
 
 /**
  * https://github.com/Stupremee
@@ -6,6 +6,6 @@ package com.github.stupremee.mela.mongo.criteria;
  * @author Stu
  * @since 10.04.2019
  */
-public class Criterias {
+public class Queries {
 
 }
