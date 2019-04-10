@@ -21,8 +21,7 @@ public final class Queries {
    *
    * @param value The value that field should have
    * @param <ValueT> The type of the value
-   * @return The {@link Query} that matches all documents where the {@literal _id} has the given
-   *     value
+   * @return The {@link Query}
    */
   @Nonnull
   public static <ValueT> Query eq(ValueT value) {
@@ -41,6 +40,19 @@ public final class Queries {
   @Nonnull
   public static <ValueT> Query eq(String field, ValueT value) {
     return new KeyValueQuery<>(field, value);
+  }
+
+  /**
+   * Creates a {@link Query} that matches all documents where the value of a field is not equal to
+   * the given value.
+   *
+   * @param field The field name
+   * @param value The value
+   * @param <ValueT> The value type
+   * @return The {@link Query}
+   */
+  public static <ValueT> Query ne(String field, ValueT value) {
+    return new OperatorQuery<>("$ne", field, value);
   }
 
   /**
@@ -96,5 +108,58 @@ public final class Queries {
    */
   public static <ValueT> Query in(String field, Iterable<ValueT> values) {
     return new IterableOperatorQuery<>("$in", field, values);
+  }
+
+  /**
+   * Creates a {@link Query} that matches all documents where the value of a field does not equal
+   * any of the specified values or does not exist.
+   *
+   * @param field The field name
+   * @param values The list of values
+   * @param <ValueT> The value type
+   * @return The {@link Query}
+   */
+  @SafeVarargs
+  public static <ValueT> Query nin(String field, ValueT... values) {
+    return nin(field, Arrays.asList(values));
+  }
+
+  /**
+   * Creates a {@link Query} that matches all documents where the value of a field does not equal
+   * any of the specified values or does not exist.
+   *
+   * @param field The field name
+   * @param values The list of values
+   * @param <ValueT> The value type
+   * @return The {@link Query}
+   */
+  public static <ValueT> Query nin(String field, Iterable<ValueT> values) {
+    return new IterableOperatorQuery<>("$nin", field, values);
+  }
+
+  /**
+   * Creates a {@link Query} that matches all documents where the value of a field is less than the
+   * given value.
+   *
+   * @param field The field name
+   * @param value The value
+   * @param <ValueT> The value type
+   * @return The {@link Query}
+   */
+  public static <ValueT> Query lt(String field, ValueT value) {
+    return new OperatorQuery<>("$lt", field, value);
+  }
+
+  /**
+   * Creates a {@link Query} that matches all documents where the value of a field is less than or
+   * equal to the given value.
+   *
+   * @param field The field name
+   * @param value The value
+   * @param <ValueT> The value type
+   * @return The {@link Query}
+   */
+  public static <ValueT> Query lte(String field, ValueT value) {
+    return new OperatorQuery<>("$lte", field, value);
   }
 }
