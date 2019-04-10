@@ -13,13 +13,15 @@ import org.bson.conversions.Bson;
  * @author Stu
  * @since 10.04.2019
  */
-public class KeyValueQuery<ElementT> implements Query {
+public class OperatorQuery<ElementT> implements Query {
 
   private final ElementT value;
   private final String field;
+  private final String operator;
 
-  private KeyValueQuery(String field, ElementT value) {
+  private OperatorQuery(String field, String operator, ElementT value) {
     this.field = field;
+    this.operator = operator;
     this.value = value;
   }
 
@@ -30,7 +32,10 @@ public class KeyValueQuery<ElementT> implements Query {
 
     writer.writeStartDocument();
     writer.writeName(field);
+    writer.writeStartDocument();
+    writer.writeName(operator);
     CriteriaHelpers.encodeValue(writer, value, codecRegistry);
+    writer.writeEndDocument();
     writer.writeEndDocument();
 
     return writer.getDocument();
