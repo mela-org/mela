@@ -21,7 +21,7 @@ final class CriteriaHelpers {
   }
 
   @SuppressWarnings("unchecked")
-  static <TItem> void encodeValue(BsonDocumentWriter writer, TItem value,
+  static <T> void encodeValue(BsonDocumentWriter writer, T value,
       CodecRegistry codecRegistry) {
     if (value == null) {
       writer.writeNull();
