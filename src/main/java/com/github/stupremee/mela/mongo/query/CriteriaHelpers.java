@@ -1,6 +1,5 @@
 package com.github.stupremee.mela.mongo.query;
 
-import com.google.common.base.Preconditions;
 import org.bson.BsonDocument;
 import org.bson.BsonDocumentWriter;
 import org.bson.codecs.Encoder;
