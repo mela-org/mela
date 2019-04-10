@@ -29,8 +29,8 @@ public final class Queries {
   }
 
   /**
-   * Creates a {@link Query} that matches documents where the value of the given field equals
-   * the given value.
+   * Creates a {@link Query} that matches documents where the value of the given field equals the
+   * given value.
    *
    * @param field The name of the field as a {@link String}
    * @param value The value that field should have
@@ -43,8 +43,8 @@ public final class Queries {
   }
 
   /**
-   * Creates a {@link Query} that matches all documents where the value of the given field is greater than
-   * the given value.
+   * Creates a {@link Query} that matches all documents where the value of the given field is
+   * greater than the given value.
    *
    * @param field the field name
    * @param value the value
@@ -57,8 +57,8 @@ public final class Queries {
   }
 
   /**
-   * Creates a {@link Query} that matches all documents where the value of the given field is greater than
-   * or equal to the given value.
+   * Creates a {@link Query} that matches all documents where the value of the given field is
+   * greater than or equal to the given value.
    *
    * @param field the field name
    * @param value the value
