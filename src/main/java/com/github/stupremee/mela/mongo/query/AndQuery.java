@@ -14,11 +14,11 @@ import org.bson.conversions.Bson;
  * @author Stu
  * @since 10.04.2019
  */
-final class ConjunctionQuery implements Query {
+final class AndQuery implements Query {
 
   private final Iterable<Query> queries;
 
-  ConjunctionQuery(Iterable<Query> queries) {
+  AndQuery(Iterable<Query> queries) {
     this.queries = queries;
   }
 
@@ -29,16 +29,15 @@ final class ConjunctionQuery implements Query {
     return DocumentWriter.create(codecRegistry)
         .name("$and")
         .startArray()
-        .values(mapQueries(queries, codecRegistry))
+        .values(mapQueries(queries))
         .endArray()
         .write();
   }
 
-  private Iterable<? extends Bson> mapQueries(Iterable<Query> queries,
-      CodecRegistry codecRegistry) {
+  private Iterable<? extends Bson> mapQueries(Iterable<Query> queries) {
     // TODO: Map better to get a better query result
     return Stream.ofAll(queries)
-        .map(query -> query.toBson(codecRegistry))
+        .map(BsonQueryAdapter::of)
         .collect(Collectors.toList());
   }
 }

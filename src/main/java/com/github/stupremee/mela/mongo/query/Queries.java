@@ -193,7 +193,7 @@ public final class Queries {
   @Nonnull
   public static Query and(@Nonnull Iterable<Query> queries) {
     Preconditions.checkNotNull(queries, "queries can't be null.");
-    return new ConjunctionQuery(queries);
+    return new AndQuery(queries);
   }
 
   /**
@@ -204,6 +204,66 @@ public final class Queries {
    */
   @Nonnull
   public static Query and(@Nonnull Query... queries) {
+    Preconditions.checkNotNull(queries, "queries can't be null.");
+    return and(Arrays.asList(queries));
+  }
+
+  /**
+   * Creates a {@link Query} that matches all documents that do not match the passed in query.
+   *
+   * @param query The query that should ne negated
+   * @return The {@link Query}
+   */
+  @Nonnull
+  public static Query not(@Nonnull Query query) {
+    Preconditions.checkNotNull(query, "query can't be null.");
+    return new NotQuery(query);
+  }
+
+  /**
+   * Creates a {@link Query} that performs a logical NOR of the provided list of queries.
+   *
+   * @param queries The list of {@link Query Queries}
+   * @return The {@link Query}
+   */
+  @Nonnull
+  public static Query nor(@Nonnull Iterable<Query> queries) {
+    Preconditions.checkNotNull(queries, "queries can't be null.");
+    return new NorQuery(queries);
+  }
+
+  /**
+   * Creates a {@link Query} that performs a logical NOR of the provided list of queries.
+   *
+   * @param queries The list of {@link Query Queries}
+   * @return The {@link Query}
+   */
+  @Nonnull
+  public static Query nor(@Nonnull Query... queries) {
+    Preconditions.checkNotNull(queries, "queries can't be null.");
+    return and(Arrays.asList(queries));
+  }
+
+  /**
+   * Creates a {@link Query} that performs a logical OR of the provided list of queries.
+   *
+   * @param queries The list of {@link Query Queries}
+   * @return The {@link Query}
+   */
+  @Nonnull
+  public static Query or(@Nonnull Iterable<Query> queries) {
+    Preconditions.checkNotNull(queries, "queries can't be null.");
+    return new OrQuery(queries);
+  }
+
+  /**
+   * Creates a {@link Query} that performs a logical OR of the provided list of queries.
+   *
+   * @param queries The list of {@link Query Queries}
+   * @return The {@link Query}
+   */
+  @Nonnull
+  public static Query or(@Nonnull Query... queries) {
     Preconditions.checkNotNull(queries, "queries can't be null.");
     return and(Arrays.asList(queries));
   }
