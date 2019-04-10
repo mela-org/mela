@@ -18,7 +18,7 @@ public class KeyValueQuery<ElementT> implements Query {
   private final ElementT value;
   private final String field;
 
-  private KeyValueQuery(String field, ElementT value) {
+  KeyValueQuery(String field, ElementT value) {
     this.field = field;
     this.value = value;
   }
