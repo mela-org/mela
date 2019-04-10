@@ -24,9 +24,6 @@ final class CriteriaHelpers {
   @SuppressWarnings("unchecked")
   static <TItem> void encodeValue(BsonDocumentWriter writer, TItem value,
       CodecRegistry codecRegistry) {
-    Preconditions.checkNotNull(writer, "writer can't be null.");
-    Preconditions.checkNotNull(codecRegistry, "codecRegistry can't be null.");
-
     if (value == null) {
       writer.writeNull();
     } else if (value instanceof Bson) {
