@@ -13,12 +13,12 @@ import org.bson.conversions.Bson;
  * @author Stu
  * @since 10.04.2019
  */
-public class KeyValueQuery<ElementT> implements Query {
+public class KeyValueQuery<ValueT> implements Query {
 
-  private final ElementT value;
+  private final ValueT value;
   private final String field;
 
-  KeyValueQuery(String field, ElementT value) {
+  KeyValueQuery(String field, ValueT value) {
     this.field = field;
     this.value = value;
   }

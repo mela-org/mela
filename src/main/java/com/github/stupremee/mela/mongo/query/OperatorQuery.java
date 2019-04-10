@@ -13,13 +13,13 @@ import org.bson.conversions.Bson;
  * @author Stu
  * @since 10.04.2019
  */
-public class OperatorQuery<ElementT> implements Query {
+public class OperatorQuery<ValueT> implements Query {
 
-  private final ElementT value;
+  private final ValueT value;
   private final String field;
   private final String operator;
 
-  OperatorQuery(String operator, String field, ElementT value) {
+  OperatorQuery(String operator, String field, ValueT value) {
     this.field = field;
     this.operator = operator;
     this.value = value;
