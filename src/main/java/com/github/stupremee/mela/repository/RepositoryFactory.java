@@ -15,7 +15,7 @@ public interface RepositoryFactory {
   /**
    * Creates a new {@link Repository}.
    *
-   * @param name The name of the {@link Repository}, e.g. the table name
+   * @param name The name of the {@link Repository}, e.g. the table name of a database
    * @param type The class of the type of the {@link Repository}
    * @param <T> The type of the {@link Repository}
    * @return The new {@link Repository}
