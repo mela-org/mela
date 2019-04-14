@@ -1,6 +1,8 @@
-package com.github.stupremee.mela.mongo.query;
+package com.github.stupremee.mela.mongo;
 
 import com.google.common.base.Preconditions;
+import com.mongodb.client.model.Filters;
+import io.vavr.collection.Stream;
 import java.util.Arrays;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -42,7 +44,7 @@ public final class Queries {
   @Nonnull
   public static <ValueT> Query eq(@Nonnull String field, @Nullable ValueT value) {
     Preconditions.checkNotNull(field, "field can't be null.");
-    return new KeyValueQuery<>(field, value);
+    return () -> Filters.eq(field, value);
   }
 
   /**
@@ -57,7 +59,7 @@ public final class Queries {
   @Nonnull
   public static <ValueT> Query ne(@Nonnull String field, @Nullable ValueT value) {
     Preconditions.checkNotNull(field, "field can't be null.");
-    return new OperatorQuery<>("$ne", field, value);
+    return () -> Filters.ne(field, value);
   }
 
   /**
@@ -72,7 +74,7 @@ public final class Queries {
   @Nonnull
   public static <ValueT> Query gt(@Nonnull String field, @Nullable ValueT value) {
     Preconditions.checkNotNull(field, "field can't be null.");
-    return new OperatorQuery<>("$gt", field, value);
+    return () -> Filters.gt(field, value);
   }
 
   /**
@@ -87,7 +89,7 @@ public final class Queries {
   @Nonnull
   public static <ValueT> Query gte(@Nonnull String field, @Nullable ValueT value) {
     Preconditions.checkNotNull(field, "field can't be null.");
-    return new OperatorQuery<>("$gte", field, value);
+    return () -> Filters.gte(field, value);
   }
 
   /**
@@ -119,7 +121,7 @@ public final class Queries {
   public static <ValueT> Query in(@Nonnull String field, @Nonnull Iterable<ValueT> values) {
     Preconditions.checkNotNull(field, "field can't be null.");
     Preconditions.checkNotNull(values, "values can't be null.");
-    return new IterableOperatorQuery<>("$in", field, values);
+    return () -> Filters.in(field, values);
   }
 
   /**
@@ -151,7 +153,7 @@ public final class Queries {
   public static <ValueT> Query nin(@Nonnull String field, @Nonnull Iterable<ValueT> values) {
     Preconditions.checkNotNull(field, "field can't be null.");
     Preconditions.checkNotNull(values, "values can't be null.");
-    return new IterableOperatorQuery<>("$nin", field, values);
+    return () -> Filters.nin(field, values);
   }
 
   /**
@@ -166,7 +168,7 @@ public final class Queries {
   @Nonnull
   public static <ValueT> Query lt(@Nonnull String field, @Nullable ValueT value) {
     Preconditions.checkNotNull(field, "field can't be null.");
-    return new OperatorQuery<>("$lt", field, value);
+    return () -> Filters.lt(field, value);
   }
 
   /**
@@ -181,7 +183,7 @@ public final class Queries {
   @Nonnull
   public static <ValueT> Query lte(@Nonnull String field, @Nullable ValueT value) {
     Preconditions.checkNotNull(field, "field can't be null.");
-    return new OperatorQuery<>("$lte", field, value);
+    return () -> Filters.lte(field, value);
   }
 
   /**
@@ -193,7 +195,9 @@ public final class Queries {
   @Nonnull
   public static Query and(@Nonnull Iterable<Query> queries) {
     Preconditions.checkNotNull(queries, "queries can't be null.");
-    return new AndQuery(queries);
+    return () -> Filters.and(Stream.ofAll(queries)
+        .map(Query::toBson)
+        .toJavaList());
   }
 
   /**
@@ -217,7 +221,7 @@ public final class Queries {
   @Nonnull
   public static Query not(@Nonnull Query query) {
     Preconditions.checkNotNull(query, "query can't be null.");
-    return new NotQuery(query);
+    return () -> Filters.not(query.toBson());
   }
 
   /**
@@ -229,7 +233,9 @@ public final class Queries {
   @Nonnull
   public static Query nor(@Nonnull Iterable<Query> queries) {
     Preconditions.checkNotNull(queries, "queries can't be null.");
-    return new NorQuery(queries);
+    return () -> Filters.nor(Stream.ofAll(queries)
+        .map(Query::toBson)
+        .toJavaList());
   }
 
   /**
@@ -241,7 +247,7 @@ public final class Queries {
   @Nonnull
   public static Query nor(@Nonnull Query... queries) {
     Preconditions.checkNotNull(queries, "queries can't be null.");
-    return and(Arrays.asList(queries));
+    return nor(Arrays.asList(queries));
   }
 
   /**
@@ -253,7 +259,9 @@ public final class Queries {
   @Nonnull
   public static Query or(@Nonnull Iterable<Query> queries) {
     Preconditions.checkNotNull(queries, "queries can't be null.");
-    return new OrQuery(queries);
+    return () -> Filters.or(Stream.ofAll(queries)
+        .map(Query::toBson)
+        .toJavaList());
   }
 
   /**
@@ -265,6 +273,6 @@ public final class Queries {
   @Nonnull
   public static Query or(@Nonnull Query... queries) {
     Preconditions.checkNotNull(queries, "queries can't be null.");
-    return and(Arrays.asList(queries));
+    return or(Arrays.asList(queries));
   }
 }
