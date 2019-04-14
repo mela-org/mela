@@ -3,7 +3,6 @@ package com.github.stupremee.mela.mongo;
 import com.google.common.base.Preconditions;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.TextSearchOptions;
-import com.mongodb.client.model.geojson.Geometry;
 import io.vavr.collection.Stream;
 import java.util.Arrays;
 import java.util.regex.Pattern;
@@ -563,5 +562,18 @@ public final class Queries {
   public static Query bitsAnySet(@Nonnull String field, long bitmask) {
     Preconditions.checkNotNull(field, "field can't be null.");
     return () -> Filters.bitsAnySet(field, bitmask);
+  }
+
+  /**
+   * Creates a {@link Query} that matches all documents that validate against the given JSON schema
+   * document.
+   *
+   * @param schema The JSON schema to validate against
+   * @return The {@link Query}
+   */
+  @Nonnull
+  public static Query jsonSchema(@Nonnull Bson schema) {
+    Preconditions.checkNotNull(schema, "schema can't be null.");
+    return () -> Filters.jsonSchema(schema);
   }
 }
