@@ -1,7 +1,7 @@
 package com.github.stupremee.mela.mongo.beans;
 
-import com.github.stupremee.mela.beans.Bean;
 import com.google.common.base.MoreObjects;
+import java.io.Serializable;
 
 /**
  * https://github.com/Stupremee
@@ -10,7 +10,7 @@ import com.google.common.base.MoreObjects;
  * @since 07.04.2019
  */
 @SuppressWarnings("unused")
-public class MongoDatabaseBean implements Bean {
+public class MongoDatabaseBean implements Serializable {
 
   private static final long serialVersionUID = 7753061786456967159L;
   private String name;

@@ -1,5 +1,6 @@
 package com.github.stupremee.mela.beans;
 
+import java.io.Serializable;
 import org.bson.codecs.pojo.annotations.BsonId;
 
 /**
@@ -8,7 +9,7 @@ import org.bson.codecs.pojo.annotations.BsonId;
  * @author Stu
  * @since 06.04.2019
  */
-public abstract class SnowflakeBean implements Bean {
+public abstract class SnowflakeBean implements Serializable {
 
   private static final long serialVersionUID = -2074915195340425431L;
 

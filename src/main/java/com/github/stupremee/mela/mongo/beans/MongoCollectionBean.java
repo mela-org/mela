@@ -1,8 +1,8 @@
 package com.github.stupremee.mela.mongo.beans;
 
-import com.github.stupremee.mela.beans.Bean;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
+import java.io.Serializable;
 import java.util.UUID;
 import javax.annotation.Nonnull;
 import org.bson.Document;
@@ -14,7 +14,7 @@ import org.bson.Document;
  * @since 07.04.2019
  */
 @SuppressWarnings("unused")
-public class MongoCollectionBean implements Bean {
+public class MongoCollectionBean implements Serializable {
 
   private static final long serialVersionUID = -8555736335162519651L;
 
