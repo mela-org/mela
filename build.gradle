@@ -14,7 +14,7 @@ targetCompatibility = 11
 
 ext {
   logback_version = "1.2.3"
-  immutables_version = "2.7.4"
+  immutables_version = "2.7.5"
   junit_version = "4.12"
   vavr_version = "0.10.0"
   datastax_version = "3.6.0"
