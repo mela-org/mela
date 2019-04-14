@@ -8,6 +8,7 @@ import org.bson.conversions.Bson;
  * @author Stu
  * @since 10.04.2019
  */
+@FunctionalInterface
 public interface Query {
 
   /**

@@ -1,8 +1,10 @@
 package com.github.stupremee.mela.mongo;
 
+import com.google.common.base.Preconditions;
 import com.mongodb.MongoClientSettings;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
 import org.bson.AbstractBsonWriter;
 import org.bson.BsonDocument;
 import org.bson.BsonDocumentWriter;
@@ -32,12 +34,35 @@ public final class DocumentWriter {
   }
 
   /**
+   * Manually adds a {@link WriterStep} to the step list.
+   *
+   * @param step The step to add
+   * @return The {@link DocumentWriter instance} for chained calls
+   */
+  public DocumentWriter addStep(@Nonnull WriterStep step) {
+    Preconditions.checkNotNull(step, "step can't be null.");
+    steps.add(step);
+    return this;
+  }
+
+  /**
    * Adds {@link BsonWriter#writeStartArray()} to the list of steps.
    *
    * @return The {@link DocumentWriter instance} for chained calls
    */
   public DocumentWriter startArray() {
     steps.add(AbstractBsonWriter::writeStartArray);
+    return this;
+  }
+
+  /**
+   * Adds {@link BsonWriter#writeStartArray(String)} to the list of steps.
+   *
+   * @return The {@link DocumentWriter instance} for chained calls
+   */
+  public DocumentWriter startArray(@Nonnull String name) {
+    Preconditions.checkNotNull(name, "name can't be null.");
+    steps.add(writer -> writer.writeStartArray(name));
     return this;
   }
 
@@ -62,6 +87,17 @@ public final class DocumentWriter {
   }
 
   /**
+   * Adds {@link BsonWriter#writeStartDocument(String)} to the list of steps.
+   *
+   * @return The {@link DocumentWriter instance} for chained calls
+   */
+  public DocumentWriter startDocument(@Nonnull String name) {
+    Preconditions.checkNotNull(name, "name can't be null.");
+    steps.add(writer -> writer.writeStartDocument(name));
+    return this;
+  }
+
+  /**
    * Adds {@link BsonWriter#writeEndDocument()} to the list of steps.
    *
    * @return The {@link DocumentWriter instance} for chained calls
@@ -78,6 +114,7 @@ public final class DocumentWriter {
    * @return The {@link DocumentWriter instance} for chained calls
    */
   public DocumentWriter values(Iterable<?> values) {
+    Preconditions.checkNotNull(values, "values can't be null.");
     values.forEach(this::value);
     return this;
   }
@@ -89,7 +126,24 @@ public final class DocumentWriter {
    * @return The {@link DocumentWriter instance} for chained calls
    */
   public DocumentWriter value(Object value) {
+    Preconditions.checkNotNull(value, "value can't be null.");
     steps.add(writer -> encodeValue(writer, value, codecRegistry));
+    return this;
+  }
+
+  /**
+   * Encodes the value by using {@link #encodeValue(BsonDocumentWriter, Object, CodecRegistry)}.
+   *
+   * @param name The name for the value
+   * @param value The value that should be written to the document
+   * @return The {@link DocumentWriter instance} for chained calls
+   */
+  public DocumentWriter value(@Nonnull String name, @Nonnull Object value) {
+    Preconditions.checkNotNull(value, "value can't be null.");
+    steps.add(writer -> {
+      writer.writeName(name);
+      encodeValue(writer, value, codecRegistry);
+    });
     return this;
   }
 
@@ -98,15 +152,62 @@ public final class DocumentWriter {
    *
    * @return The {@link DocumentWriter instance} for chained calls
    */
-  public DocumentWriter name(String name) {
+  public DocumentWriter name(@Nonnull String name) {
+    Preconditions.checkNotNull(name, "name can't be null.");
     steps.add(writer -> writer.writeName(name));
     return this;
   }
 
   /**
-   * Writes all the steps in the steps list to a writer and then returns the document.
+   * Adds {@link BsonWriter#writeString(String, String)} to the list of steps.
    *
-   * @return The document
+   * @return The {@link DocumentWriter instance} for chained calls
+   */
+  public DocumentWriter string(@Nonnull String name, @Nonnull String value) {
+    Preconditions.checkNotNull(name, "name can't be null.");
+    Preconditions.checkNotNull(value, "value can't be null.");
+    steps.add(writer -> writer.writeString(name, value));
+    return this;
+  }
+
+  /**
+   * Adds {@link BsonWriter#writeString(String)} to the list of steps.
+   *
+   * @return The {@link DocumentWriter instance} for chained calls
+   */
+  public DocumentWriter string(@Nonnull String value) {
+    Preconditions.checkNotNull(value, "value can't be null.");
+    steps.add(writer -> writer.writeName(value));
+    return this;
+  }
+
+  /**
+   * Adds {@link BsonWriter#writeString(String, String)} to the list of steps.
+   *
+   * @return The {@link DocumentWriter instance} for chained calls
+   */
+  public DocumentWriter undefined(@Nonnull String name) {
+    Preconditions.checkNotNull(name, "name can't be null.");
+    steps.add(writer -> writer.writeUndefined(name));
+    return this;
+  }
+
+  /**
+   * Adds {@link BsonWriter#writeString(String)} to the list of steps.
+   *
+   * @return The {@link DocumentWriter instance} for chained calls
+   */
+  public DocumentWriter undefined() {
+    steps.add(AbstractBsonWriter::writeUndefined);
+    return this;
+  }
+
+  /**
+   * Writes all the steps in the steps list to a writer and then returns the document. ATTENTION:
+   * Writes {@link BsonWriter#writeStartDocument()}, then all the steps, and at the end {@link
+   * BsonWriter#writeEndDocument()}.
+   *
+   * @return The {@link BsonDocument}
    */
   public BsonDocument write() {
     BsonDocumentWriter writer = new BsonDocumentWriter(new BsonDocument());
@@ -135,7 +236,8 @@ public final class DocumentWriter {
     }
   }
 
-  private interface WriterStep {
+  @FunctionalInterface
+  public interface WriterStep {
 
     void write(BsonDocumentWriter writer);
   }
