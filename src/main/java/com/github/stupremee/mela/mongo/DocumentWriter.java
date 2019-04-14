@@ -20,6 +20,7 @@ import org.bson.conversions.Bson;
  * @author Stu
  * @since 10.04.2019
  */
+@SuppressWarnings({"unused", "WeakerAccess"})
 public final class DocumentWriter {
 
   private final List<WriterStep> steps;
@@ -115,11 +116,10 @@ public final class DocumentWriter {
     return writer.getDocument();
   }
 
-  private interface WriterStep {
-
-    void write(BsonDocumentWriter writer);
-  }
-
+  /**
+   * This method was copied from the source code of the MongoDB Java Driver and can be found <a
+   * href="https://github.com/mongodb/mongo-java-driver/blob/master/driver-core/src/main/com/mongodb/client/model/BuildersHelper.java#L29-L39">here</a>.
+   */
   @SuppressWarnings("unchecked")
   private static void encodeValue(BsonDocumentWriter writer, Object value,
       CodecRegistry codecRegistry) {
@@ -135,10 +135,27 @@ public final class DocumentWriter {
     }
   }
 
+  private interface WriterStep {
+
+    void write(BsonDocumentWriter writer);
+  }
+
+  /**
+   * Creates a new {@link DocumentWriter} with the default {@link CodecRegistry}.
+   *
+   * @return The {@link DocumentWriter}
+   */
   public static DocumentWriter create() {
     return new DocumentWriter(MongoClientSettings.getDefaultCodecRegistry());
   }
 
+  /**
+   * Creates a new {@link DocumentWriter} that will use the given {@link CodecRegistry} to encode
+   * values.
+   *
+   * @param codecRegistry The {@link CodecRegistry}
+   * @return The {@link DocumentWriter}
+   */
   public static DocumentWriter create(CodecRegistry codecRegistry) {
     return new DocumentWriter(codecRegistry);
   }
