@@ -1,6 +1,5 @@
 plugins {
   id 'java-library'
-  id 'com.github.johnrengelman.shadow' version '5.0.0'
   id 'checkstyle'
   id 'pmd'
   id 'com.github.spotbugs' version '1.7.1'
@@ -116,10 +115,6 @@ pmdMain {
   ruleSetConfig = project.resources.text.fromFile(file("$projectDir/config/pmd/ruleset.xml"))
 }
 
-shadowJar {
-  classifier = 'shaded'
-}
-
 wrapper {
   gradleVersion = "5.2.1"
   distributionType = Wrapper.DistributionType.ALL
@@ -167,12 +162,10 @@ build {
   dependsOn jar
   dependsOn javadocJar
   dependsOn sourcesJar
-  dependsOn shadowJar
 
   jar.mustRunAfter clean
   javadocJar.mustRunAfter jar
   sourcesJar.mustRunAfter javadocJar
-  shadowJar.mustRunAfter sourcesJar
 }
 
 compileJava.options.encoding = 'UTF-8'
