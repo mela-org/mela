@@ -160,12 +160,12 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 
 build {
   dependsOn jar
-  dependsOn javadocJar
+  //dependsOn javadocJar
   dependsOn sourcesJar
 
   jar.mustRunAfter clean
-  javadocJar.mustRunAfter jar
-  sourcesJar.mustRunAfter javadocJar
+  //javadocJar.mustRunAfter jar
+  sourcesJar.mustRunAfter jar
 }
 
 compileJava.options.encoding = 'UTF-8'
