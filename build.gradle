@@ -140,7 +140,6 @@ javadoc {
         "https://projectreactor.io/docs/core/release/api/"
     ]
   }
-
   setDestinationDir(new File("${buildDir}/docs/"))
 }
 
