@@ -13,7 +13,7 @@ import org.bson.Document;
  * @author Stu
  * @since 07.04.2019
  */
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "WeakerAccess"})
 public class MongoCollectionBean implements Serializable {
 
   private static final long serialVersionUID = -8555736335162519651L;
