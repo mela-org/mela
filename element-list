@@ -1,0 +1,11 @@
+com.github.stupremee.mela
+com.github.stupremee.mela.beans
+com.github.stupremee.mela.configuration
+com.github.stupremee.mela.event
+com.github.stupremee.mela.mongo
+com.github.stupremee.mela.mongo.beans
+com.github.stupremee.mela.repository
+com.github.stupremee.mela.serialization.deserializer
+com.github.stupremee.mela.serialization.serializer
+com.github.stupremee.mela.shard
+com.github.stupremee.mela.util
