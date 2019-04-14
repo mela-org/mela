@@ -4,7 +4,6 @@ com.github.stupremee.mela.configuration
 com.github.stupremee.mela.event
 com.github.stupremee.mela.mongo
 com.github.stupremee.mela.mongo.beans
-com.github.stupremee.mela.mongo.query
 com.github.stupremee.mela.repository
 com.github.stupremee.mela.serialization.deserializer
 com.github.stupremee.mela.serialization.serializer
