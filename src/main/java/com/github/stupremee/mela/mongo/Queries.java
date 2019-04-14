@@ -564,34 +564,4 @@ public final class Queries {
     Preconditions.checkNotNull(field, "field can't be null.");
     return () -> Filters.bitsAnySet(field, bitmask);
   }
-
-  /**
-   * Creates a {@link Query} that matches all documents containing a field with geospatial data that
-   * exists entirely within the specified shape.
-   *
-   * @param field The field name
-   * @param geometry The bounding GeoJSON geometry object
-   * @return The {@link Query}
-   */
-  @Nonnull
-  public static Query geoWithin(@Nonnull String field, @Nonnull Geometry geometry) {
-    Preconditions.checkNotNull(field, "field can't be null.");
-    Preconditions.checkNotNull(geometry, "geometry can't be null.");
-    return () -> Filters.geoWithin(field, geometry);
-  }
-
-  /**
-   * Creates a {@link Query} that matches all documents containing a field with geospatial data that
-   * exists entirely within the specified shape.
-   *
-   * @param field The field name
-   * @param geometry The bounding GeoJSON geometry object
-   * @return The {@link Query}
-   */
-  @Nonnull
-  public static Query geoWithin(@Nonnull String field, @Nonnull Bson geometry) {
-    Preconditions.checkNotNull(field, "field can't be null.");
-    Preconditions.checkNotNull(geometry, "geometry can't be null.");
-    return () -> Filters.geoWithin(field, geometry);
-  }
 }
