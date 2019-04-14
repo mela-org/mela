@@ -17,5 +17,5 @@ public interface Query {
    *
    * @return The {@link Bson} representing the {@link Query}
    */
-  Bson toBson();
+  Bson asBson();
 }

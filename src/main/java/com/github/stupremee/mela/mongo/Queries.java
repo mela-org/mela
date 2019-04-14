@@ -200,7 +200,7 @@ public final class Queries {
   public static Query and(@Nonnull Iterable<Query> queries) {
     Preconditions.checkNotNull(queries, "queries can't be null.");
     return () -> Filters.and(Stream.ofAll(queries)
-        .map(Query::toBson)
+        .map(Query::asBson)
         .toJavaList());
   }
 
@@ -225,7 +225,7 @@ public final class Queries {
   @Nonnull
   public static Query not(@Nonnull Query query) {
     Preconditions.checkNotNull(query, "query can't be null.");
-    return () -> Filters.not(query.toBson());
+    return () -> Filters.not(query.asBson());
   }
 
   /**
@@ -238,7 +238,7 @@ public final class Queries {
   public static Query nor(@Nonnull Iterable<Query> queries) {
     Preconditions.checkNotNull(queries, "queries can't be null.");
     return () -> Filters.nor(Stream.ofAll(queries)
-        .map(Query::toBson)
+        .map(Query::asBson)
         .toJavaList());
   }
 
@@ -264,7 +264,7 @@ public final class Queries {
   public static Query or(@Nonnull Iterable<Query> queries) {
     Preconditions.checkNotNull(queries, "queries can't be null.");
     return () -> Filters.or(Stream.ofAll(queries)
-        .map(Query::toBson)
+        .map(Query::asBson)
         .toJavaList());
   }
 
