@@ -30,4 +30,20 @@ public class EqualsTest {
 
     assertThat(one).isNotEqualTo(two);
   }
+
+  @Test
+  public void twoCriteriaMatchHashCode() {
+    Criteria one = EqualsCriteria.create("something", 1337L);
+    Criteria two = EqualsCriteria.create("something", 1337);
+
+    assertThat(one.hashCode()).isEqualTo(two.hashCode());
+  }
+
+  @Test
+  public void twoCriteriaNotMatchHashCode() {
+    Criteria one = EqualsCriteria.create("somethingg", 1337);
+    Criteria two = EqualsCriteria.create("something", 1337);
+
+    assertThat(one.hashCode()).isNotEqualTo(two.hashCode());
+  }
 }
