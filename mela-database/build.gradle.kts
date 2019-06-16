@@ -5,4 +5,5 @@ dependencies {
   testCompile(Deps.Test.assertj)
   testCompile(Deps.Test.JUnit.api)
   testRuntimeOnly(Deps.Test.JUnit.engine)
+  
 }
