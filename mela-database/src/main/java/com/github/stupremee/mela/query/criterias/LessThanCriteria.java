@@ -13,25 +13,25 @@ import javax.annotation.Nonnull;
  * @author Stu
  * @since 10.06.19
  */
-public final class LessThanCriteria implements Criteria {
+public final class LessThanCriteria<T extends Comparable<T>> implements Criteria {
 
   private final String key;
-  private final Object value;
+  private final T upperBound;
 
 
-  private LessThanCriteria(String key, Object value) {
+  private LessThanCriteria(String key, T upperBound) {
     this.key = key;
-    this.value = value;
+    this.upperBound = upperBound;
   }
 
   /**
-   * Returns the value that this criteria should match.
+   * Returns the upperBound that this criteria should match.
    *
-   * @return The value as an {@link Object}
+   * @return The upperBound as an {@link Object}
    */
   @Nonnull
-  public Object getNumber() {
-    return value;
+  public T getNumber() {
+    return upperBound;
   }
 
   @Override
@@ -48,7 +48,7 @@ public final class LessThanCriteria implements Criteria {
   public String toString() {
     return MoreObjects.toStringHelper(this)
         .add("key", key)
-        .add("value", value)
+        .add("upperBound", upperBound)
         .toString();
   }
 
@@ -68,20 +68,20 @@ public final class LessThanCriteria implements Criteria {
 
     var other = (LessThanCriteria) o;
     return Objects.equal(this.key, other.key)
-        && Objects.equal(this.value, other.value);
+        && Objects.equal(this.upperBound, other.upperBound);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(key, value);
+    return Objects.hashCode(key, upperBound);
   }
 
   /**
    * Static factory method to create a new {@link LessThanCriteria}.
    */
-  public static Criteria create(String key, Object value) {
+  public static <T extends Comparable<T>> Criteria create(String key, T value) {
     Preconditions.checkNotNull(key, "key can't be null.");
-    Preconditions.checkNotNull(value, "value can't be null.");
-    return new LessThanCriteria(key, value);
+    Preconditions.checkNotNull(value, "upperBound can't be null.");
+    return new LessThanCriteria<>(key, value);
   }
 }

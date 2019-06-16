@@ -13,25 +13,25 @@ import javax.annotation.Nonnull;
  * @author Stu
  * @since 10.06.19
  */
-public final class GreaterThanOrEqualCriteria implements Criteria {
+public final class GreaterThanOrEqualCriteria<T extends Comparable<T>> implements Criteria {
 
   private final String key;
-  private final Object value;
+  private final T lowerBound;
 
 
-  private GreaterThanOrEqualCriteria(String key, Object value) {
+  private GreaterThanOrEqualCriteria(String key, T lowerBound) {
     this.key = key;
-    this.value = value;
+    this.lowerBound = lowerBound;
   }
 
   /**
-   * Returns the value that this criteria should match.
+   * Returns the lowerBound that this criteria should match.
    *
-   * @return The value as an {@link Object}
+   * @return The lowerBound as an {@link Object}
    */
   @Nonnull
-  public Object getNumber() {
-    return value;
+  public T getLowerBound() {
+    return lowerBound;
   }
 
   @Override
@@ -48,7 +48,7 @@ public final class GreaterThanOrEqualCriteria implements Criteria {
   public String toString() {
     return MoreObjects.toStringHelper(this)
         .add("key", key)
-        .add("value", value)
+        .add("lowerBound", lowerBound)
         .toString();
   }
 
@@ -68,20 +68,20 @@ public final class GreaterThanOrEqualCriteria implements Criteria {
 
     var other = (GreaterThanOrEqualCriteria) o;
     return Objects.equal(this.key, other.key)
-        && Objects.equal(this.value, other.value);
+        && Objects.equal(this.lowerBound, other.lowerBound);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(key, value);
+    return Objects.hashCode(key, lowerBound);
   }
 
   /**
    * Static factory method to create a new {@link GreaterThanOrEqualCriteria}.
    */
-  public static Criteria create(String key, Object value) {
+  public static <T extends Comparable<T>> Criteria create(String key, T value) {
     Preconditions.checkNotNull(key, "key can't be null.");
-    Preconditions.checkNotNull(value, "value can't be null.");
-    return new GreaterThanOrEqualCriteria(key, value);
+    Preconditions.checkNotNull(value, "lowerBound can't be null.");
+    return new GreaterThanOrEqualCriteria<>(key, value);
   }
 }

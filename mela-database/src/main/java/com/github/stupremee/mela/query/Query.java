@@ -100,12 +100,9 @@ public final class Query {
 
     /**
      * Adds a {@link EqualsCriteria} to the {@link Query}.
-     *
-     * @param value The value
-     * @return The {@link Query}
      */
     @Nonnull
-    public Query eq(Object value) {
+    public Query equalTo(Object value) {
       Preconditions.checkNotNull(value, "value can't be null.");
       query.criteria.add(EqualsCriteria.create(query.key, value));
       return query;
@@ -113,12 +110,9 @@ public final class Query {
 
     /**
      * Adds a {@link NotEqualsCriteria} to the {@link Query}.
-     *
-     * @param value The value
-     * @return The {@link Query}
      */
     @Nonnull
-    public Query neq(Object value) {
+    public Query notEqualTo(Object value) {
       Preconditions.checkNotNull(value, "value can't be null.");
       query.criteria.add(NotEqualsCriteria.create(query.key, value));
       return query;
@@ -126,66 +120,50 @@ public final class Query {
 
     /**
      * Adds a {@link LessThanCriteria} to the {@link Query}.
-     *
-     * @param number The upper bound
-     * @return The {@link Query}
      */
     @Nonnull
-    public Query lt(Object number) {
-      Preconditions.checkNotNull(number, "value can't be null.");
-      query.criteria.add(LessThanCriteria.create(query.key, number));
+    public <T extends Comparable<T>> Query lessThan(T upperBound) {
+      Preconditions.checkNotNull(upperBound, "value can't be null.");
+      query.criteria.add(LessThanCriteria.create(query.key, upperBound));
       return query;
     }
 
     /**
      * Adds a {@link LessThanOrEqualCriteria} to the {@link Query}.
-     *
-     * @param number The upper bound
-     * @return The {@link Query}
      */
     @Nonnull
-    public Query lte(Object number) {
-      Preconditions.checkNotNull(number, "value can't be null.");
-      query.criteria.add(LessThanOrEqualCriteria.create(query.key, number));
+    public <T extends Comparable<T>> Query lessThanOrEqual(T upperBound) {
+      Preconditions.checkNotNull(upperBound, "value can't be null.");
+      query.criteria.add(LessThanOrEqualCriteria.create(query.key, upperBound));
       return query;
     }
 
     /**
      * Adds a {@link GreaterThanCriteria} to the {@link Query}.
-     *
-     * @param number The lower bound
-     * @return The {@link Query}
      */
     @Nonnull
-    public Query gt(Object number) {
-      Preconditions.checkNotNull(number, "value can't be null.");
-      query.criteria.add(GreaterThanCriteria.create(query.key, number));
+    public <T extends Comparable<T>> Query greaterThan(T lowerBound) {
+      Preconditions.checkNotNull(lowerBound, "lowerBound can't be null.");
+      query.criteria.add(GreaterThanCriteria.create(query.key, lowerBound));
       return query;
     }
 
     /**
      * Adds a {@link GreaterThanOrEqualCriteria} to the {@link Query}.
-     *
-     * @param number The lower bound
-     * @return The {@link Query}
      */
     @Nonnull
-    public Query gte(Object number) {
-      Preconditions.checkNotNull(number, "value can't be null.");
-      query.criteria.add(GreaterThanOrEqualCriteria.create(query.key, number));
+    public <T extends Comparable<T>> Query greaterThanOrEqual(T lowerBound) {
+      Preconditions.checkNotNull(lowerBound, "value can't be null.");
+      query.criteria.add(GreaterThanOrEqualCriteria.create(query.key, lowerBound));
       return query;
     }
 
     /**
      * Adds a {@link BetweenCriteria} to the {@link Query}. Warning: This only works for some
      * databases.
-     *
-     * @param lowerBound The lower bound of the {@link BetweenCriteria}
-     * @param upperBound The upper bound of the {@link BetweenCriteria}
-     * @return The {@link Query}
      */
     @Nonnull
-    public Query between(Object lowerBound, Object upperBound) {
+    public <T extends Comparable<T>> Query between(T lowerBound, T upperBound) {
       Preconditions.checkNotNull(lowerBound, "lowerBound can't be null.");
       Preconditions.checkNotNull(upperBound, "upperBound can't be null.");
       query.criteria.add(BetweenCriteria.create(query.key, lowerBound, upperBound));
@@ -195,9 +173,6 @@ public final class Query {
     /**
      * Adds a {@link BetweenCriteria} to the {@link Query}. Warning: This only works for some
      * databases.
-     *
-     * @param pattern The {@link Pattern RegEx pattern}
-     * @return The {@link Query}
      */
     @Nonnull
     public Query regex(Pattern pattern) {
@@ -209,9 +184,6 @@ public final class Query {
     /**
      * Adds a {@link BetweenCriteria} to the {@link Query}. Warning: This only works for some
      * databases.
-     *
-     * @param pattern The {@link Pattern RegEx pattern}
-     * @return The {@link Query}
      */
     @Nonnull
     public Query like(String pattern) {
