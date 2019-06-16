@@ -97,6 +97,11 @@ public final class BetweenCriteria<T extends Comparable<T>> implements Criteria 
     Preconditions.checkNotNull(key, "key can't be null.");
     Preconditions.checkNotNull(lowerBound, "lowerBound can't be null.");
     Preconditions.checkNotNull(upperBound, "upperBound can't be null.");
+
+    if (lowerBound.compareTo(upperBound) > 0) {
+      throw new IllegalArgumentException("The lower bound must be lower than the upper bound.");
+    }
+
     return new BetweenCriteria<>(key, lowerBound, upperBound);
   }
 }
