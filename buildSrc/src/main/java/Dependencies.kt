@@ -22,7 +22,7 @@ object Deps {
       const val engine = "org.junit.jupiter:junit-jupiter-engine:${Versions.Test.JUnit.engine}"
     }
 
-    const val assert4j = "org.assertj:assertj-core:${Versions.Test.assert4j}"
+    const val assertj = "org.assertj:assertj-core:${Versions.Test.assertj}"
   }
 }
 
@@ -49,6 +49,6 @@ object Versions {
       const val engine = "5.3.1"
     }
 
-    const val assert4j = "3.11.1"
+    const val assertj = "3.11.1"
   }
 }
