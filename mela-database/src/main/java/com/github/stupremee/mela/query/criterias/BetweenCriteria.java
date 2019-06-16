@@ -13,14 +13,14 @@ import javax.annotation.Nonnull;
  * @author Stu
  * @since 10.06.19
  */
-public final class BetweenCriteria implements Criteria {
+public final class BetweenCriteria<T extends Comparable<T>> implements Criteria {
 
   private final String key;
-  private final Object lowerBound;
-  private final Object upperBound;
+  private final T lowerBound;
+  private final T upperBound;
 
 
-  private BetweenCriteria(String key, Object lowerBound, Object upperBound) {
+  private BetweenCriteria(String key, T lowerBound, T upperBound) {
     this.key = key;
     this.lowerBound = lowerBound;
     this.upperBound = upperBound;
@@ -32,7 +32,7 @@ public final class BetweenCriteria implements Criteria {
    * @return The lower bound
    */
   @Nonnull
-  public Object getLowerBound() {
+  public T getLowerBound() {
     return lowerBound;
   }
 
@@ -42,7 +42,7 @@ public final class BetweenCriteria implements Criteria {
    * @return The upper bound
    */
   @Nonnull
-  public Object getUpperBound() {
+  public T getUpperBound() {
     return upperBound;
   }
 
@@ -93,11 +93,10 @@ public final class BetweenCriteria implements Criteria {
   /**
    * Static factory method to create a new {@link BetweenCriteria}.
    */
-  public static Criteria create(String key, Object lowerBound, Object upperBound) {
+  public static <T extends Comparable<T>> Criteria create(String key, T lowerBound, T upperBound) {
     Preconditions.checkNotNull(key, "key can't be null.");
     Preconditions.checkNotNull(lowerBound, "lowerBound can't be null.");
     Preconditions.checkNotNull(upperBound, "upperBound can't be null.");
-    return new BetweenCriteria(key, lowerBound, upperBound);
+    return new BetweenCriteria<>(key, lowerBound, upperBound);
   }
-
 }
