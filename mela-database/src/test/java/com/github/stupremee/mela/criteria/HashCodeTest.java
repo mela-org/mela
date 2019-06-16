@@ -13,22 +13,22 @@ import org.junit.jupiter.api.Test;
  * @since 16.06.19
  */
 @SuppressWarnings("WeakerAccess")
-public class EqualsTest {
+public class HashCodeTest {
 
   @Test
-  public void twoCriteriaShouldMatch() {
-    Criteria one = EqualsCriteria.create("something", 1337);
+  public void twoCriteriaMatchHashCode() {
+    Criteria one = EqualsCriteria.create("something", 1337L);
     Criteria two = EqualsCriteria.create("something", 1337);
 
-    assertThat(one).isEqualTo(two);
+    assertThat(one.hashCode()).isEqualTo(two.hashCode());
   }
 
   @Test
-  public void twoCriteriaShouldNotMatch() {
-    Criteria one = EqualsCriteria.create("something", 1337);
-    Criteria two = EqualsCriteria.create("something", 1337L);
+  public void twoCriteriaNotMatchHashCode() {
+    Criteria one = EqualsCriteria.create("somethingg", 1337);
+    Criteria two = EqualsCriteria.create("something", 1337);
 
-    assertThat(one).isNotEqualTo(two);
+    assertThat(one.hashCode()).isNotEqualTo(two.hashCode());
   }
 
 }
