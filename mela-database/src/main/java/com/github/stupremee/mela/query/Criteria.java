@@ -11,14 +11,12 @@ public interface Criteria {
   /**
    * Returns the key of this {@link Criteria}.
    *
-   * @return The key name
+   * @return The name of the key
    */
   String getKey();
 
   /**
    * Visits this criteria via the given {@link CriteriaVisitor}.
-   *
-   * @param visitor The visitor to visit
    */
   void accept(CriteriaVisitor visitor);
 

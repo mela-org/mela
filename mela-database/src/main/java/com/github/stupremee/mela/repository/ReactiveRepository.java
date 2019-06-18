@@ -16,15 +16,13 @@ public interface ReactiveRepository<IdentifierT, EntityT> {
   /**
    * Finds all entities that match the given query.
    *
-   * @param query The {@link Query}
-   * @return The entities in a {@link Flux}
+   * @return A {@link Flux} containing all matched entities
    */
   Flux<EntityT> query(Query query);
 
   /**
    * Finds the first entity that matches the given query.
    *
-   * @param query The {@link Query}
    * @return A {@link Mono} that contains the entity
    */
   Mono<EntityT> queryFirst(Query query);
@@ -32,7 +30,6 @@ public interface ReactiveRepository<IdentifierT, EntityT> {
   /**
    * Finds the entity with the given id.
    *
-   * @param id The id
    * @return A {@link Mono} containing the entity
    */
   Mono<EntityT> findWithId(IdentifierT id);
@@ -47,7 +44,6 @@ public interface ReactiveRepository<IdentifierT, EntityT> {
   /**
    * Deletes all entities that match the query.
    *
-   * @param query The {@link Query}
    * @return A {@link Mono} that completes when all entities are deleted
    */
   Mono<Void> delete(Query query);
@@ -55,7 +51,6 @@ public interface ReactiveRepository<IdentifierT, EntityT> {
   /**
    * Deletes the first entity that matches the given query.
    *
-   * @param query The {@link Query}
    * @return A {@link Mono} that completes when the entity is deleted
    */
   Mono<Void> deleteFirst(Query query);
@@ -63,7 +58,6 @@ public interface ReactiveRepository<IdentifierT, EntityT> {
   /**
    * Deletes the entity with the given id.
    *
-   * @param id The id
    * @return A {@link Mono} that completes when the entity is deleted
    */
   Mono<Void> deleteWithId(IdentifierT id);
@@ -78,8 +72,6 @@ public interface ReactiveRepository<IdentifierT, EntityT> {
   /**
    * Replaces the entity with the given id with the given entity.
    *
-   * @param id The id
-   * @param entity The entity
    * @return A {@link Mono} that completes when the entity is replaced
    */
   Mono<Void> replace(IdentifierT id, EntityT entity);
