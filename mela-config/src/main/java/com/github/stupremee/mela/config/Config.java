@@ -1,5 +1,7 @@
 package com.github.stupremee.mela.config;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.OptionalDouble;
@@ -103,5 +105,35 @@ public interface Config {
    * @return A {@link Collection} containing all elements or none if the value was invalid or absent
    */
   Collection<Long> getLongList(String path);
+
+  /**
+   * Tries to get the {@link BigInteger} at the dotted path.
+   *
+   * @return An {@link Optional} that is empty if the value is absent or the value can't be parsed
+   *     to a {@link BigInteger}
+   */
+  Optional<BigInteger> getBigInteger(String path);
+
+  /**
+   * Tries to get a {@link Collection BigInteger list} at the dotted path.
+   *
+   * @return A {@link Collection} containing all elements or none if the value was invalid or absent
+   */
+  Collection<BigInteger> getBigIntegerList(String path);
+
+  /**
+   * Tries to get the {@link BigDecimal} at the dotted path.
+   *
+   * @return An {@link Optional} that is empty if the value is absent or the value can't be parsed
+   *     to a {@link BigDecimal}
+   */
+  Optional<BigDecimal> getBigDecimal(String path);
+
+  /**
+   * Tries to get a {@link Collection BigInteger list} at the dotted path.
+   *
+   * @return A {@link Collection} containing all elements or none if the value was invalid or absent
+   */
+  Collection<BigDecimal> getBigDecimalList(String path);
 
 }
