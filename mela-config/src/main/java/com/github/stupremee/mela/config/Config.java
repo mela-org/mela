@@ -17,21 +17,6 @@ import java.util.OptionalLong;
 public interface Config {
 
   /**
-   * Tries to get the {@link Object} at the dotted path.
-   *
-   * @return An {@link Optional} that is empty if the value is absent or the value can't be parsed
-   *     to a {@link Object}
-   */
-  Optional<Object> getObject(String path);
-
-  /**
-   * Tries to get a {@link Collection Object list} at the dotted path.
-   *
-   * @return A {@link Collection} containing all elements or none if the value was invalid or absent
-   */
-  Collection<Object> getObjectList(String path);
-
-  /**
    * Tries to get the {@link String} at the dotted path.
    *
    * @return An {@link Optional} that is empty if the value is absent or the value can't be parsed
