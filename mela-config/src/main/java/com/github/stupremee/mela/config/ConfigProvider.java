@@ -1,6 +1,9 @@
 package com.github.stupremee.mela.config;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Path;
 
 /**
@@ -12,16 +15,60 @@ import java.nio.file.Path;
 public interface ConfigProvider {
 
   /**
-   * Loads a config from the given {@link File} by mapping the config to the given type.
-   *
-   * @return The config as the given type
-   */
-  <T> T load(File file, Class<T> configType);
-
-  /**
    * Loads a config from the given {@link Path} by mapping the config to the given type.
    *
    * @return The config as the given type
    */
-  <T> T load(Path path, Class<T> configType);
+  default <T> T parse(Path path, Class<T> configType) {
+    return parse(path.toFile(), configType);
+  }
+
+  /**
+   * Loads a config from the given {@link File} by mapping the config to the given type.
+   *
+   * @return The config as the given type
+   */
+  default <T> T parse(File file, Class<T> configType) {
+    try (InputStream input = new FileInputStream(file)) {
+      return parse(input, configType);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  /**
+   * Loads a config from the given {@link File} by mapping the config to the given type.
+   *
+   * @return The config as the given type
+   */
+  <T> T parse(InputStream input, Class<T> configType);
+
+  /**
+   * Loads a config from the given {@link Path}.
+   *
+   * @return The {@link Config}
+   */
+  default Config load(Path path) {
+    return load(path.toFile());
+  }
+
+  /**
+   * Loads a config from the given {@link File}.
+   *
+   * @return The {@link Config}
+   */
+  default Config load(File file) {
+    try (InputStream input = new FileInputStream(file)) {
+      return load(input);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  /**
+   * Loads a config from the given {@link Path}.
+   *
+   * @return The {@link Config}
+   */
+  Config load(InputStream input);
 }
