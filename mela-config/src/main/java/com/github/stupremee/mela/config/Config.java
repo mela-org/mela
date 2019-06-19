@@ -1,8 +1,6 @@
 package com.github.stupremee.mela.config;
 
-import com.github.stupremee.mela.config.exceptions.InvalidTypeException;
-import java.time.Duration;
-import java.time.Period;
+import java.time.OffsetDateTime;
 import java.util.Optional;
 
 /**
@@ -14,53 +12,74 @@ import java.util.Optional;
 public interface Config {
 
   /**
-   * Tries to get the {@link Long} at the dotted path.
+   * Tries to get the {@link Object} at the dotted path.
    *
-   * @throws InvalidTypeException if the type is not a {@link Long}
+   * @return An {@link Optional} that is empty if the value is absent or the value can't be parsed
+   *     to a {@link Long}
    */
   Optional<Long> getLong(String path);
-  /**
-   * Tries to get the {@link Short} at the dotted path.
-   *
-   * @throws InvalidTypeException if the type is not a {@link Short}
-   */
-  Optional<Short> getShort(String path);
+
   /**
    * Tries to get the {@link Object} at the dotted path.
    *
-   * @throws InvalidTypeException if the type is not a {@link Object}
+   * @return An {@link Optional} that is empty if the value is absent or the value can't be parsed
+   *     to a {@link Short}
+   */
+  Optional<Short> getShort(String path);
+
+  /**
+   * Tries to get the {@link Object} at the dotted path.
+   *
+   * @return An {@link Optional} that is empty if the value is absent or the value can't be parsed
+   *     to a {@link Object}
    */
   Optional<Object> getObject(String path);
+
   /**
-   * Tries to get the {@link String} at the dotted path.
+   * Tries to get the {@link Object} at the dotted path.
    *
-   * @throws InvalidTypeException if the type is not a {@link String}
+   * @return An {@link Optional} that is empty if the value is absent or the value can't be parsed
+   *     to a {@link String}
    */
   Optional<String> getString(String path);
+
   /**
-   * Tries to get the {@link Integer} at the dotted path.
+   * Tries to get the {@link Object} at the dotted path.
    *
-   * @throws InvalidTypeException if the type is not a {@link Integer}
+   * @return An {@link Optional} that is empty if the value is absent or the value can't be parsed
+   *     to a {@link Integer}
    */
   Optional<Integer> getInteger(String path);
+
   /**
-   * Tries to get the {@link Number} at the dotted path.
+   * Tries to get the {@link Object} at the dotted path.
    *
-   * @throws InvalidTypeException if the type is not a {@link Number}
+   * @return An {@link Optional} that is empty if the value is absent or the value can't be parsed
+   *     to a {@link Number}
    */
   Optional<Number> getNumber(String path);
-  /**
-   * Tries to get the {@link Duration} at the dotted path.
-   *
-   * @throws InvalidTypeException if the type is not a {@link Duration}
-   */
-  Optional<Duration> getDuration(String path);
-  /**
-   * Tries to get the {@link Period} at the dotted path.
-   *
-   * @throws InvalidTypeException if the type is not a {@link Period}
-   */
-  Optional<Period> getPeriod(String path);
 
+  /**
+   * Tries to get the {@link Object} at the dotted path.
+   *
+   * @return An {@link Optional} that is empty if the value is absent or the value can't be parsed
+   *     to a {@link OffsetDateTime}
+   */
+  Optional<OffsetDateTime> getOffsetDateTime(String path);
 
+  /**
+   * Tries to get the {@link Object} at the dotted path.
+   *
+   * @return An {@link Optional} that is empty if the value is absent or the value can't be parsed
+   *     to a {@link Double}
+   */
+  Optional<Double> getDouble(String path);
+
+  /**
+   * Tries to get the {@link Object} at the dotted path.
+   *
+   * @return An {@link Optional} that is empty if the value is absent or the value can't be parsed
+   *     to a {@link Float}
+   */
+  Optional<Float> getFloat(String path);
 }
