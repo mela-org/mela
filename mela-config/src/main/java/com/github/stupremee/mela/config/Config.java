@@ -1,7 +1,10 @@
 package com.github.stupremee.mela.config;
 
-import java.time.OffsetDateTime;
+import java.util.Collection;
 import java.util.Optional;
+import java.util.OptionalDouble;
+import java.util.OptionalInt;
+import java.util.OptionalLong;
 
 /**
  * https://github.com/Stupremee
@@ -15,28 +18,19 @@ public interface Config {
    * Tries to get the {@link Object} at the dotted path.
    *
    * @return An {@link Optional} that is empty if the value is absent or the value can't be parsed
-   *     to a {@link Long}
-   */
-  Optional<Long> getLong(String path);
-
-  /**
-   * Tries to get the {@link Object} at the dotted path.
-   *
-   * @return An {@link Optional} that is empty if the value is absent or the value can't be parsed
-   *     to a {@link Short}
-   */
-  Optional<Short> getShort(String path);
-
-  /**
-   * Tries to get the {@link Object} at the dotted path.
-   *
-   * @return An {@link Optional} that is empty if the value is absent or the value can't be parsed
    *     to a {@link Object}
    */
   Optional<Object> getObject(String path);
 
   /**
-   * Tries to get the {@link Object} at the dotted path.
+   * Tries to get a {@link Collection Object list} at the dotted path.
+   *
+   * @return A {@link Collection} containing all elements or none if the value was invalid or absent
+   */
+  Collection<Object> getObjectList(String path);
+
+  /**
+   * Tries to get the {@link String} at the dotted path.
    *
    * @return An {@link Optional} that is empty if the value is absent or the value can't be parsed
    *     to a {@link String}
@@ -44,15 +38,14 @@ public interface Config {
   Optional<String> getString(String path);
 
   /**
-   * Tries to get the {@link Object} at the dotted path.
+   * Tries to get a {@link Collection String list} at the dotted path.
    *
-   * @return An {@link Optional} that is empty if the value is absent or the value can't be parsed
-   *     to a {@link Integer}
+   * @return A {@link Collection} containing all elements or none if the value was invalid or absent
    */
-  Optional<Integer> getInteger(String path);
+  Collection<String> getStringList(String path);
 
   /**
-   * Tries to get the {@link Object} at the dotted path.
+   * Tries to get the {@link Number} at the dotted path.
    *
    * @return An {@link Optional} that is empty if the value is absent or the value can't be parsed
    *     to a {@link Number}
@@ -60,26 +53,55 @@ public interface Config {
   Optional<Number> getNumber(String path);
 
   /**
-   * Tries to get the {@link Object} at the dotted path.
+   * Tries to get a {@link Collection Number list} at the dotted path.
    *
-   * @return An {@link Optional} that is empty if the value is absent or the value can't be parsed
-   *     to a {@link OffsetDateTime}
+   * @return A {@link Collection} containing all elements or none if the value was invalid or absent
    */
-  Optional<OffsetDateTime> getOffsetDateTime(String path);
+  Collection<Number> getNumberList(String path);
 
   /**
-   * Tries to get the {@link Object} at the dotted path.
+   * Tries to get the {@link Integer} at the dotted path.
+   *
+   * @return An {@link Optional} that is empty if the value is absent or the value can't be parsed
+   *     to a {@link Integer}
+   */
+  OptionalInt getInteger(String path);
+
+  /**
+   * Tries to get a {@link Collection Integer list} at the dotted path.
+   *
+   * @return A {@link Collection} containing all elements or none if the value was invalid or absent
+   */
+  Collection<Integer> getIntegerList(String path);
+
+  /**
+   * Tries to get the {@link Double} at the dotted path.
    *
    * @return An {@link Optional} that is empty if the value is absent or the value can't be parsed
    *     to a {@link Double}
    */
-  Optional<Double> getDouble(String path);
+  OptionalDouble getDouble(String path);
 
   /**
-   * Tries to get the {@link Object} at the dotted path.
+   * Tries to get a {@link Collection Double list} at the dotted path.
+   *
+   * @return A {@link Collection} containing all elements or none if the value was invalid or absent
+   */
+  Collection<Double> getDoubleList(String path);
+
+  /**
+   * Tries to get the {@link Long} at the dotted path.
    *
    * @return An {@link Optional} that is empty if the value is absent or the value can't be parsed
-   *     to a {@link Float}
+   *     to a {@link Long}
    */
-  Optional<Float> getFloat(String path);
+  OptionalLong getLong(String path);
+
+  /**
+   * Tries to get a {@link Collection Long list} at the dotted path.
+   *
+   * @return A {@link Collection} containing all elements or none if the value was invalid or absent
+   */
+  Collection<Long> getLongList(String path);
+
 }
