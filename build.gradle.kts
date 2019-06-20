@@ -80,6 +80,7 @@ subprojects {
 
     spotbugs {
       toolVersion = "4.0.0-beta1"
+      spotbugsTest.get().enabled = false
     }
 
     spotbugsMain {
