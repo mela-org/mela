@@ -1,9 +1,11 @@
 package com.github.stupremee.mela.config;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 
 /**
@@ -13,6 +15,16 @@ import java.nio.file.Path;
  * @since 18.06.19
  */
 public interface ConfigProvider {
+
+  /**
+   * Loads a config from the given {@link String} by mapping the config to the given type.
+   *
+   * @return The config as the given type
+   */
+  default <T> T parse(String content, Class<T> configType) {
+    InputStream input = new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8));
+    return parse(input, configType);
+  }
 
   /**
    * Loads a config from the given {@link Path} by mapping the config to the given type.
@@ -42,6 +54,16 @@ public interface ConfigProvider {
    * @return The config as the given type
    */
   <T> T parse(InputStream input, Class<T> configType);
+
+  /**
+   * Loads a config from the given {@link Path}.
+   *
+   * @return The {@link Config}
+   */
+  default Config load(String content) {
+    InputStream input = new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8));
+    return load(input);
+  }
 
   /**
    * Loads a config from the given {@link Path}.

@@ -31,14 +31,13 @@ final class JsonConfig implements Config {
   public Optional<String> getString(String path) {
     return getNodeAtPath(path)
         .filter(JsonNode::isTextual)
-        .map(JsonNode::textValue);
+        .map(JsonNode::asText);
   }
 
   @Override
   public Collection<String> getStringList(String path) {
     return getListAtPath(path)
-        .filter(JsonNode::isTextual)
-        .map(JsonNode::textValue)
+        .map(JsonNode::asText)
         .collect(Collectors.toUnmodifiableList());
   }
 
@@ -60,16 +59,16 @@ final class JsonConfig implements Config {
   @Override
   public OptionalInt getInteger(String path) {
     Optional<Integer> number = getNodeAtPath(path)
-        .filter(JsonNode::isInt)
-        .map(JsonNode::intValue);
+        .filter(JsonNode::canConvertToInt)
+        .map(JsonNode::asInt);
     return number.isEmpty() ? OptionalInt.empty() : OptionalInt.of(number.get());
   }
 
   @Override
   public Collection<Integer> getIntegerList(String path) {
     return getListAtPath(path)
-        .filter(JsonNode::isInt)
-        .map(JsonNode::intValue)
+        .filter(JsonNode::canConvertToInt)
+        .map(JsonNode::asInt)
         .collect(Collectors.toUnmodifiableList());
   }
 
@@ -77,7 +76,7 @@ final class JsonConfig implements Config {
   public OptionalDouble getDouble(String path) {
     Optional<Double> number = getNodeAtPath(path)
         .filter(JsonNode::isDouble)
-        .map(JsonNode::doubleValue);
+        .map(JsonNode::asDouble);
     return number.isEmpty() ? OptionalDouble.empty() : OptionalDouble.of(number.get());
   }
 
@@ -85,53 +84,53 @@ final class JsonConfig implements Config {
   public Collection<Double> getDoubleList(String path) {
     return getListAtPath(path)
         .filter(JsonNode::isDouble)
-        .map(JsonNode::doubleValue)
+        .map(JsonNode::asDouble)
         .collect(Collectors.toUnmodifiableList());
   }
 
   @Override
   public OptionalLong getLong(String path) {
     Optional<Long> number = getNodeAtPath(path)
-        .filter(JsonNode::isLong)
-        .map(JsonNode::longValue);
+        .filter(JsonNode::canConvertToLong)
+        .map(JsonNode::asLong);
     return number.isEmpty() ? OptionalLong.empty() : OptionalLong.of(number.get());
   }
 
   @Override
   public Collection<Long> getLongList(String path) {
     return getListAtPath(path)
-        .filter(JsonNode::isLong)
-        .map(JsonNode::longValue)
+        .filter(JsonNode::canConvertToLong)
+        .map(JsonNode::asLong)
         .collect(Collectors.toUnmodifiableList());
   }
 
   @Override
   public Optional<BigInteger> getBigInteger(String path) {
     return getNodeAtPath(path)
-        .filter(JsonNode::isBigInteger)
-        .map(JsonNode::bigIntegerValue);
+        .map(JsonNode::bigIntegerValue)
+        .filter(number -> !number.equals(BigInteger.ZERO));
   }
 
   @Override
   public Collection<BigInteger> getBigIntegerList(String path) {
     return getListAtPath(path)
-        .filter(JsonNode::isBigInteger)
         .map(JsonNode::bigIntegerValue)
+        .filter(number -> !number.equals(BigInteger.ZERO))
         .collect(Collectors.toUnmodifiableList());
   }
 
   @Override
   public Optional<BigDecimal> getBigDecimal(String path) {
     return getNodeAtPath(path)
-        .filter(JsonNode::isBigDecimal)
-        .map(JsonNode::decimalValue);
+        .map(JsonNode::decimalValue)
+        .filter(number -> !number.equals(BigDecimal.ZERO));
   }
 
   @Override
   public Collection<BigDecimal> getBigDecimalList(String path) {
     return getListAtPath(path)
-        .filter(JsonNode::isBigDecimal)
         .map(JsonNode::decimalValue)
+        .filter(number -> !number.equals(BigDecimal.ZERO))
         .collect(Collectors.toUnmodifiableList());
   }
 
