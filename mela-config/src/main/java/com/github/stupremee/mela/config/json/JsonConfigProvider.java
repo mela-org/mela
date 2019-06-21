@@ -14,7 +14,7 @@ import java.io.InputStream;
  * @author Stu
  * @since 21.06.19
  */
-public final class JsonConfigProvider implements Provider<Config> {
+final class JsonConfigProvider implements Provider<Config> {
 
   private final ObjectMapper mapper;
   private final InputStream input;
