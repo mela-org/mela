@@ -18,6 +18,8 @@ public interface Config {
 
   /**
    * Tries to map the object at the given path to the given type.
+   * <bold>Warning:</bold> Only fields annotated with {@link com.github.stupremee.mela.config.annotations.ConfigProperty}
+   * will be mapped.
    *
    * @return An {@link Optional} that is empty if the value is absent or the value can't be parsed
    *     to the given type
