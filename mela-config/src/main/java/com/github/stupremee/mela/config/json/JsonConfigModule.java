@@ -1,7 +1,6 @@
 package com.github.stupremee.mela.config.json;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.stupremee.mela.config.ConfigProvider;
 import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
 
@@ -19,10 +18,6 @@ public final class JsonConfigModule extends AbstractModule {
   @Override
   protected void configure() {
     bind(ObjectMapper.class)
-        .in(Singleton.class);
-
-    bind(ConfigProvider.class)
-        .to(JsonConfigProvider.class)
         .in(Singleton.class);
   }
 

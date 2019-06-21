@@ -28,6 +28,11 @@ final class JsonConfig implements Config {
   }
 
   @Override
+  public <T> Optional<T> getAs(String path, Class<T> type) {
+    return Optional.empty();
+  }
+
+  @Override
   public Optional<String> getString(String path) {
     return getNodeAtPath(path)
         .filter(JsonNode::isTextual)
