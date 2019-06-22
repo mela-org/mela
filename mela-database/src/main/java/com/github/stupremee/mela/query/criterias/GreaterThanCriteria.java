@@ -8,9 +8,7 @@ import com.google.common.base.Preconditions;
 import javax.annotation.Nonnull;
 
 /**
- * https://github.com/Stupremee
- *
- * @author Stu
+ * @author Stu (https://github.com/Stupremee)
  * @since 10.06.19
  */
 public final class GreaterThanCriteria<T extends Comparable<T>> implements Criteria {

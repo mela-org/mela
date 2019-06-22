@@ -13,6 +13,8 @@ object Deps {
 
     object Dataformat {
       const val yaml = "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:${Versions.Jackson.Dataformat.yaml}"
+      const val xml = "com.fasterxml.jackson.dataformat:jackson-dataformat-xml:${Versions.Jackson.Dataformat.xml}"
+
     }
   }
 
@@ -40,6 +42,7 @@ object Versions {
 
     object Dataformat {
       const val yaml = "2.9.9"
+      const val xml = "2.9.9"
     }
   }
 

@@ -9,6 +9,7 @@ plugins {
 group = "com.github.stupremee"
 version = "1.0.0"
 
+
 subprojects {
   apply(plugin = "java-library")
   apply(plugin = "pmd")
@@ -55,6 +56,12 @@ subprojects {
       add("archives", sourcesJar)
     }
 
+    javadoc {
+      isFailOnError = false
+
+      options.encoding = "UTF-8"
+    }
+
     build {
       dependsOn(jar)
       dependsOn(sourcesJar)
@@ -80,6 +87,7 @@ subprojects {
 
     spotbugs {
       toolVersion = "4.0.0-beta1"
+      spotbugsTest.get().enabled = false
     }
 
     spotbugsMain {

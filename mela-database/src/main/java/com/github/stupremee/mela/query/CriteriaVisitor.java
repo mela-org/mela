@@ -11,9 +11,7 @@ import com.github.stupremee.mela.query.criterias.NotEqualsCriteria;
 import com.github.stupremee.mela.query.criterias.RegExCriteria;
 
 /**
- * https://github.com/Stupremee
- *
- * @author Stu
+ * @author Stu (https://github.com/Stupremee)
  * @since 10.06.19
  */
 public interface CriteriaVisitor {

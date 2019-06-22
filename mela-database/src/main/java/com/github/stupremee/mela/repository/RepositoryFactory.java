@@ -1,9 +1,7 @@
 package com.github.stupremee.mela.repository;
 
 /**
- * https://github.com/Stupremee
- *
- * @author Stu
+ * @author Stu (https://github.com/Stupremee)
  * @since 11.06.19
  */
 public interface RepositoryFactory {

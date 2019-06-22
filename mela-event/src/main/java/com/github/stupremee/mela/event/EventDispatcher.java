@@ -27,9 +27,7 @@ import reactor.util.Logger;
 import reactor.util.Loggers;
 
 /**
- * https://github.com/Stupremee
- *
- * @author Stu
+ * @author Stu (https://github.com/Stupremee)
  * @since 05.05.19
  */
 public final class EventDispatcher {
