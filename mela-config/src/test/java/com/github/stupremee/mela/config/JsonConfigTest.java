@@ -10,7 +10,7 @@ import java.io.InputStream;
  * @author Stu (https://github.com/Stupremee)
  * @since 22.06.19
  */
-class JsonConfigTest extends BasicConfigTest {
+class JsonConfigTest extends AbstractConfigTest {
 
   private static final Config config;
 

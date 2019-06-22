@@ -8,11 +8,11 @@ import org.junit.jupiter.api.Test;
  * @author Stu (https://github.com/Stupremee)
  * @since 22.06.19
  */
-abstract class BasicConfigTest {
+abstract class AbstractConfigTest {
 
   private final Config config;
 
-  BasicConfigTest(Config config) {
+  AbstractConfigTest(Config config) {
     this.config = config;
   }
 
@@ -92,5 +92,17 @@ abstract class BasicConfigTest {
 
     assertThat(config.getDoubleList("some.doubles"))
         .containsExactly(3.3, 4.4, 7.7, 8.8);
+  }
+
+  @Test
+  void mappingOperation() {
+    TestObject stu = new TestObject(12345, "Stu", 701);
+    TestObject grugor = new TestObject(8765, "Grugor", 702);
+
+    assertThat(config.getAs("rootObject", TestObject.class).orElse(null))
+        .isEqualTo(stu);
+
+    assertThat(config.getAs("some.object", TestObject.class).orElse(null))
+        .isEqualTo(grugor);
   }
 }
