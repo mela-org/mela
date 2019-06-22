@@ -26,8 +26,6 @@ public final class BetweenCriteria<T extends Comparable<T>> implements Criteria 
 
   /**
    * Returns the lower bound of this between criteria.
-   *
-   * @return The lower bound
    */
   @Nonnull
   public T getLowerBound() {
@@ -36,8 +34,6 @@ public final class BetweenCriteria<T extends Comparable<T>> implements Criteria 
 
   /**
    * Returns the upper bound of this between criteria.
-   *
-   * @return The upper bound
    */
   @Nonnull
   public T getUpperBound() {

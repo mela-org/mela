@@ -9,6 +9,8 @@ public interface RepositoryFactory {
   /**
    * Creates a new {@link ReactiveRepository}.
    *
+   * @param entityClass The class of the entity that should be stored in the repository
+   * @param identifierClass The unique identifier that should be used
    * @return The created {@link ReactiveRepository}
    */
   <IdentifierT, EntityT> ReactiveRepository<IdentifierT, EntityT> createReactiveRepository(
