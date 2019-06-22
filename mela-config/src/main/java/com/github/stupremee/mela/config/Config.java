@@ -1,6 +1,5 @@
 package com.github.stupremee.mela.config;
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Optional;

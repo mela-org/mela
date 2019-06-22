@@ -5,7 +5,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.github.stupremee.mela.config.ConfigProvider;
-import com.github.stupremee.mela.config.json.JsonConfigProvider;
 import java.io.File;
 import java.io.InputStream;
 

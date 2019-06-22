@@ -37,7 +37,7 @@ final class JacksonConfig implements Config {
           try {
             return mapper.treeToValue(node, type);
           } catch (JsonProcessingException cause) {
-            throw new RuntimeException(cause);
+            throw new RuntimeException("Failed to map a object to " + type.getSimpleName(), cause);
           }
         });
   }
