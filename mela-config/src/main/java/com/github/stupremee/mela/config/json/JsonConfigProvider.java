@@ -24,7 +24,7 @@ public abstract class JsonConfigProvider implements ConfigProvider {
    * Creates a {@link ConfigProvider} that will parse the content of the given {@link File} as
    * json.
    */
-  public static ConfigProvider ofFile(File file) {
+  public static ConfigProvider of(File file) {
     checkNotNull(file, "file can't be null.");
     return new JsonFileConfigProvider(file);
   }
@@ -32,7 +32,7 @@ public abstract class JsonConfigProvider implements ConfigProvider {
   /**
    * Creates a new {@link ConfigProvider} that will parse the given content as json.
    */
-  public static ConfigProvider ofContent(String content) {
+  public static ConfigProvider of(String content) {
     checkNotNull(content, "content can't be null.");
     return new JsonContentConfigProvider(content);
   }
