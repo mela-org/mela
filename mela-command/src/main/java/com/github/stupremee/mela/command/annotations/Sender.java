@@ -7,7 +7,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @author Stu <https://github.com/Stupremee>
+ * @author Stu (https://github.com/Stupremee)
  * @since 13.05.19
  */
 @Target(ElementType.PARAMETER)

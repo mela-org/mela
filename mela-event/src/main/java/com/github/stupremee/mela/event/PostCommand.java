@@ -7,7 +7,7 @@ import net.engio.mbassy.bus.publication.ISyncAsyncPublicationCommand;
 import reactor.core.publisher.FluxProcessor;
 
 /**
- * @author Stu <https://github.com/Stupremee>
+ * @author Stu (https://github.com/Stupremee)
  * @since 05.05.19
  */
 final class PostCommand<T extends Event> implements ISyncAsyncPublicationCommand {

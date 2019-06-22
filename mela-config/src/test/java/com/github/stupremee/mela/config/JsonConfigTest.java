@@ -7,7 +7,7 @@ import com.google.inject.Module;
 import java.io.InputStream;
 
 /**
- * @author Stu <https://github.com/Stupremee>
+ * @author Stu (https://github.com/Stupremee)
  * @since 22.06.19
  */
 class JsonConfigTest extends BasicConfigTest {

@@ -26,9 +26,9 @@ import reactor.scheduler.forkjoin.ForkJoinPoolScheduler;
 import reactor.util.Logger;
 import reactor.util.Loggers;
 
-/** *
- * @author Stu <https://github.com/Stupree>
- * @since (.+)
+/**
+ * @author Stu (https://github.com/Stupremee)
+ * @since 05.05.19
  */
 public final class EventDispatcher {
 

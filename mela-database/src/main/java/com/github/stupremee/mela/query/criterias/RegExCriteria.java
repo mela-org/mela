@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 import javax.annotation.Nonnull;
 
 /**
- * @author Stu <https://github.com/Stupremee>
+ * @author Stu (https://github.com/Stupremee)
  * @since 10.06.19
  */
 public final class RegExCriteria implements Criteria {

@@ -8,7 +8,7 @@ import com.google.common.base.Preconditions;
 import javax.annotation.Nonnull;
 
 /**
- * @author Stu <https://github.com/Stupremee>
+ * @author Stu (https://github.com/Stupremee)
  * @since 10.06.19
  */
 public final class LessThanOrEqualCriteria<T extends Comparable<T>> implements Criteria {

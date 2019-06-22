@@ -7,7 +7,7 @@ import com.github.stupremee.mela.query.criterias.EqualsCriteria;
 import org.junit.jupiter.api.Test;
 
 /**
- * @author Stu <https://github.com/Stupremee>
+ * @author Stu (https://github.com/Stupremee)
  * @since 16.06.19
  */
 @SuppressWarnings("WeakerAccess")

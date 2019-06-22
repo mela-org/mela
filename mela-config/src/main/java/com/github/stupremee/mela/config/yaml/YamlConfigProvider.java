@@ -9,7 +9,7 @@ import java.io.File;
 import java.io.InputStream;
 
 /**
- * @author Stu <https://github.com/Stupremee>
+ * @author Stu (https://github.com/Stupremee)
  * @since 22.06.19
  */
 public abstract class YamlConfigProvider implements ConfigProvider {

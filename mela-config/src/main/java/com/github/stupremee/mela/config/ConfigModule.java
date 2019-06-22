@@ -9,7 +9,7 @@ import com.google.inject.Singleton;
 import java.io.InputStream;
 
 /**
- * @author Stu <https://github.com/Stupremee>
+ * @author Stu (https://github.com/Stupremee)
  * @since 19.06.19
  */
 @SuppressWarnings({"unused"})

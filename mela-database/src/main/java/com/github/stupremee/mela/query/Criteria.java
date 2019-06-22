@@ -1,7 +1,7 @@
 package com.github.stupremee.mela.query;
 
 /**
- * @author Stu <https://github.com/Stupremee>
+ * @author Stu (https://github.com/Stupremee)
  * @since 10.06.19
  */
 public interface Criteria {
