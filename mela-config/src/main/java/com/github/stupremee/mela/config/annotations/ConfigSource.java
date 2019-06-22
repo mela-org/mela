@@ -7,7 +7,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * https://github.com/Stupremee
+ * Annotation that will bind a {@link java.io.InputStream} to the source of the config.
  *
  * @author Stu
  * @since 22.06.19

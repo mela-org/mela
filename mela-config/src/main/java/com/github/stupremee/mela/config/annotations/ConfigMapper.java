@@ -7,7 +7,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * https://github.com/Stupremee
+ * Annotation that is used to bind a {@link com.fasterxml.jackson.databind.ObjectMapper} to the
+ * mapper that will be used to parse configs.
  *
  * @author Stu
  * @since 22.06.19
