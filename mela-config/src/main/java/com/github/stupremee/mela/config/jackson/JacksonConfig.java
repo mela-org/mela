@@ -32,9 +32,9 @@ final class JacksonConfig implements Config {
   }
 
   @Override
-  public <T> Optional<T> getAs(String path, Class<T> type) {
+  public <T> T getAs(String path, Class<T> type) {
     try {
-      return Optional.of(mapper.treeToValue(node, type));
+      return mapper.treeToValue(node, type);
     } catch (JsonProcessingException cause) {
       throw new RuntimeException(cause);
     }
