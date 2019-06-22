@@ -7,9 +7,7 @@ import com.google.inject.Module;
 import java.io.InputStream;
 
 /**
- * https://github.com/Stupremee
- *
- * @author Stu
+ * @author Stu <https://github.com/Stupremee>
  * @since 22.06.19
  */
 class YamlConfigTest extends BasicConfigTest {

@@ -8,9 +8,7 @@ import java.util.OptionalInt;
 import java.util.OptionalLong;
 
 /**
- * https://github.com/Stupremee
- *
- * @author Stu
+ * @author Stu <https://github.com/Stupremee>
  * @since 18.06.19
  */
 public interface Config {

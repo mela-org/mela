@@ -5,9 +5,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 /**
- * https://github.com/Stupremee
- *
- * @author Stu
+ * @author Stu <https://github.com/Stupremee>
  * @since 22.06.19
  */
 final class YamlContentConfigProvider extends YamlConfigProvider {

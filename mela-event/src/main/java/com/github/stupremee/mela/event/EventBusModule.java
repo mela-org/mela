@@ -6,9 +6,7 @@ import net.engio.mbassy.bus.config.Feature;
 import net.engio.mbassy.bus.config.IBusConfiguration;
 
 /**
- * https://github.com/Stupremee
- *
- * @author Stu
+ * @author Stu <https://github.com/Stupremee>
  * @since 05.05.19
  */
 public final class EventBusModule extends AbstractModule {

@@ -16,9 +16,7 @@ import java.util.regex.Pattern;
 import javax.annotation.Nullable;
 
 /**
- * https://github.com/Stupremee
- *
- * @author Stu
+ * @author Stu <https://github.com/Stupremee>
  * @since 31.05.19
  */
 public final class RoleProvider implements Provider<Role> {

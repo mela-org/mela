@@ -15,9 +15,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * https://github.com/Stupremee
- *
- * @author Stu
+ * @author Stu <https://github.com/Stupremee>
  * @since 19.06.19
  */
 final class JacksonConfig implements Config {

@@ -4,9 +4,7 @@ import com.fasterxml.jackson.core.JsonFactory;
 import java.io.InputStream;
 
 /**
- * https://github.com/Stupremee
- *
- * @author Stu
+ * @author Stu <https://github.com/Stupremee>
  * @since 22.06.19
  */
 public interface ConfigProvider {

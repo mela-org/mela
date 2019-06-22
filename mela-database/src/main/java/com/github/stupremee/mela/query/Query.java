@@ -17,9 +17,7 @@ import java.util.regex.Pattern;
 import javax.annotation.Nonnull;
 
 /**
- * https://github.com/Stupremee
- *
- * @author Stu
+ * @author Stu <https://github.com/Stupremee>
  * @since 10.06.19
  */
 @SuppressWarnings("unused")

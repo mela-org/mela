@@ -55,6 +55,12 @@ subprojects {
       add("archives", sourcesJar)
     }
 
+    javadoc {
+      isFailOnError = false
+
+      options.encoding = "UTF-8"
+    }
+
     build {
       dependsOn(jar)
       dependsOn(sourcesJar)

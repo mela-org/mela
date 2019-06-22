@@ -17,9 +17,7 @@ import discord4j.core.object.entity.TextChannel;
 import discord4j.core.object.entity.User;
 
 /**
- * https://github.com/Stupremee
- *
- * @author Stu
+ * @author Stu <https://github.com/Stupremee>
  * @since 13.05.19
  */
 public final class DefaultCommandModule extends AbstractModule {
