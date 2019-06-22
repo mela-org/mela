@@ -9,6 +9,7 @@ plugins {
 group = "com.github.stupremee"
 version = "1.0.0"
 
+
 subprojects {
   apply(plugin = "java-library")
   apply(plugin = "pmd")
