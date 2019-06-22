@@ -1,7 +1,6 @@
-package com.github.stupremee.mela.config.json;
+package com.github.stupremee.mela.config;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.github.stupremee.mela.config.Config;
 import com.google.common.collect.Streams;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -19,11 +18,11 @@ import java.util.stream.Stream;
  * @author Stu
  * @since 19.06.19
  */
-final class JsonConfig implements Config {
+final class JacksonConfig implements Config {
 
   private final JsonNode node;
 
-  JsonConfig(JsonNode node) {
+  JacksonConfig(JsonNode node) {
     this.node = node;
   }
 
