@@ -3,6 +3,7 @@ package com.github.stupremee.mela.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.stupremee.mela.config.annotations.ConfigMapper;
 import com.github.stupremee.mela.config.annotations.ConfigSource;
+import com.github.stupremee.mela.config.jackson.JacksonConfigAssembler;
 import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
 import java.io.InputStream;
@@ -35,7 +36,7 @@ public final class ConfigModule extends AbstractModule {
         .in(Singleton.class);
 
     bind(Config.class)
-        .toProvider(JacksonConfigProvider.class)
+        .toProvider(JacksonConfigAssembler.class)
         .asEagerSingleton();
   }
 

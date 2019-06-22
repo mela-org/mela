@@ -1,7 +1,8 @@
-package com.github.stupremee.mela.config;
+package com.github.stupremee.mela.config.jackson;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.stupremee.mela.config.Config;
 import com.github.stupremee.mela.config.annotations.ConfigMapper;
 import com.github.stupremee.mela.config.annotations.ConfigSource;
 import com.google.inject.Inject;
@@ -16,13 +17,13 @@ import java.io.InputStream;
  * @author Stu
  * @since 21.06.19
  */
-final class JacksonConfigProvider implements Provider<Config> {
+public final class JacksonConfigAssembler implements Provider<Config> {
 
   private final ObjectMapper mapper;
   private final InputStream input;
 
   @Inject
-  JacksonConfigProvider(@ConfigMapper ObjectMapper mapper, @ConfigSource InputStream input) {
+  JacksonConfigAssembler(@ConfigMapper ObjectMapper mapper, @ConfigSource InputStream input) {
     this.mapper = mapper;
     this.input = input;
   }

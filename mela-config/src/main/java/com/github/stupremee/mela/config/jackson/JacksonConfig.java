@@ -1,6 +1,7 @@
-package com.github.stupremee.mela.config;
+package com.github.stupremee.mela.config.jackson;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.github.stupremee.mela.config.Config;
 import com.google.common.collect.Streams;
 import java.math.BigDecimal;
 import java.math.BigInteger;
