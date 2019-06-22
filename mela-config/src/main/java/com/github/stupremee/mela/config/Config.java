@@ -24,7 +24,7 @@ public interface Config {
    * @return An {@link Optional} that is empty if the value is absent or the value can't be parsed
    *     to the given type
    */
-  <T> T getAs(String path, Class<T> type);
+  <T> Optional<T> getAs(String path, Class<T> type);
 
   /**
    * Tries to get the {@link String} at the dotted path.
