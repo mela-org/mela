@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.databind.MappingJsonFactory;
 import com.github.stupremee.mela.config.ConfigProvider;
 import java.io.File;
+import java.io.InputStream;
 
 /**
  * https://github.com/Stupremee
@@ -18,6 +19,19 @@ public abstract class JsonConfigProvider implements ConfigProvider {
   @Override
   public final JsonFactory getJsonFactory() {
     return new MappingJsonFactory();
+  }
+
+  /**
+   * Creates a {@link ConfigProvider} that will parse the given {@link InputStream} as json.
+   */
+  public static ConfigProvider create(InputStream source) {
+    checkNotNull(source, "source can't be null.");
+    return new JsonConfigProvider() {
+      @Override
+      public InputStream getSource() {
+        return source;
+      }
+    };
   }
 
   /**

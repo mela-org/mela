@@ -18,8 +18,6 @@ public interface Config {
 
   /**
    * Tries to map the object at the given path to the given type.
-   * <bold>Warning:</bold> Only fields annotated with {@link com.github.stupremee.mela.config.annotations.ConfigProperty}
-   * will be mapped.
    *
    * @return An {@link Optional} that is empty if the value is absent or the value can't be parsed
    *     to the given type
@@ -115,20 +113,5 @@ public interface Config {
    * @return A {@link Collection} containing all elements or none if the value was invalid or absent
    */
   Collection<BigInteger> getBigIntegerList(String path);
-
-  /**
-   * Tries to get the {@link BigDecimal} at the dotted path.
-   *
-   * @return An {@link Optional} that is empty if the value is absent or the value can't be parsed
-   *     to a {@link BigDecimal}
-   */
-  Optional<BigDecimal> getBigDecimal(String path);
-
-  /**
-   * Tries to get a {@link Collection BigInteger list} at the dotted path.
-   *
-   * @return A {@link Collection} containing all elements or none if the value was invalid or absent
-   */
-  Collection<BigDecimal> getBigDecimalList(String path);
 
 }

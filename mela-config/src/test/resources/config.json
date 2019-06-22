@@ -1,0 +1,49 @@
+{
+  "someString": "something",
+  "someStrings": [
+    "some",
+    "strings",
+    "are",
+    "here"
+  ],
+  "someNumber": 1337,
+  "someNumbers": [
+    1, 3, 5, 7
+  ],
+  "someInt": 787,
+  "someInts": [
+    1, 2, 5, 6
+  ],
+  "someLong": 987654321,
+  "someLongs": [
+    11111, 22222, 55555, 66666
+  ],
+  "someDouble": 123.321,
+  "someDoubles": [
+    1.1, 2.2, 5.5, 6.6
+  ],
+  "some": {
+    "string": "some",
+    "strings": [
+      "some",
+      "more",
+      "strings"
+    ],
+    "number": 3173,
+    "numbers": [
+      2, 4, 6, 8
+    ],
+    "int": 123,
+    "ints": [
+      3, 4, 7, 8
+    ],
+    "long": 123456789,
+    "longs": [
+      3333333333, 4444444444, 7777777777, 8888888888
+    ],
+    "double": 321.123,
+    "doubles": [
+      3.3, 4.4, 7.7, 8.8
+    ]
+  }
+}

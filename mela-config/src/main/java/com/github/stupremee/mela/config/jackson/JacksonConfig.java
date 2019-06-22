@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.stupremee.mela.config.Config;
 import com.google.common.collect.Streams;
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Optional;
@@ -132,21 +131,6 @@ final class JacksonConfig implements Config {
     return getListAtPath(path)
         .map(JsonNode::bigIntegerValue)
         .filter(number -> !number.equals(BigInteger.ZERO))
-        .collect(Collectors.toUnmodifiableList());
-  }
-
-  @Override
-  public Optional<BigDecimal> getBigDecimal(String path) {
-    return getNodeAtPath(path)
-        .map(JsonNode::decimalValue)
-        .filter(number -> !number.equals(BigDecimal.ZERO));
-  }
-
-  @Override
-  public Collection<BigDecimal> getBigDecimalList(String path) {
-    return getListAtPath(path)
-        .map(JsonNode::decimalValue)
-        .filter(number -> !number.equals(BigDecimal.ZERO))
         .collect(Collectors.toUnmodifiableList());
   }
 
