@@ -32,7 +32,7 @@ public final class JacksonConfigAssembler implements Provider<Config> {
   public Config get() {
     try {
       JsonNode node = mapper.readTree(input);
-      return new JacksonConfig(node);
+      return new JacksonConfig(node, mapper);
     } catch (IOException cause) {
       throw new ProvisionException("Failed to get Config.", cause);
     }

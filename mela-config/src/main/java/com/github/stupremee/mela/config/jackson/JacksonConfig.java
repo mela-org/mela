@@ -1,6 +1,8 @@
 package com.github.stupremee.mela.config.jackson;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.stupremee.mela.config.Config;
 import com.google.common.collect.Streams;
 import java.math.BigDecimal;
@@ -22,14 +24,20 @@ import java.util.stream.Stream;
 final class JacksonConfig implements Config {
 
   private final JsonNode node;
+  private final ObjectMapper mapper;
 
-  JacksonConfig(JsonNode node) {
+  JacksonConfig(JsonNode node, ObjectMapper mapper) {
     this.node = node;
+    this.mapper = mapper;
   }
 
   @Override
   public <T> Optional<T> getAs(String path, Class<T> type) {
-    return Optional.empty();
+    try {
+      return Optional.of(mapper.treeToValue(node, type));
+    } catch (JsonProcessingException cause) {
+      throw new RuntimeException(cause);
+    }
   }
 
   @Override
