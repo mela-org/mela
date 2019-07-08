@@ -10,14 +10,18 @@ public interface SubscriberRegistry {
 
   /**
    * Registers the given {@code subscriber}.
+   *
+   * @throws IllegalArgumentException If the given {@link Subscriber} already is registered.
    */
   void register(Subscriber subscriber);
 
   /**
    * Unregisters the given {@code subscriber}. Whenever a event was posted, it will not call the
    * given {@link Subscriber}.
+   *
+   * @return {@code true} if this list contained the specified element
    */
-  void unregister(Subscriber subscriber);
+  boolean unregister(Subscriber subscriber);
 
   /**
    * Returns all registered {@link Subscriber Subscribers} that matches the given {@code event}.
