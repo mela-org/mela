@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Objects;
 
 /**
- * @author Stu <https://github.com/Stupremee>
+ * @author Stu (https://github.com/Stupremee)
  * @since 22.06.19
  */
 final class TestObject {
