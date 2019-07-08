@@ -2,6 +2,7 @@ package com.github.stupremee.mela.event;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static org.assertj.core.api.Assertions.assertThatNullPointerException;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -39,6 +40,7 @@ class SubscriberRegistryTest {
     registry.register(charSequenceSubscriber);
 
     assertThatIllegalArgumentException().isThrownBy(() -> registry.register(stringSubscriber));
+    assertThatNullPointerException().isThrownBy(() -> registry.register(null));
   }
 
   @Test
@@ -50,6 +52,7 @@ class SubscriberRegistryTest {
         .isTrue();
     assertThat(registry.unregister(boolSubscriber))
         .isFalse();
+    assertThatNullPointerException().isThrownBy(() -> registry.unregister(null));
   }
 
   @Test
@@ -67,6 +70,7 @@ class SubscriberRegistryTest {
     assertThat(stringSubscribers).isNotEmpty();
     assertThat(stringSubscribers)
         .containsExactlyInAnyOrder(stringSubscriber, charSequenceSubscriber);
+    assertThatNullPointerException().isThrownBy(() -> registry.getSubscribersForEvent(null));
   }
 
   static final class ClassSubscriber implements Subscriber {

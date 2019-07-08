@@ -1,5 +1,7 @@
 package com.github.stupremee.mela.event.internal;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import com.github.stupremee.mela.event.Subscriber;
 import com.github.stupremee.mela.event.SubscriberRegistry;
 import java.util.ArrayList;
@@ -20,6 +22,7 @@ public final class InternalSubscriberRegistry implements SubscriberRegistry {
 
   @Override
   public void register(Subscriber subscriber) {
+    checkNotNull(subscriber, "subscriber can't be null.");
     if (subscribers.contains(subscriber)) {
       throw new IllegalArgumentException(
           "The Subscriber " + subscriber + " is already registered.");
@@ -29,7 +32,8 @@ public final class InternalSubscriberRegistry implements SubscriberRegistry {
 
   @Override
   public boolean unregister(Subscriber subscriber) {
-    return false;
+    checkNotNull(subscriber, "subscriber can't be null.");
+    return subscribers.remove(subscriber);
   }
 
   @Override
