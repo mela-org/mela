@@ -32,5 +32,4 @@ public interface Subscriber {
    * Method#invoke(Object, Object...)}.
    */
   Object getListener();
-
 }
