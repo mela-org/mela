@@ -3,6 +3,7 @@ repositories {
 }
 
 dependencies {
+  compile(Deps.discord4j)
   compile(Deps.guice)
   compile(Deps.intake)
   compile(project(":mela-event"))
