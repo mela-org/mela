@@ -9,17 +9,15 @@ import java.util.Set;
 public interface SubscriberRegistry {
 
   /**
-   * Registers the given listener by finding all methods that are annotated with {@link
-   * com.github.stupremee.mela.event.annotations.Subscribe}.
+   * Registers the given {@code subscriber}.
    */
-  void register(Object listener);
+  void register(Subscriber subscriber);
 
   /**
-   * Removes a listener. All methods in the given listener, which are annotated with {@link
-   * com.github.stupremee.mela.event.annotations.Subscribe}  will not be called whenever an event is
-   * called.
+   * Unregisters the given {@code subscriber}. Whenever a event was posted, it will not call the
+   * given {@link Subscriber}.
    */
-  void unregister(Object listener);
+  void unregister(Subscriber subscriber);
 
   /**
    * Returns all registered {@link Subscriber Subscribers} that matches the given {@code event}.
