@@ -9,21 +9,24 @@ import com.google.inject.Injector;
 import java.lang.reflect.Method;
 import java.util.Objects;
 import java.util.Set;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 
+@TestInstance(Lifecycle.PER_CLASS)
 class SubscriberRegistryTest {
 
   private SubscriberRegistry registry;
 
-  @BeforeEach
+  @BeforeAll
   void setUp() {
     Injector injector = Guice.createInjector(EventModule.create());
     this.registry = injector.getInstance(SubscriberRegistry.class);
   }
 
-  @AfterEach
+  @AfterAll
   void tearDown() {
     registry = null;
   }
@@ -32,13 +35,15 @@ class SubscriberRegistryTest {
   void registerTest() {
     Subscriber stringSubscriber = new ClassSubscriber(String.class);
     Subscriber charSequenceSubscriber = new ClassSubscriber(CharSequence.class);
-    Subscriber longSubscriber = new ClassSubscriber(long.class);
+    Subscriber longSubscriber = new ClassSubscriber(Long.class);
+    Subscriber boolSubscriber = new ClassSubscriber(Boolean.class);
     Subscriber intSubscriber = new ClassSubscriber(int.class);
     registry.register(stringSubscriber);
-    registry.register(intSubscriber);
     registry.register(longSubscriber);
+    registry.register(boolSubscriber);
     registry.register(charSequenceSubscriber);
 
+    assertThatIllegalArgumentException().isThrownBy(() -> registry.register(intSubscriber));
     assertThatIllegalArgumentException().isThrownBy(() -> registry.register(stringSubscriber));
     assertThatNullPointerException().isThrownBy(() -> registry.register(null));
   }
@@ -46,12 +51,12 @@ class SubscriberRegistryTest {
   @Test
   void unregisterTest() {
     Subscriber intSubscriber = new ClassSubscriber(int.class);
-    Subscriber boolSubscriber = new ClassSubscriber(boolean.class);
+    Subscriber boolSubscriber = new ClassSubscriber(Boolean.class);
 
     assertThat(registry.unregister(intSubscriber))
-        .isTrue();
-    assertThat(registry.unregister(boolSubscriber))
         .isFalse();
+    assertThat(registry.unregister(boolSubscriber))
+        .isTrue();
     assertThatNullPointerException().isThrownBy(() -> registry.unregister(null));
   }
 

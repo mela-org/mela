@@ -11,7 +11,8 @@ public interface SubscriberRegistry {
   /**
    * Registers the given {@code subscriber}.
    *
-   * @throws IllegalArgumentException If the given {@link Subscriber} already is registered.
+   * @throws IllegalArgumentException If the given {@link Subscriber} already is registered or
+   *     the {@link Subscriber} has a primitive type
    */
   void register(Subscriber subscriber);
 
