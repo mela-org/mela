@@ -1,6 +1,8 @@
 package com.github.stupremee.mela.event;
 
+import com.github.stupremee.mela.event.internal.InternalSubscriberRegistry;
 import com.google.inject.AbstractModule;
+import com.google.inject.Singleton;
 
 /**
  * @author Stu (https://github.com/Stupremee)
@@ -14,7 +16,9 @@ public final class EventModule extends AbstractModule {
 
   @Override
   protected void configure() {
-    super.configure();
+    bind(SubscriberRegistry.class)
+        .toProvider(InternalSubscriberRegistry::create)
+        .in(Singleton.class);
   }
 
   public static AbstractModule create() {
