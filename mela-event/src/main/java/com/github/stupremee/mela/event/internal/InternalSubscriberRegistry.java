@@ -49,6 +49,9 @@ public final class InternalSubscriberRegistry implements SubscriberRegistry {
         .collect(Collectors.toUnmodifiableSet());
   }
 
+  /**
+   * Creates a new {@link SubscriberRegistry}.
+   */
   public static SubscriberRegistry create() {
     return new InternalSubscriberRegistry();
   }
