@@ -70,7 +70,7 @@ class SubscriberRegistryTest {
     Set<Subscriber> stringSubscribers = registry.getSubscribersForEvent("some");
 
     assertThat(firstLongSubscriber).isNotNull();
-    assertThat(firstLongSubscriber.getEventType()).isExactlyInstanceOf(long.class);
+    assertThat(firstLongSubscriber.getEventType()).isEqualTo(Long.class);
 
     assertThat(stringSubscribers).isNotEmpty();
     assertThat(stringSubscribers)
