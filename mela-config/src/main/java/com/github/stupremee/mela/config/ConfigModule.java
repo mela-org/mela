@@ -38,6 +38,10 @@ public final class ConfigModule extends AbstractModule {
         .asEagerSingleton();
   }
 
+  /**
+   * Creates a new {@link ConfigModule} with only the root config which is mapped to the {@link
+   * Config Config interface}.
+   */
   public static AbstractModule of(ConfigProvider configProvider) {
     return new ConfigModule(configProvider);
   }
