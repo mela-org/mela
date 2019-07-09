@@ -22,6 +22,18 @@
   "someDoubles": [
     1.1, 2.2, 5.5, 6.6
   ],
+  "customList": [
+    {
+      "id": 111,
+      "name": "Stu",
+      "count": 7
+    },
+    {
+      "id": 222,
+      "name": "Johnny",
+      "count": 71
+    }
+  ],
   "some": {
     "string": "some",
     "strings": [

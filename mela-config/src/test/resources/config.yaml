@@ -32,6 +32,13 @@ rootObject:
   id: 12345
   name: Stu
   count: 701
+customList:
+  - id: 111
+    name: "Stu"
+    count: 7
+  - id: 222
+    name: "Johnny"
+    count: 71
 some:
   string: "some"
   strings:

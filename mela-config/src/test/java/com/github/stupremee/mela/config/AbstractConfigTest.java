@@ -95,6 +95,15 @@ abstract class AbstractConfigTest {
   }
 
   @Test
+  void mappingListOperation() {
+    TestObject stu = new TestObject(111, "Stu", 7);
+    TestObject johnny = new TestObject(222, "Johnny", 71);
+
+    assertThat(config.getList("customList", TestObject.class))
+        .containsExactlyInAnyOrder(stu, johnny);
+  }
+
+  @Test
   void mappingOperation() {
     TestObject stu = new TestObject(12345, "Stu", 701);
     TestObject grugor = new TestObject(8765, "Grugor", 702);
