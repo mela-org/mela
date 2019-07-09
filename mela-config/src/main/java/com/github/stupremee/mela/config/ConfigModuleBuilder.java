@@ -18,15 +18,24 @@ public final class ConfigModuleBuilder {
     this.customConfigs = new ArrayList<>();
   }
 
+  /**
+   * Creates a new {@link CustomConfigBuilder} to allow registration of custom configs.
+   */
   public CustomConfigBuilder customConfig() {
     return new CustomConfigBuilder(this);
   }
 
+  /**
+   * Sets the provider for root / main config.
+   */
   public ConfigModuleBuilder rootProvider(ConfigProvider configProvider) {
     this.rootConfigProvider = configProvider;
     return this;
   }
 
+  /**
+   * Builds a new {@link ConfigModule}.
+   */
   public Module build() {
     if (rootConfigProvider == null) {
       throw new IllegalArgumentException("path and rootConfigProvider must be set.");
@@ -71,16 +80,25 @@ public final class ConfigModuleBuilder {
       this.configModuleBuilder = configModuleBuilder;
     }
 
+    /**
+     * Sets the binding annotation for this custom config.
+     */
     public CustomConfigBuilder annotatedWith(Class<? extends Annotation> annotation) {
       this.annotation = annotation;
       return this;
     }
 
+    /**
+     * Sets the provider for this custom config.
+     */
     public CustomConfigBuilder providedBy(ConfigProvider provider) {
       this.provider = provider;
       return this;
     }
 
+    /**
+     * Registers this custom config in the {@link ConfigModuleBuilder}.
+     */
     public ConfigModuleBuilder register() {
       if (annotation == null || provider == null) {
         throw new IllegalArgumentException("annotation and provider must be set.");
