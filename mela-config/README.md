@@ -39,25 +39,36 @@ config.getNumber("some.number");
 // The getAs method uses Jackson to map the object at the given path
 // to the given type
 config.getAs("some.user", User.class);
+// The getList tries to map all objects in an array / list to the given type
+config.getList("some.userList", User.class);
 ```
 
 ### Creating multiple configs
 
-To create multiple configs you need to bind everything yourself in a custom Guice module.
+#### Create your Binding Annotation
 
 ```java
-public final class MyCustomConfigModule extends AbstractModule {
-  
-  @Override
-  public void configure() {
-    bind(Config.class)
-      .annotatedWith(MyCustomConfig.class)
-      .toProvider(JacksonConfigAssembler.create(yourObjectMapper, yourConfig));
-    // The JacksonConfigAssembler will try to create a config with the given ObjectMapper
-    // by reading the content of the InputStream.
-    // The config you provide in the create method needs to be a InputStream.
-  }
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.FIELD, ElementType.PARAMETER)
+@BindingAnnotation // This is important for Guice. So don't forget it
+@interface MyCustomConfig {
 }
+```
+
+#### Register the Custom Config
+
+```java
+// You need to register your custom config when creating the ConfigModule
+Module module = ConfigModule.builder()
+        .rootProvider(JsonConfigProvider.of(new File("config.json")))
+        .customConfig()
+          .annotatedWith(MyCustomConfig.class)
+          .providedBy(YamlConfigProvider.of(new File("moneySettings.yml")))
+          .register()
+        .build();
+// You can register as many custom configs as you want
+// Now you can continue as in the example above
+// ...
 ```
 
 ## Used Dependencies
