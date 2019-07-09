@@ -1,5 +1,7 @@
 package com.github.stupremee.mela.config.jackson;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.stupremee.mela.config.Config;
@@ -34,5 +36,14 @@ public final class JacksonConfigAssembler implements Provider<Config> {
     } catch (IOException cause) {
       throw new ProvisionException("Failed to get Config.", cause);
     }
+  }
+
+  /**
+   * Creates a new {@link JacksonConfigAssembler} from the given parameters.
+   */
+  public static Provider<Config> create(ObjectMapper mapper, InputStream input) {
+    checkNotNull(mapper, "mapper can't be null.");
+    checkNotNull(input, "input can't be null.");
+    return new JacksonConfigAssembler(mapper, input);
   }
 }
