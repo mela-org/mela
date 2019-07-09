@@ -39,7 +39,8 @@ public final class JacksonConfigAssembler implements Provider<Config> {
   }
 
   /**
-   * Creates a new {@link JacksonConfigAssembler} from the given parameters.
+   * Creates a new {@link JacksonConfigAssembler} that can be used as a {@link Provider Guice
+   * Provider} to bind a {@link Config}.
    */
   public static Provider<Config> create(ObjectMapper mapper, InputStream input) {
     checkNotNull(mapper, "mapper can't be null.");
