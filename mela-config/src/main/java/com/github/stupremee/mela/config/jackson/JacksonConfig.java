@@ -29,6 +29,19 @@ final class JacksonConfig implements Config {
   }
 
   @Override
+  public <T> Collection<T> getList(String path, Class<T> type) {
+    return getListAtPath(path)
+        .map(node -> {
+          try {
+            return mapper.treeToValue(node, type);
+          } catch (JsonProcessingException cause) {
+            throw new RuntimeException("Failed to map a list of " + type.getSimpleName(), cause);
+          }
+        })
+        .collect(Collectors.toUnmodifiableList());
+  }
+
+  @Override
   public <T> Optional<T> getAs(String path, Class<T> type) {
     return getNodeAtPath(path)
         .map(node -> {
