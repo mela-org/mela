@@ -13,11 +13,11 @@ import java.util.stream.Collectors;
  * @author Stu (https://github.com/Stupremee)
  * @since 09.07.19
  */
-public final class InternalSubscriberRegistry implements SubscriberRegistry {
+public final class DefaultSubscriberRegistry implements SubscriberRegistry {
 
   private final List<Subscriber> subscribers;
 
-  private InternalSubscriberRegistry() {
+  private DefaultSubscriberRegistry() {
     this.subscribers = new ArrayList<>();
   }
 
@@ -53,6 +53,6 @@ public final class InternalSubscriberRegistry implements SubscriberRegistry {
    * Creates a new {@link SubscriberRegistry}.
    */
   public static SubscriberRegistry create() {
-    return new InternalSubscriberRegistry();
+    return new DefaultSubscriberRegistry();
   }
 }
