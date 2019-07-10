@@ -32,12 +32,13 @@ class SubscriberRegistryTest {
   }
 
   @Test
-  void registerTest() {
+  void testRegister() {
     Subscriber stringSubscriber = new ClassSubscriber(String.class);
     Subscriber charSequenceSubscriber = new ClassSubscriber(CharSequence.class);
     Subscriber longSubscriber = new ClassSubscriber(Long.class);
     Subscriber boolSubscriber = new ClassSubscriber(Boolean.class);
     Subscriber intSubscriber = new ClassSubscriber(int.class);
+
     registry.register(stringSubscriber);
     registry.register(longSubscriber);
     registry.register(boolSubscriber);
@@ -49,7 +50,7 @@ class SubscriberRegistryTest {
   }
 
   @Test
-  void unregisterTest() {
+  void testUnregister() {
     Subscriber intSubscriber = new ClassSubscriber(int.class);
     Subscriber boolSubscriber = new ClassSubscriber(Boolean.class);
 
@@ -61,7 +62,7 @@ class SubscriberRegistryTest {
   }
 
   @Test
-  void getSubscribersForEventTest() {
+  void testGetSubscribersForEvent() {
     Set<Subscriber> longSubscribers = registry.getSubscribersForEvent(123L);
     Subscriber firstLongSubscriber = longSubscribers.iterator().next();
 
