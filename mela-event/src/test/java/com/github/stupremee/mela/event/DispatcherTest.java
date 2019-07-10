@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.github.stupremee.mela.event.dispatchers.Dispatchers;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
@@ -40,7 +39,7 @@ final class DispatcherTest {
   @Test
   void testImmediateDispatcher() {
     dispatcher = Dispatchers.immediate();
-    dispatcher.dispatchEvent(1, intSubscribers);
+    dispatcher.dispatchEvent(1337, intSubscribers);
 
     assertThat(dispatchedSubscribers)
         .containsExactly(
@@ -92,21 +91,6 @@ final class DispatcherTest {
     }
 
     @Override
-    public int hashCode() {
-      return name.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-      if (!(obj instanceof StringSubscriber)) {
-        return false;
-      }
-
-      StringSubscriber that = (StringSubscriber) obj;
-      return Objects.equals(name, that.name);
-    }
-
-    @Override
     public String toString() {
       return name;
     }
@@ -128,21 +112,6 @@ final class DispatcherTest {
     @Override
     public Class<?> getEventType() {
       return String.class;
-    }
-
-    @Override
-    public int hashCode() {
-      return name.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-      if (!(obj instanceof StringSubscriber)) {
-        return false;
-      }
-
-      StringSubscriber that = (StringSubscriber) obj;
-      return Objects.equals(name, that.name);
     }
 
     @Override
