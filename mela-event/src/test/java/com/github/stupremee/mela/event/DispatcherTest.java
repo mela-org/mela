@@ -3,9 +3,9 @@ package com.github.stupremee.mela.event;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.github.stupremee.mela.event.dispatchers.Dispatchers;
-import com.google.common.collect.ImmutableList;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.ConcurrentLinkedQueue;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
  */
 final class DispatcherTest {
 
-  private final ConcurrentLinkedQueue<Subscriber> dispatchedSubscribers = new ConcurrentLinkedQueue<>();
+  private final List<Subscriber> dispatchedSubscribers = new ArrayList<>();
 
   private final Subscriber firstStringSubscriber = createStringSubscriber("firstString");
   private final Subscriber secondStringSubscriber = createStringSubscriber("secondString");
@@ -24,11 +24,11 @@ final class DispatcherTest {
   private final Subscriber secondIntSubscriber = createIntSubscriber("secondInt");
   private final Subscriber thirdIntSubscriber = createIntSubscriber("thirdInt");
 
-  private final ImmutableList<Subscriber> stringSubscribers =
-      ImmutableList.of(firstStringSubscriber, secondStringSubscriber);
+  private final List<Subscriber> stringSubscribers =
+      List.of(firstStringSubscriber, secondStringSubscriber);
 
-  private final ImmutableList<Subscriber> intSubscribers =
-      ImmutableList.of(firstIntSubscriber, secondIntSubscriber, thirdIntSubscriber);
+  private final List<Subscriber> intSubscribers =
+      List.of(firstIntSubscriber, secondIntSubscriber, thirdIntSubscriber);
 
   private Dispatcher dispatcher;
 
@@ -105,6 +105,11 @@ final class DispatcherTest {
       StringSubscriber that = (StringSubscriber) obj;
       return Objects.equals(name, that.name);
     }
+
+    @Override
+    public String toString() {
+      return name;
+    }
   }
 
   private final class StringSubscriber implements Subscriber {
@@ -138,6 +143,11 @@ final class DispatcherTest {
 
       StringSubscriber that = (StringSubscriber) obj;
       return Objects.equals(name, that.name);
+    }
+
+    @Override
+    public String toString() {
+      return name;
     }
   }
 }
