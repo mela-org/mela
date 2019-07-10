@@ -13,6 +13,14 @@ public final class Dispatchers {
   }
 
   /**
+   * Returns a dispatcher that queues events that are posted reentrant on a thread that is already
+   * dispatching an event.
+   */
+  public static Dispatcher perThreadQueued() {
+    return PerThreadQueuedDispatcher.create();
+  }
+
+  /**
    * Returns a dispatcher which immediately dispatch events as they're posted.
    */
   public static Dispatcher immediate() {

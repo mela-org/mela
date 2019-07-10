@@ -51,8 +51,8 @@ final class DispatcherTest {
 
   @Test
   void testQueuedDispatcher() {
-    // Initialize dispatcher here
-    dispatcher.dispatchEvent(1, intSubscribers);
+    dispatcher = Dispatchers.perThreadQueued();
+    dispatcher.dispatchEvent(1337, intSubscribers);
 
     assertThat(dispatchedSubscribers)
         .containsExactly(
