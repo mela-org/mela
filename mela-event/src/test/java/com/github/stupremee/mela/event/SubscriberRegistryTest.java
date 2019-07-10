@@ -17,7 +17,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 
 @TestInstance(Lifecycle.PER_CLASS)
-class SubscriberRegistryTest {
+final class SubscriberRegistryTest {
 
   private SubscriberRegistry registry;
 
@@ -100,16 +100,6 @@ class SubscriberRegistryTest {
     @Override
     public Class<?> getEventType() {
       return clazz;
-    }
-
-    @Override
-    public Method getMethod() {
-      return null;
-    }
-
-    @Override
-    public Object getListener() {
-      return null;
     }
 
     @Override

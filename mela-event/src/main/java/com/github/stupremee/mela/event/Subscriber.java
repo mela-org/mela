@@ -21,15 +21,4 @@ public interface Subscriber {
    * Returns the {@link Class type} of the event which should be post to this Subscriber.
    */
   Class<?> getEventType();
-
-  /**
-   * Returns the {@link Method} which will be called by the {@link #call(Object)} method.
-   */
-  Method getMethod();
-
-  /**
-   * Returns the listener which is required to invoke the {@link Method} via {@link
-   * Method#invoke(Object, Object...)}.
-   */
-  Object getListener();
 }
