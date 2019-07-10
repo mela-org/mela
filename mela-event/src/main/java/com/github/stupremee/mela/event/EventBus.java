@@ -19,16 +19,22 @@ public interface EventBus {
    * Registers the given {@code listener} by finding all methods which are annotated with {@link
    * com.github.stupremee.mela.event.annotations.Subscribe}.
    *
-   * @see SubscriberRegistry#register(Object)
+   * @see SubscriberRegistry#register(Subscriber)
    */
   void register(Object listener);
+
+  /**
+   * Registers all Classes that are annotated with {@link com.github.stupremee.mela.event.annotations.Subscriber}
+   * by creating an instance via Guice.
+   */
+  void registerFromClasspath();
 
   /**
    * Removes a listener. All methods in the given listener, which are annotated with {@link
    * com.github.stupremee.mela.event.annotations.Subscribe}  will not be called whenever an event is
    * called.
    *
-   * @see SubscriberRegistry#unregister(Object)
+   * @see SubscriberRegistry#unregister(Subscriber)
    */
   void unregister(Object listener);
 
