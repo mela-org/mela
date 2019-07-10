@@ -3,6 +3,7 @@ package com.github.stupremee.mela.event;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.assertj.core.api.Assertions.assertThatNullPointerException;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -33,11 +34,11 @@ class SubscriberRegistryTest {
 
   @Test
   void testRegister() {
-    Subscriber stringSubscriber = new ClassSubscriber(String.class);
-    Subscriber charSequenceSubscriber = new ClassSubscriber(CharSequence.class);
-    Subscriber longSubscriber = new ClassSubscriber(Long.class);
-    Subscriber boolSubscriber = new ClassSubscriber(Boolean.class);
-    Subscriber intSubscriber = new ClassSubscriber(int.class);
+    Subscriber stringSubscriber = createSubscriber(String.class);
+    Subscriber charSequenceSubscriber = createSubscriber(CharSequence.class);
+    Subscriber longSubscriber = createSubscriber(Long.class);
+    Subscriber boolSubscriber = createSubscriber(Boolean.class);
+    Subscriber intSubscriber = createSubscriber(int.class);
 
     registry.register(stringSubscriber);
     registry.register(longSubscriber);
@@ -51,8 +52,8 @@ class SubscriberRegistryTest {
 
   @Test
   void testUnregister() {
-    Subscriber intSubscriber = new ClassSubscriber(int.class);
-    Subscriber boolSubscriber = new ClassSubscriber(Boolean.class);
+    Subscriber intSubscriber = createSubscriber(int.class);
+    Subscriber boolSubscriber = createSubscriber(Boolean.class);
 
     assertThat(registry.unregister(intSubscriber))
         .isFalse();
@@ -64,19 +65,23 @@ class SubscriberRegistryTest {
   @Test
   void testGetSubscribersForEvent() {
     Set<Subscriber> longSubscribers = registry.getSubscribersForEvent(123L);
-    Subscriber firstLongSubscriber = longSubscribers.iterator().next();
+    Set<Subscriber> stringSubscribers = registry.getSubscribersForEvent("some");
 
     Subscriber stringSubscriber = new ClassSubscriber(String.class);
     Subscriber charSequenceSubscriber = new ClassSubscriber(CharSequence.class);
-    Set<Subscriber> stringSubscribers = registry.getSubscribersForEvent("some");
+    Subscriber firstLongSubscriber = longSubscribers.iterator().next();
 
-    assertThat(firstLongSubscriber).isNotNull();
+    assertNotNull(firstLongSubscriber);
     assertThat(firstLongSubscriber.getEventType()).isEqualTo(Long.class);
 
     assertThat(stringSubscribers).isNotEmpty();
     assertThat(stringSubscribers)
         .containsExactlyInAnyOrder(stringSubscriber, charSequenceSubscriber);
     assertThatNullPointerException().isThrownBy(() -> registry.getSubscribersForEvent(null));
+  }
+
+  private Subscriber createSubscriber(Class<?> type) {
+    return new ClassSubscriber(type);
   }
 
   static final class ClassSubscriber implements Subscriber {
