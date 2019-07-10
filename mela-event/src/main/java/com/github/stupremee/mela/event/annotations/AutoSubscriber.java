@@ -6,13 +6,13 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * This annotation is used to mark a class as a Subscriber which can receive events.
+ * This annotation is used to mark a class as a AutoSubscriber which can receive events.
  *
  * @author Stu (https://github.com/Stupremee)
  * @since 10.07.19
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface Subscriber {
+public @interface AutoSubscriber {
 
 }

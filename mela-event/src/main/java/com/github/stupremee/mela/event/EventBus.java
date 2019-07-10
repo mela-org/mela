@@ -1,5 +1,7 @@
 package com.github.stupremee.mela.event;
 
+import com.github.stupremee.mela.event.annotations.AutoSubscriber;
+
 /**
  * @author Stu (https://github.com/Stupremee)
  * @since 08.07.19
@@ -24,8 +26,8 @@ public interface EventBus {
   void register(Object listener);
 
   /**
-   * Registers all Classes that are annotated with {@link com.github.stupremee.mela.event.annotations.Subscriber}
-   * by creating an instance via Guice.
+   * Registers all Classes that are annotated with {@link AutoSubscriber} by creating an instance
+   * via Guice.
    */
   void registerFromClasspath();
 
