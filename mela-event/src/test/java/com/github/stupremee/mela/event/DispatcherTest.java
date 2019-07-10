@@ -2,6 +2,7 @@ package com.github.stupremee.mela.event;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.github.stupremee.mela.event.dispatchers.Dispatchers;
 import com.google.common.collect.ImmutableList;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -38,8 +39,7 @@ final class DispatcherTest {
 
   @Test
   void testImmediateDispatcher() {
-    // Initialize immediate dispatcher here
-
+    dispatcher = Dispatchers.immediate();
     dispatcher.dispatchEvent(1, intSubscribers);
 
     assertThat(dispatchedSubscribers)
@@ -50,6 +50,19 @@ final class DispatcherTest {
         );
   }
 
+  @Test
+  void testQueuedDispatcher() {
+    // Initialize dispatcher here
+    dispatcher.dispatchEvent(1, intSubscribers);
+
+    assertThat(dispatchedSubscribers)
+        .containsExactly(
+            firstIntSubscriber, secondIntSubscriber, thirdIntSubscriber,
+            firstStringSubscriber, secondStringSubscriber,
+            firstStringSubscriber, secondStringSubscriber,
+            firstStringSubscriber, secondStringSubscriber
+        );
+  }
 
   private Subscriber createIntSubscriber(String name) {
     return new IntegerSubscriber(name);
