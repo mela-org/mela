@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.stupremee.mela.config.Config;
 import com.google.common.collect.Streams;
 import java.math.BigInteger;
-import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.OptionalDouble;
 import java.util.OptionalInt;
@@ -29,7 +29,7 @@ final class JacksonConfig implements Config {
   }
 
   @Override
-  public <T> Collection<T> getList(String path, Class<T> type) {
+  public <T> List<T> getList(String path, Class<T> type) {
     return getListAtPath(path)
         .map(node -> {
           try {
@@ -61,7 +61,7 @@ final class JacksonConfig implements Config {
   }
 
   @Override
-  public Collection<String> getStringList(String path) {
+  public List<String> getStringList(String path) {
     return getListAtPath(path)
         .map(JsonNode::asText)
         .collect(Collectors.toUnmodifiableList());
@@ -75,7 +75,7 @@ final class JacksonConfig implements Config {
   }
 
   @Override
-  public Collection<Number> getNumberList(String path) {
+  public List<Number> getNumberList(String path) {
     return getListAtPath(path)
         .filter(JsonNode::isNumber)
         .map(JsonNode::numberValue)
@@ -91,7 +91,7 @@ final class JacksonConfig implements Config {
   }
 
   @Override
-  public Collection<Integer> getIntegerList(String path) {
+  public List<Integer> getIntegerList(String path) {
     return getListAtPath(path)
         .filter(JsonNode::canConvertToInt)
         .map(JsonNode::asInt)
@@ -107,7 +107,7 @@ final class JacksonConfig implements Config {
   }
 
   @Override
-  public Collection<Double> getDoubleList(String path) {
+  public List<Double> getDoubleList(String path) {
     return getListAtPath(path)
         .filter(JsonNode::isDouble)
         .map(JsonNode::asDouble)
@@ -123,7 +123,7 @@ final class JacksonConfig implements Config {
   }
 
   @Override
-  public Collection<Long> getLongList(String path) {
+  public List<Long> getLongList(String path) {
     return getListAtPath(path)
         .filter(JsonNode::canConvertToLong)
         .map(JsonNode::asLong)
@@ -138,7 +138,7 @@ final class JacksonConfig implements Config {
   }
 
   @Override
-  public Collection<BigInteger> getBigIntegerList(String path) {
+  public List<BigInteger> getBigIntegerList(String path) {
     return getListAtPath(path)
         .map(JsonNode::bigIntegerValue)
         .filter(number -> !number.equals(BigInteger.ZERO))
