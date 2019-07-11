@@ -22,11 +22,11 @@ public final class EventModule extends AbstractModule {
         .in(Singleton.class);
 
     bind(Dispatcher.class)
-        .toProvider(Dispatchers::perThreadQueued);
+        .toProvider(Dispatchers::immediate);
   }
 
   /**
-   * Creates a new {@link EventModule} with a Per Thread Queued Dispatcher.
+   * Creates a new {@link EventModule} with a Immediate Dispatcher.
    */
   public static AbstractModule create() {
     return new EventModule();
