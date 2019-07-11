@@ -36,16 +36,21 @@ public final class DefaultEventBus implements EventBus {
 
   @Override
   public void register(Object listener) {
+    checkNotNull(listener, "listener can't be null.");
+    throw new AssertionError();
     // TODO: 11.07.19 Implement this
   }
 
   @Override
   public void unregister(Object listener) {
+    checkNotNull(listener, "listener can't be null.");
+    throw new AssertionError();
     // TODO: 11.07.19 Implement this
   }
 
   @Override
   public void registerFromClasspath() {
+    throw new AssertionError();
     // TODO: 11.07.19 Implement this
   }
 }
