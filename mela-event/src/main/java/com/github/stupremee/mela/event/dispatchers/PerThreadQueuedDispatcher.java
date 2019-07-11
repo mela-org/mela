@@ -28,6 +28,10 @@ final class PerThreadQueuedDispatcher implements Dispatcher {
     checkNotNull(event, "event can't be null.");
     checkNotNull(subscribers, "subscribers can't be null.");
 
+    if (!subscribers.iterator().hasNext()) {
+      return;
+    }
+
     Queue<Event> queue = eventQueue.get();
     queue.offer(new Event(event, subscribers));
 

@@ -39,15 +39,4 @@ public interface EventBus {
    * @see SubscriberRegistry#unregister(Subscriber)
    */
   void unregister(Object listener);
-
-  /**
-   * Returns the {@link Dispatcher} which will be used to dispatch all events.
-   */
-  Dispatcher getDispatcher();
-
-  /**
-   * Returns the {@link SubscriberRegistry} which will be used to register, unregister and finding
-   * Subscribers.
-   */
-  SubscriberRegistry getSubscriberRegistry();
 }
