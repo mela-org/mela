@@ -33,7 +33,8 @@ final class ConfigValueTypeListener implements TypeListener {
     } while ((clazz = clazz.getSuperclass()) != null);
   }
 
-  private <I> MembersInjector<Object> registerMemberInjectorForField(Field field, TypeEncounter<I> encounter) {
+  private <I> MembersInjector<Object> registerMemberInjectorForField(Field field,
+      TypeEncounter<I> encounter) {
     String path = field.getAnnotation(ConfigValue.class).value();
     Config config = Arrays.stream(field.getDeclaredAnnotations())
         .filter(annotation -> !annotation.annotationType().equals(ConfigValue.class))
