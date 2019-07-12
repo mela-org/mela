@@ -71,6 +71,28 @@ Module module = ConfigModule.builder()
 // ...
 ```
 
+#### Inject values from a config
+
+You can inject a value from a config by using the `@ConfigValue` annotation.
+
+```java
+public class Foo {
+  @MyCustomConfig // Use the config which is bind to a custom config
+  @ConfigValue("someNumber")
+  int numberFromMyCustomConfig;
+  
+  @ConfigValue("someString")
+  String someString;
+}
+
+// We will use the injector from the example above
+Foo foo = new Foo();
+injector.injectMembers(foo);
+// The value for "numberFromMyCustomConfig" will be taken from the config which was bind to
+// the "MyCustomConfig" annotation
+// The value for "someString" will be taken from the root config.
+``` 
+
 ## Used Dependencies
 
 - [Guice](https://github.com/google/guice)

@@ -4,10 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.stupremee.mela.config.ConfigModuleBuilder.CustomConfig;
 import com.github.stupremee.mela.config.annotations.ConfigMapper;
 import com.github.stupremee.mela.config.annotations.ConfigSource;
+import com.github.stupremee.mela.config.inject.ConfigValueTypeListener;
 import com.github.stupremee.mela.config.jackson.JacksonConfigAssembler;
 import com.google.inject.AbstractModule;
 import com.google.inject.Module;
 import com.google.inject.Singleton;
+import com.google.inject.matcher.Matchers;
 import java.io.InputStream;
 import java.util.Collections;
 import java.util.List;
@@ -47,6 +49,8 @@ public final class ConfigModule extends AbstractModule {
     bind(Config.class)
         .toProvider(JacksonConfigAssembler.class)
         .asEagerSingleton();
+
+    bindListener(Matchers.any(), ConfigValueTypeListener.create());
 
     for (CustomConfig config : this.customConfigs) {
       ObjectMapper mapper = new ObjectMapper(config.getProvider().getJsonFactory());

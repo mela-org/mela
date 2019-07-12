@@ -1,11 +1,10 @@
 dependencies {
-  compile(Deps.guice)
-  compile(Deps.guava)
+  api(Deps.guice)
+  implementation(Deps.guava)
+  implementation(Deps.Jackson.databind)
+  implementation(Deps.Jackson.Dataformat.yaml)
 
-  compile(Deps.Jackson.databind)
-  compile(Deps.Jackson.Dataformat.yaml)
-
-  testCompile(Deps.Test.assertj)
-  testCompile(Deps.Test.JUnit.api)
+  testImplementation(Deps.Test.assertj)
+  testImplementation(Deps.Test.JUnit.api)
   testRuntimeOnly(Deps.Test.JUnit.engine)
 }
