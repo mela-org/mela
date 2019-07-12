@@ -28,12 +28,12 @@ final class ConfigValueTypeListener implements TypeListener {
     do {
       Arrays.stream(clazz.getDeclaredFields())
           .filter(field -> field.isAnnotationPresent(ConfigValue.class))
-          .map(field -> registerMemberInjectorForField(field, encounter))
+          .map(field -> createMemberInjectorForField(field, encounter))
           .forEach(encounter::register);
     } while ((clazz = clazz.getSuperclass()) != null);
   }
 
-  private <I> MembersInjector<Object> registerMemberInjectorForField(Field field,
+  private <I> MembersInjector<Object> createMemberInjectorForField(Field field,
       TypeEncounter<I> encounter) {
     String path = field.getAnnotation(ConfigValue.class).value();
     Config config = Arrays.stream(field.getDeclaredAnnotations())
