@@ -1,5 +1,6 @@
-package com.github.stupremee.mela.config;
+package com.github.stupremee.mela.config.inject;
 
+import com.github.stupremee.mela.config.Config;
 import com.google.inject.MembersInjector;
 import java.lang.reflect.Field;
 
@@ -7,7 +8,7 @@ import java.lang.reflect.Field;
  * @author Stu (https://github.com/Stupremee)
  * @since 12.07.19
  */
-final class ConfigValueMembersInjector<T> implements MembersInjector<T> {
+public final class ConfigValueMembersInjector<T> implements MembersInjector<T> {
 
   private final Field field;
   private final Config config;
@@ -31,7 +32,7 @@ final class ConfigValueMembersInjector<T> implements MembersInjector<T> {
     }
   }
 
-  static <T> MembersInjector<T> create(Field field, Config config, String path) {
+  public static <T> MembersInjector<T> create(Field field, Config config, String path) {
     return new ConfigValueMembersInjector<>(field, config, path);
   }
 }

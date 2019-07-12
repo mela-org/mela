@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.stupremee.mela.config.ConfigModuleBuilder.CustomConfig;
 import com.github.stupremee.mela.config.annotations.ConfigMapper;
 import com.github.stupremee.mela.config.annotations.ConfigSource;
+import com.github.stupremee.mela.config.inject.ConfigValueTypeListener;
 import com.github.stupremee.mela.config.jackson.JacksonConfigAssembler;
 import com.google.inject.AbstractModule;
 import com.google.inject.Module;

@@ -1,5 +1,6 @@
-package com.github.stupremee.mela.config;
+package com.github.stupremee.mela.config.inject;
 
+import com.github.stupremee.mela.config.Config;
 import com.github.stupremee.mela.config.annotations.ConfigValue;
 import com.google.inject.BindingAnnotation;
 import com.google.inject.Key;
@@ -17,7 +18,7 @@ import java.util.Optional;
  * @author Stu (https://github.com/Stupremee)
  * @since 12.07.19
  */
-final class ConfigValueTypeListener implements TypeListener {
+public final class ConfigValueTypeListener implements TypeListener {
 
   private ConfigValueTypeListener() {
   }
@@ -51,7 +52,7 @@ final class ConfigValueTypeListener implements TypeListener {
     return annotation.annotationType().isAnnotationPresent(BindingAnnotation.class);
   }
 
-  static TypeListener create() {
+  public static TypeListener create() {
     return new ConfigValueTypeListener();
   }
 }
