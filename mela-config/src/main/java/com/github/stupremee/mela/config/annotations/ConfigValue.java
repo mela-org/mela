@@ -16,6 +16,6 @@ public @interface ConfigValue {
   /**
    * The path to the given value.
    */
-  String path();
+  String value();
 
 }
