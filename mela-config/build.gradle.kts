@@ -6,4 +6,5 @@ dependencies {
 
   testImplementation(Deps.Test.assertj)
   testImplementation(Deps.Test.JUnit.api)
+  testRuntimeOnly(Deps.Test.JUnit.engine)
 }
