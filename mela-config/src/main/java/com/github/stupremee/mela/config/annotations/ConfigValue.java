@@ -13,4 +13,9 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD, ElementType.PARAMETER})
 public @interface ConfigValue {
 
+  /**
+   * The path to the given value.
+   */
+  String path();
+
 }
