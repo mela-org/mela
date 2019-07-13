@@ -3,6 +3,7 @@ package com.github.stupremee.mela.event;
 import com.github.stupremee.mela.event.dispatchers.Dispatchers;
 import com.github.stupremee.mela.event.internal.DefaultSubscriberRegistry;
 import com.google.inject.AbstractModule;
+import com.google.inject.Module;
 import com.google.inject.Singleton;
 
 /**
@@ -28,7 +29,7 @@ public final class EventModule extends AbstractModule {
   /**
    * Creates a new {@link EventModule} with a Immediate Dispatcher.
    */
-  public static AbstractModule create() {
+  public static Module create() {
     return new EventModule();
   }
 }
