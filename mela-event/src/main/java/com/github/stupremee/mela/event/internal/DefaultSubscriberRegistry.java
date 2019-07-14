@@ -2,8 +2,8 @@ package com.github.stupremee.mela.event.internal;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import com.github.stupremee.mela.event.Subscriber;
-import com.github.stupremee.mela.event.SubscriberRegistry;
+import com.github.stupremee.mela.event.subscriber.Subscriber;
+import com.github.stupremee.mela.event.subscriber.SubscriberRegistry;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;

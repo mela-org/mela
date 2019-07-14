@@ -1,6 +1,8 @@
 package com.github.stupremee.mela.event;
 
 import com.github.stupremee.mela.event.annotations.AutoSubscriber;
+import com.github.stupremee.mela.event.subscriber.Subscriber;
+import com.github.stupremee.mela.event.subscriber.SubscriberRegistry;
 
 /**
  * @author Stu (https://github.com/Stupremee)

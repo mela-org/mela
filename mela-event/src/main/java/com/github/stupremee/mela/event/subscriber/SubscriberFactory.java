@@ -1,4 +1,4 @@
-package com.github.stupremee.mela.event;
+package com.github.stupremee.mela.event.subscriber;
 
 import com.github.stupremee.mela.event.listener.GenericListener;
 import com.github.stupremee.mela.event.listener.Listener;

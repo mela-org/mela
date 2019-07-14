@@ -5,9 +5,10 @@ import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import static org.assertj.core.api.Assertions.assertThatNullPointerException;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import com.github.stupremee.mela.event.subscriber.Subscriber;
+import com.github.stupremee.mela.event.subscriber.SubscriberRegistry;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import java.lang.reflect.Method;
 import java.util.Objects;
 import java.util.Set;
 import org.junit.jupiter.api.AfterAll;

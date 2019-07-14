@@ -1,9 +1,9 @@
 package com.github.stupremee.mela.event.exceptions;
 
-import com.github.stupremee.mela.event.Subscriber;
+import com.github.stupremee.mela.event.subscriber.Subscriber;
 
 /**
- * This exception is thrown when the {@link com.github.stupremee.mela.event.Subscriber} fails to
+ * This exception is thrown when the {@link Subscriber} fails to
  * invoke his method.
  *
  * @author Stu (https://github.com/Stupremee)

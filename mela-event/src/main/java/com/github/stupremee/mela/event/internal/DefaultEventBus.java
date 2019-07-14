@@ -4,7 +4,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.github.stupremee.mela.event.Dispatcher;
 import com.github.stupremee.mela.event.EventBus;
-import com.github.stupremee.mela.event.SubscriberRegistry;
+import com.github.stupremee.mela.event.subscriber.SubscriberRegistry;
 import com.github.stupremee.mela.event.annotations.EventExecutor;
 import com.google.inject.Inject;
 import java.util.concurrent.Executor;

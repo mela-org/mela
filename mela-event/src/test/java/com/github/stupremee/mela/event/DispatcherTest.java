@@ -3,6 +3,7 @@ package com.github.stupremee.mela.event;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.github.stupremee.mela.event.dispatchers.Dispatchers;
+import com.github.stupremee.mela.event.subscriber.Subscriber;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;

@@ -3,7 +3,7 @@ package com.github.stupremee.mela.event.dispatchers;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.github.stupremee.mela.event.Dispatcher;
-import com.github.stupremee.mela.event.Subscriber;
+import com.github.stupremee.mela.event.subscriber.Subscriber;
 import java.util.ArrayDeque;
 import java.util.Queue;
 

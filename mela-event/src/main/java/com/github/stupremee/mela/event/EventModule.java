@@ -3,6 +3,7 @@ package com.github.stupremee.mela.event;
 import com.github.stupremee.mela.event.dispatchers.Dispatchers;
 import com.github.stupremee.mela.event.internal.DefaultEventBus;
 import com.github.stupremee.mela.event.internal.DefaultSubscriberRegistry;
+import com.github.stupremee.mela.event.subscriber.SubscriberRegistry;
 import com.google.inject.AbstractModule;
 import com.google.inject.Module;
 import com.google.inject.Singleton;

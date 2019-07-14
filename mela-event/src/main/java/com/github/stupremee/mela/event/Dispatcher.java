@@ -1,5 +1,7 @@
 package com.github.stupremee.mela.event;
 
+import com.github.stupremee.mela.event.subscriber.Subscriber;
+
 /**
  * @author Stu (https://github.com/Stupremee)
  * @since 08.07.19
