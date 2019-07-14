@@ -1,6 +1,7 @@
 package com.github.stupremee.mela.event;
 
 import com.github.stupremee.mela.event.dispatchers.Dispatchers;
+import com.github.stupremee.mela.event.internal.DefaultEventBus;
 import com.github.stupremee.mela.event.internal.DefaultSubscriberRegistry;
 import com.google.inject.AbstractModule;
 import com.google.inject.Module;
@@ -21,6 +22,9 @@ public final class EventModule extends AbstractModule {
     bind(SubscriberRegistry.class)
         .toProvider(DefaultSubscriberRegistry::create)
         .in(Singleton.class);
+
+    bind(EventBus.class)
+        .to(DefaultEventBus.class);
 
     bind(Dispatcher.class)
         .toProvider(Dispatchers::immediate);
