@@ -2,6 +2,7 @@ package com.github.stupremee.mela.event;
 
 import com.github.stupremee.mela.event.annotations.AutoSubscriber;
 import com.github.stupremee.mela.event.subscriber.Subscriber;
+import com.github.stupremee.mela.event.subscriber.SubscriberFactory;
 import com.github.stupremee.mela.event.subscriber.SubscriberRegistry;
 
 /**
@@ -26,8 +27,17 @@ public interface EventBus {
    * @throws IllegalArgumentException If the given {@link Subscriber} already is registered or
    *     the {@link Subscriber} has a primitive type
    * @see SubscriberRegistry#register(Subscriber)
+   * @see com.github.stupremee.mela.event.subscriber.SubscriberFactory#fromListener(Object)
+   * @see #register(Subscriber)
    */
-  void register(Object listener);
+  default void register(Object listener) {
+    register(getSubscriberFactory().fromListener(listener));
+  }
+
+  /**
+   * Registers the given {@code subscriber} to this event bus.
+   */
+  void register(Subscriber subscriber);
 
   /**
    * Registers all Classes that are annotated with {@link AutoSubscriber} by creating an instance
@@ -41,6 +51,21 @@ public interface EventBus {
    * called.
    *
    * @see SubscriberRegistry#unregister(Subscriber)
+   * @see com.github.stupremee.mela.event.subscriber.SubscriberFactory#fromListener(Object)
+   * @see #unregister(Subscriber)
    */
-  boolean unregister(Object listener);
+  default boolean unregister(Object listener) {
+    return unregister(getSubscriberFactory().fromListener(listener));
+  }
+
+  /**
+   * Removes the given {@code subscriber} from this event bus.
+   */
+  boolean unregister(Subscriber subscriber);
+
+  /**
+   * Returns the {@link SubscriberFactory} which will be used to create {@link Subscriber}. You can
+   * also create your own {@link Subscriber Subscribers} via this factory and the register it.
+   */
+  SubscriberFactory getSubscriberFactory();
 }

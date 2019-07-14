@@ -4,8 +4,10 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.github.stupremee.mela.event.Dispatcher;
 import com.github.stupremee.mela.event.EventBus;
-import com.github.stupremee.mela.event.subscriber.SubscriberRegistry;
 import com.github.stupremee.mela.event.annotations.EventExecutor;
+import com.github.stupremee.mela.event.subscriber.Subscriber;
+import com.github.stupremee.mela.event.subscriber.SubscriberFactory;
+import com.github.stupremee.mela.event.subscriber.SubscriberRegistry;
 import com.google.inject.Inject;
 import java.util.concurrent.Executor;
 
@@ -35,21 +37,27 @@ public final class DefaultEventBus implements EventBus {
   }
 
   @Override
-  public void register(Object listener) {
-    checkNotNull(listener, "listener can't be null.");
+  public void register(Subscriber subscriber) {
+    checkNotNull(subscriber, "subscriber can't be null.");
     throw new AssertionError();
     // TODO: 11.07.19 Implement this
   }
 
   @Override
-  public boolean unregister(Object listener) {
-    checkNotNull(listener, "listener can't be null.");
+  public boolean unregister(Subscriber subscriber) {
+    checkNotNull(subscriber, "subscriber can't be null.");
     throw new AssertionError();
     // TODO: 11.07.19 Implement this
   }
 
   @Override
   public void registerFromClasspath() {
+    throw new AssertionError();
+    // TODO: 11.07.19 Implement this
+  }
+
+  @Override
+  public SubscriberFactory getSubscriberFactory() {
     throw new AssertionError();
     // TODO: 11.07.19 Implement this
   }
