@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.github.stupremee.mela.event.dispatchers.Dispatchers;
 import com.github.stupremee.mela.event.subscriber.Subscriber;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -87,8 +88,8 @@ final class DispatcherTest {
     }
 
     @Override
-    public Class<?> getEventType() {
-      return Integer.class;
+    public List<Class<?>> getSupportedTypes() {
+      return Collections.singletonList(Integer.class);
     }
 
     @Override
@@ -106,18 +107,18 @@ final class DispatcherTest {
     }
 
     @Override
+    public String toString() {
+      return name;
+    }
+
+    @Override
     public void call(Object event) {
       dispatchedSubscribers.add(this);
     }
 
     @Override
-    public Class<?> getEventType() {
-      return String.class;
-    }
-
-    @Override
-    public String toString() {
-      return name;
+    public List<Class<?>> getSupportedTypes() {
+      return Collections.singletonList(String.class);
     }
   }
 }

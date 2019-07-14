@@ -1,10 +1,11 @@
 package com.github.stupremee.mela.event.subscriber;
 
 import java.lang.reflect.Method;
+import java.util.List;
 
 /**
  * The subscriber interface represents a {@link Method} which get invoked by by calling {@link
- * Subscriber#call(Object)} with the given event.
+ * Subscriber#call(Object)} with the given event and the eventType.
  *
  * @author Stu (https://github.com/Stupremee)
  * @since 08.07.19
@@ -20,5 +21,5 @@ public interface Subscriber {
   /**
    * Returns the {@link Class type} of the event which should be post to this Subscriber.
    */
-  Class<?> getEventType();
+  List<Class<?>> getSupportedTypes();
 }

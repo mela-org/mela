@@ -9,6 +9,8 @@ import com.github.stupremee.mela.event.subscriber.Subscriber;
 import com.github.stupremee.mela.event.subscriber.SubscriberRegistry;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import org.junit.jupiter.api.AfterAll;
@@ -73,7 +75,7 @@ final class SubscriberRegistryTest {
     Subscriber firstLongSubscriber = longSubscribers.iterator().next();
 
     assertNotNull(firstLongSubscriber);
-    assertThat(firstLongSubscriber.getEventType()).isEqualTo(Long.class);
+    assertThat(firstLongSubscriber.getSupportedTypes()).containsExactly(Long.class);
 
     assertThat(stringSubscribers).isNotEmpty();
     assertThat(stringSubscribers)
@@ -94,16 +96,6 @@ final class SubscriberRegistryTest {
     }
 
     @Override
-    public void call(Object event) {
-
-    }
-
-    @Override
-    public Class<?> getEventType() {
-      return clazz;
-    }
-
-    @Override
     public int hashCode() {
       return clazz.hashCode();
     }
@@ -120,6 +112,16 @@ final class SubscriberRegistryTest {
 
       ClassSubscriber that = (ClassSubscriber) o;
       return Objects.equals(this.clazz, that.clazz);
+    }
+
+    @Override
+    public void call(Object event) {
+
+    }
+
+    @Override
+    public List<Class<?>> getSupportedTypes() {
+      return Collections.emptyList();
     }
   }
 }
