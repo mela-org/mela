@@ -42,7 +42,7 @@ public final class DefaultEventBus implements EventBus {
   }
 
   @Override
-  public void unregister(Object listener) {
+  public boolean unregister(Object listener) {
     checkNotNull(listener, "listener can't be null.");
     throw new AssertionError();
     // TODO: 11.07.19 Implement this

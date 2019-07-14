@@ -3,8 +3,11 @@ package com.github.stupremee.mela.event;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.github.stupremee.mela.event.annotations.Subscribe;
+import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.google.inject.Module;
+import com.google.inject.TypeLiteral;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.AfterAll;
@@ -23,14 +26,23 @@ final class EventBusTest {
   private final TestListener firstListener = new TestListener();
   private final TestListener secondListener = new TestListener();
 
-  private List<TestListener> calledListener;
+  private List<Object> calledListener;
   private EventBus eventBus;
+  private Injector injector;
 
   @BeforeAll
   void setUp() {
-    Injector injector = Guice.createInjector(EventModule.create());
-    this.eventBus = injector.getInstance(EventBus.class);
     this.calledListener = new ArrayList<>();
+    Module calledListenerModule = new AbstractModule() {
+      @Override
+      protected void configure() {
+        bind(new TypeLiteral<List<Object>>() {
+        }).toInstance(calledListener);
+      }
+    };
+    Injector injector = Guice.createInjector(EventModule.create(), calledListenerModule);
+    this.eventBus = injector.getInstance(EventBus.class);
+    this.injector = injector;
   }
 
   @AfterAll
@@ -42,6 +54,8 @@ final class EventBusTest {
   void testRegister() {
     eventBus.register(firstListener);
     eventBus.register(secondListener);
+
+    eventBus.registerFromClasspath();
   }
 
   @Test
@@ -54,7 +68,8 @@ final class EventBusTest {
     eventBus.post(new TestEvent("firstEvent", 1));
     eventBus.post(new TestEvent("secondEvent", 2));
 
-    assertThat(calledListener).containsExactly(firstListener, firstListener);
+    AutoSubscribeListener autoSubscribeListener = injector.getInstance(AutoSubscribeListener.class);
+    assertThat(calledListener).containsExactly(firstListener, firstListener, autoSubscribeListener);
   }
 
   private final class TestListener {

@@ -21,6 +21,8 @@ public interface EventBus {
    * Registers the given {@code listener} by finding all methods which are annotated with {@link
    * com.github.stupremee.mela.event.annotations.Subscribe}.
    *
+   * @throws IllegalArgumentException If the given {@link Subscriber} already is registered or
+   *     the {@link Subscriber} has a primitive type
    * @see SubscriberRegistry#register(Subscriber)
    */
   void register(Object listener);
@@ -38,5 +40,5 @@ public interface EventBus {
    *
    * @see SubscriberRegistry#unregister(Subscriber)
    */
-  void unregister(Object listener);
+  boolean unregister(Object listener);
 }
