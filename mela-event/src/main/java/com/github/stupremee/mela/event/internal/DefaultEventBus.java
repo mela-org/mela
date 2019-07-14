@@ -20,13 +20,18 @@ public final class DefaultEventBus implements EventBus {
   private final SubscriberRegistry subscriberRegistry;
   private final Dispatcher dispatcher;
   private final Executor executor;
+  private final SubscriberFactory subscriberFactory;
 
   @Inject
-  DefaultEventBus(SubscriberRegistry subscriberRegistry, Dispatcher dispatcher,
-      @EventExecutor Executor executor) {
+  DefaultEventBus(
+      SubscriberRegistry subscriberRegistry,
+      Dispatcher dispatcher,
+      @EventExecutor Executor executor,
+      SubscriberFactory subscriberFactory) {
     this.subscriberRegistry = subscriberRegistry;
     this.dispatcher = dispatcher;
     this.executor = executor;
+    this.subscriberFactory = subscriberFactory;
   }
 
   @Override
@@ -58,7 +63,6 @@ public final class DefaultEventBus implements EventBus {
 
   @Override
   public SubscriberFactory getSubscriberFactory() {
-    throw new AssertionError();
-    // TODO: 11.07.19 Implement this
+    return subscriberFactory;
   }
 }
