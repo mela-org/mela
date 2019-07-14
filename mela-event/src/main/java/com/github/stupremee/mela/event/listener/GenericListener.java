@@ -1,4 +1,4 @@
-package com.github.stupremee.mela.event;
+package com.github.stupremee.mela.event.listener;
 
 /**
  * This interface is a listener which listens to a specific event type which.

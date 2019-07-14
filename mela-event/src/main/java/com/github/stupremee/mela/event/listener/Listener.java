@@ -1,4 +1,4 @@
-package com.github.stupremee.mela.event;
+package com.github.stupremee.mela.event.listener;
 
 /**
  * This listener listens to all events.

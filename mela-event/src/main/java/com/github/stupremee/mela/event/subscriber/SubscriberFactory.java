@@ -1,5 +1,7 @@
 package com.github.stupremee.mela.event;
 
+import com.github.stupremee.mela.event.listener.GenericListener;
+import com.github.stupremee.mela.event.listener.Listener;
 import java.util.function.Consumer;
 
 /**
