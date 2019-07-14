@@ -4,6 +4,7 @@ import com.github.stupremee.mela.event.annotations.AutoSubscriber;
 import com.github.stupremee.mela.event.subscriber.Subscriber;
 import com.github.stupremee.mela.event.subscriber.SubscriberFactory;
 import com.github.stupremee.mela.event.subscriber.SubscriberRegistry;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 
 /**
  * @author Stu (https://github.com/Stupremee)
@@ -54,6 +55,7 @@ public interface EventBus {
    * @see com.github.stupremee.mela.event.subscriber.SubscriberFactory#fromListener(Object)
    * @see #unregister(Subscriber)
    */
+  @CanIgnoreReturnValue
   default boolean unregister(Object listener) {
     return unregister(getSubscriberFactory().fromListener(listener));
   }
@@ -61,6 +63,7 @@ public interface EventBus {
   /**
    * Removes the given {@code subscriber} from this event bus.
    */
+  @CanIgnoreReturnValue
   boolean unregister(Subscriber subscriber);
 
   /**
