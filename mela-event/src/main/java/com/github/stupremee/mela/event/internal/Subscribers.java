@@ -3,6 +3,7 @@ package com.github.stupremee.mela.event.internal;
 import com.github.stupremee.mela.event.listener.GenericListener;
 import com.github.stupremee.mela.event.listener.Listener;
 import com.github.stupremee.mela.event.subscriber.Subscriber;
+import com.google.common.base.Objects;
 import java.util.function.Consumer;
 
 /**
@@ -48,6 +49,26 @@ final class Subscribers {
     public boolean supportsType(Class<?> type) {
       return this.type.isAssignableFrom(type);
     }
+
+    @Override
+    public int hashCode() {
+      return Objects.hashCode(callback, type);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+      if (obj == this) {
+        return false;
+      }
+
+      if (!(obj instanceof CallbackSubscriber)) {
+        return false;
+      }
+
+      CallbackSubscriber<?> that = (CallbackSubscriber<?>) obj;
+      return Objects.equal(that.type, type)
+          && Objects.equal(that.callback, callback);
+    }
   }
 
   private static final class ListenerSubscriber implements Subscriber {
@@ -66,6 +87,25 @@ final class Subscribers {
     @Override
     public boolean supportsType(Class<?> type) {
       return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hashCode(listener);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+      if (obj == this) {
+        return false;
+      }
+
+      if (!(obj instanceof ListenerSubscriber)) {
+        return false;
+      }
+
+      ListenerSubscriber that = (ListenerSubscriber) obj;
+      return Objects.equal(that.listener, listener);
     }
   }
 
@@ -87,6 +127,25 @@ final class Subscribers {
     @Override
     public boolean supportsType(Class<?> type) {
       return listener.getEventType().isAssignableFrom(type);
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hashCode(listener);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+      if (obj == this) {
+        return false;
+      }
+
+      if (!(obj instanceof GenericListenerSubscriber)) {
+        return false;
+      }
+
+      GenericListenerSubscriber<?> that = (GenericListenerSubscriber<?>) obj;
+      return Objects.equal(that.listener, listener);
     }
   }
 }
