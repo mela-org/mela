@@ -7,6 +7,7 @@ import com.github.stupremee.mela.event.listener.Listener;
 import com.github.stupremee.mela.event.subscriber.Subscriber;
 import com.github.stupremee.mela.event.subscriber.SubscriberFactory;
 import com.google.inject.Inject;
+import com.google.inject.Injector;
 import java.util.function.Consumer;
 
 /**
@@ -15,13 +16,16 @@ import java.util.function.Consumer;
  */
 public final class DefaultSubscriberFactory implements SubscriberFactory {
 
-  @Inject
-  DefaultSubscriberFactory() {
+  private final Injector injector;
 
+  @Inject
+  DefaultSubscriberFactory(Injector injector) {
+    this.injector = injector;
   }
 
   @Override
   public Subscriber fromListener(Object listener) {
+    checkNotNull(listener, "listener can't be null.");
     throw new AssertionError();
   }
 
