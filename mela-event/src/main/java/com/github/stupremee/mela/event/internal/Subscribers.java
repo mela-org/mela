@@ -3,8 +3,6 @@ package com.github.stupremee.mela.event.internal;
 import com.github.stupremee.mela.event.listener.GenericListener;
 import com.github.stupremee.mela.event.listener.Listener;
 import com.github.stupremee.mela.event.subscriber.Subscriber;
-import java.util.Collections;
-import java.util.List;
 import java.util.function.Consumer;
 
 /**
@@ -15,6 +13,14 @@ final class Subscribers {
 
   private Subscribers() {
 
+  }
+
+  static <T> Subscriber fromGenericListener(GenericListener<T> listener) {
+    return new GenericListenerSubscriber<>(listener);
+  }
+
+  static Subscriber fromListener(Listener listener) {
+    return new ListenerSubscriber(listener);
   }
 
   static <T> Subscriber fromCallback(Consumer<T> callback, Class<T> eventType) {
@@ -39,8 +45,8 @@ final class Subscribers {
     }
 
     @Override
-    public List<Class<?>> getSupportedTypes() {
-      return Collections.singletonList(type);
+    public boolean supportsType(Class<?> type) {
+      return this.type.isAssignableFrom(type);
     }
   }
 
@@ -58,8 +64,8 @@ final class Subscribers {
     }
 
     @Override
-    public List<Class<?>> getSupportedTypes() {
-      return Collections.singletonList(Object.class);
+    public boolean supportsType(Class<?> type) {
+      return true;
     }
   }
 
@@ -79,8 +85,8 @@ final class Subscribers {
     }
 
     @Override
-    public List<Class<?>> getSupportedTypes() {
-      return Collections.singletonList(listener.getEventType());
+    public boolean supportsType(Class<?> type) {
+      return listener.getEventType().isAssignableFrom(type);
     }
   }
 }

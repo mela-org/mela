@@ -88,8 +88,8 @@ final class DispatcherTest {
     }
 
     @Override
-    public List<Class<?>> getSupportedTypes() {
-      return Collections.singletonList(Integer.class);
+    public boolean supportsType(Class<?> type) {
+      return Integer.class.isAssignableFrom(type);
     }
 
     @Override
@@ -117,8 +117,8 @@ final class DispatcherTest {
     }
 
     @Override
-    public List<Class<?>> getSupportedTypes() {
-      return Collections.singletonList(String.class);
+    public boolean supportsType(Class<?> type) {
+      return String.class.isAssignableFrom(type);
     }
   }
 }

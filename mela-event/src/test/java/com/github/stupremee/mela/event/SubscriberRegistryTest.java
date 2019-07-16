@@ -41,14 +41,12 @@ final class SubscriberRegistryTest {
     Subscriber charSequenceSubscriber = createSubscriber(CharSequence.class);
     Subscriber longSubscriber = createSubscriber(Long.class);
     Subscriber boolSubscriber = createSubscriber(Boolean.class);
-    Subscriber intSubscriber = createSubscriber(int.class);
 
     registry.register(stringSubscriber);
     registry.register(longSubscriber);
     registry.register(boolSubscriber);
     registry.register(charSequenceSubscriber);
 
-    assertThatIllegalArgumentException().isThrownBy(() -> registry.register(intSubscriber));
     assertThatIllegalArgumentException().isThrownBy(() -> registry.register(stringSubscriber));
     assertThatNullPointerException().isThrownBy(() -> registry.register(null));
   }
@@ -75,7 +73,7 @@ final class SubscriberRegistryTest {
     Subscriber firstLongSubscriber = longSubscribers.iterator().next();
 
     assertNotNull(firstLongSubscriber);
-    assertThat(firstLongSubscriber.getSupportedTypes()).containsExactly(Long.class);
+    assertThat(firstLongSubscriber.supportsType(Long.class)).isTrue();
 
     assertThat(stringSubscribers).isNotEmpty();
     assertThat(stringSubscribers)
@@ -120,8 +118,8 @@ final class SubscriberRegistryTest {
     }
 
     @Override
-    public List<Class<?>> getSupportedTypes() {
-      return Collections.emptyList();
+    public boolean supportsType(Class<?> type) {
+      return clazz.isAssignableFrom(type);
     }
   }
 }

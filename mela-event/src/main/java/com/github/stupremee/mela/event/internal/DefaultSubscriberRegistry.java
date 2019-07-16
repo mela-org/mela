@@ -7,7 +7,6 @@ import com.github.stupremee.mela.event.subscriber.SubscriberRegistry;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -25,9 +24,6 @@ public final class DefaultSubscriberRegistry implements SubscriberRegistry {
   @Override
   public void register(Subscriber subscriber) {
     checkNotNull(subscriber, "subscriber can't be null.");
-    if (containsAny(subscriber.getSupportedTypes(), Class::isPrimitive)) {
-      throw new IllegalArgumentException("You can't register a primitive subscriber.");
-    }
     if (subscribers.contains(subscriber)) {
       throw new IllegalArgumentException(
           "The Subscriber " + subscriber + " is already registered.");
@@ -46,14 +42,10 @@ public final class DefaultSubscriberRegistry implements SubscriberRegistry {
     checkNotNull(event, "event can't be null.");
     Class<?> eventClass = event.getClass();
     return subscribers.stream()
-        .filter(subscriber -> containsAny(subscriber.getSupportedTypes(),
-            clazz -> clazz.isAssignableFrom(eventClass)))
+        .filter(subscriber -> subscriber.supportsType(eventClass))
         .collect(Collectors.toUnmodifiableSet());
   }
 
-  private <T> boolean containsAny(List<T> list, Predicate<T> predicate) {
-    return list.stream().anyMatch(predicate);
-  }
 
   /**
    * Creates a new {@link SubscriberRegistry}.
