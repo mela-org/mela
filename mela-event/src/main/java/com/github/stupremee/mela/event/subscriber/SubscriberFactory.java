@@ -32,7 +32,9 @@ public interface SubscriberFactory {
    * Creates a {@link Subscriber} from the given {@link Consumer callback} which will be called on
    * every event.
    */
-  Subscriber fromCallback(Consumer<Object> callback);
+  default Subscriber fromCallback(Consumer<Object> callback) {
+    return fromCallback(Object.class, callback);
+  }
 
   /**
    * Creates a {@link Subscriber} from the given {@link Consumer callback} which will be called on
