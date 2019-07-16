@@ -44,15 +44,13 @@ public final class DefaultEventBus implements EventBus {
   @Override
   public void register(Subscriber subscriber) {
     checkNotNull(subscriber, "subscriber can't be null.");
-    throw new AssertionError();
-    // TODO: 11.07.19 Implement this
+    subscriberRegistry.register(subscriber);
   }
 
   @Override
   public boolean unregister(Subscriber subscriber) {
     checkNotNull(subscriber, "subscriber can't be null.");
-    throw new AssertionError();
-    // TODO: 11.07.19 Implement this
+    return subscriberRegistry.unregister(subscriber);
   }
 
   @Override

@@ -2,6 +2,7 @@ package com.github.stupremee.mela.event;
 
 import com.github.stupremee.mela.event.annotations.AutoSubscriber;
 import com.github.stupremee.mela.event.annotations.Subscribe;
+import com.google.inject.Inject;
 import java.util.List;
 
 /**
@@ -15,6 +16,7 @@ final class AutoSubscribeListener {
   private final List<Object> calledListener;
   private boolean called = false;
 
+  @Inject
   AutoSubscribeListener(
       List<Object> calledListener) {
     this.calledListener = calledListener;
