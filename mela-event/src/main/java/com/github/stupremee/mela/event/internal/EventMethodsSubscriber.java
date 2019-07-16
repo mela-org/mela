@@ -28,6 +28,7 @@ final class EventMethodsSubscriber implements Subscriber {
     Class<?> eventClass = event.getClass();
     methods.stream()
         .filter(method -> method.type.isAssignableFrom(eventClass))
+        .map(this::setEventMethodAccessible)
         .forEach(method -> invokeEventMethod(method, event));
   }
 
@@ -55,6 +56,11 @@ final class EventMethodsSubscriber implements Subscriber {
       throw new RuntimeException("Unknown error occurred", e);
       // TODO: 16.07.19 Better error handling
     }
+  }
+
+  private EventMethod setEventMethodAccessible(EventMethod method) {
+    method.method.setAccessible(true);
+    return method;
   }
 
   static final class EventMethod {
