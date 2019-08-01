@@ -50,7 +50,7 @@ final class EventMethodsSubscriber implements Subscriber {
     } catch (InvocationTargetException e) {
       throw new RuntimeException(
           "An exception was thrown in method " + method + " in listener " + eventMethod.listener,
-          e);
+          e.getCause());
       // TODO: 16.07.19 Better error handling
     } catch (Throwable e) {
       throw new RuntimeException("Unknown error occurred", e);

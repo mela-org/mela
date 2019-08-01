@@ -29,4 +29,10 @@ public interface SubscriberRegistry {
    */
   Set<Subscriber> getSubscribersForEvent(Object event);
 
+  /**
+   * Registers all classes with a {@link com.github.stupremee.mela.event.annotations.AutoSubscriber}
+   * annotation by creating a new instance of the class via Guice.
+   */
+  void registerFromClasspath();
+
 }

@@ -46,6 +46,11 @@ public final class DefaultSubscriberRegistry implements SubscriberRegistry {
         .collect(Collectors.toUnmodifiableSet());
   }
 
+  @Override
+  public void registerFromClasspath() {
+
+  }
+
 
   /**
    * Creates a new {@link SubscriberRegistry}.
