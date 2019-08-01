@@ -1,9 +1,8 @@
-package com.github.stupremee.mela.event;
+package com.github.stupremee.mela.event.subscriber;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.github.stupremee.mela.event.subscriber.Subscriber;
-import com.github.stupremee.mela.event.subscriber.SubscriberFactory;
+import com.github.stupremee.mela.event.EventModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import java.util.function.Consumer;
@@ -15,7 +14,7 @@ import org.junit.jupiter.api.Test;
  * @author Stu (https://github.com/Stupremee)
  * @since 01.08.19
  */
-final class SubscribersTest {
+final class CallbackSubscriberTest {
 
   private SubscriberFactory subscriberFactory;
   private Subscriber subscriber;
