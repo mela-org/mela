@@ -47,7 +47,7 @@ final class Subscribers {
 
     @Override
     public boolean supportsType(Class<?> type) {
-      return this.type.isAssignableFrom(type);
+      return type.isAssignableFrom(this.type);
     }
 
     @Override
