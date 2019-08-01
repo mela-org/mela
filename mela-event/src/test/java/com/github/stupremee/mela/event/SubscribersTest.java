@@ -19,6 +19,7 @@ final class SubscribersTest {
 
   private SubscriberFactory subscriberFactory;
   private Subscriber subscriber;
+  private Object event;
 
   @BeforeEach
   void setUp() {
@@ -33,26 +34,24 @@ final class SubscribersTest {
 
   @Test
   void testCallbackSubscriberWithoutType() {
-    Object event = createEvent();
+    setEventTo(new Object());
 
-    Consumer<Object> action = obj -> assertThat(obj).isEqualTo(event);
-    CheckCalledConsumer<Object> callback = new CheckCalledConsumer<>(action);
+    CheckCalledConsumer<Object> callback = createCheckCalledConsumer();
     subscriber = subscriberFactory.fromCallback(callback);
 
-    callEvent(event);
+    callEvent();
 
     assertThat(callback.called).isTrue();
   }
 
   @Test
   void testCallbackSubscriberWithType() {
-    String event = "Hello!";
+    setEventTo("Hello!");
 
-    Consumer<String> action = obj -> assertThat(obj).isEqualTo(event);
-    CheckCalledConsumer<String> callback = new CheckCalledConsumer<>(action);
+    CheckCalledConsumer<String> callback = createCheckCalledConsumer();
     subscriber = subscriberFactory.fromCallback(String.class, callback);
 
-    callEvent(event);
+    callEvent();
 
     assertThat(subscriber.supportsType(String.class)).isTrue();
     assertThat(subscriber.supportsType(CharSequence.class)).isTrue();
@@ -60,12 +59,20 @@ final class SubscribersTest {
     assertThat(callback.called).isTrue();
   }
 
-  private void callEvent(Object event) {
+  private <T> CheckCalledConsumer<T> createCheckCalledConsumer() {
+    return new CheckCalledConsumer<>(validateEventCallback());
+  }
+
+  private <T> Consumer<T> validateEventCallback() {
+    return obj -> assertThat(obj).isEqualTo(event);
+  }
+
+  private void callEvent() {
     this.subscriber.call(event);
   }
 
-  private Object createEvent() {
-    return new Object();
+  private void setEventTo(Object event) {
+    this.event = event;
   }
 
   private static final class CheckCalledConsumer<T> implements Consumer<T> {
