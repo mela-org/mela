@@ -9,7 +9,6 @@ import com.github.stupremee.mela.event.listener.Listener;
 import com.github.stupremee.mela.event.subscriber.Subscriber;
 import com.github.stupremee.mela.event.subscriber.SubscriberFactory;
 import com.google.inject.Inject;
-import com.google.inject.Injector;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.List;
@@ -22,11 +21,8 @@ import java.util.stream.Collectors;
  */
 public final class DefaultSubscriberFactory implements SubscriberFactory {
 
-  private final Injector injector;
-
   @Inject
-  DefaultSubscriberFactory(Injector injector) {
-    this.injector = injector;
+  DefaultSubscriberFactory() {
   }
 
   @Override
