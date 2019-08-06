@@ -3,6 +3,8 @@ package com.github.stupremee.mela.event;
 import com.github.stupremee.mela.event.annotations.AutoSubscriber;
 import com.github.stupremee.mela.event.annotations.Subscribe;
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
+
 import java.util.List;
 
 /**
@@ -14,7 +16,6 @@ import java.util.List;
 final class AutoSubscribeListener {
 
   private final List<Object> calledListener;
-  private boolean called = false;
 
   @Inject
   AutoSubscribeListener(
@@ -24,9 +25,8 @@ final class AutoSubscribeListener {
 
   @Subscribe
   void eventCalled(TestEvent event) {
-    if (!called) {
+    if (event.getNumber() == 1) {
       this.calledListener.add(this);
-      called = true;
     }
   }
 
@@ -42,11 +42,6 @@ final class AutoSubscribeListener {
   @Subscribe
   void tooLessParameters() {
     throw new AssertionError();
-  }
-
-  @Override
-  public int hashCode() {
-    return 42;
   }
 
   @Override

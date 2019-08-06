@@ -2,12 +2,19 @@ package com.github.stupremee.mela.event.internal;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import com.github.stupremee.mela.event.annotations.AutoSubscriber;
 import com.github.stupremee.mela.event.subscriber.Subscriber;
+import com.github.stupremee.mela.event.subscriber.SubscriberFactory;
 import com.github.stupremee.mela.event.subscriber.SubscriberRegistry;
+import com.google.inject.Inject;
+import com.google.inject.Injector;
+import io.github.classgraph.ClassGraph;
+import io.github.classgraph.ScanResult;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Stu (https://github.com/Stupremee)
@@ -16,9 +23,16 @@ import java.util.stream.Collectors;
 public final class DefaultSubscriberRegistry implements SubscriberRegistry {
 
   private final List<Subscriber> subscribers;
+  private final SubscriberFactory subscriberFactory;
+  private final Injector injector;
 
-  private DefaultSubscriberRegistry() {
+  @Inject
+  DefaultSubscriberRegistry(
+      SubscriberFactory subscriberFactory,
+      Injector injector) {
+    this.subscriberFactory = subscriberFactory;
     this.subscribers = new ArrayList<>();
+    this.injector = injector;
   }
 
   @Override
@@ -48,14 +62,22 @@ public final class DefaultSubscriberRegistry implements SubscriberRegistry {
 
   @Override
   public void registerFromClasspath() {
-
+    scanForSubscriberClasses()
+        .map(injector::getInstance)
+        .map(subscriberFactory::fromListener)
+        .forEach(this::register);
   }
 
+  private Stream<Class<?>> scanForSubscriberClasses() {
+    ClassGraph classGraph = new ClassGraph()
+        .ignoreClassVisibility()
+        .enableAnnotationInfo()
+        .enableClassInfo();
 
-  /**
-   * Creates a new {@link SubscriberRegistry}.
-   */
-  public static SubscriberRegistry create() {
-    return new DefaultSubscriberRegistry();
+    try (ScanResult result = classGraph.scan()) {
+      return result.getClassesWithAnnotation(AutoSubscriber.class.getName())
+          .loadClasses(true)
+          .stream();
+    }
   }
 }

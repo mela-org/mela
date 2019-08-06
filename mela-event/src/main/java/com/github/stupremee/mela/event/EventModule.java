@@ -43,7 +43,7 @@ public final class EventModule extends AbstractModule {
   @Override
   protected void configure() {
     bind(SubscriberRegistry.class)
-        .toProvider(DefaultSubscriberRegistry::create)
+        .to(DefaultSubscriberRegistry.class)
         .in(Singleton.class);
 
     bind(Dispatcher.class)

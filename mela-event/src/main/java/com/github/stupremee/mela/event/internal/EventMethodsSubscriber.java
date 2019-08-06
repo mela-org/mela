@@ -63,6 +63,11 @@ final class EventMethodsSubscriber implements Subscriber {
     return method;
   }
 
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(methods);
+  }
+
   static final class EventMethod {
 
     private final Method method;
