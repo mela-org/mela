@@ -1,5 +1,7 @@
 package com.github.stupremee.mela.event.internal;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import com.github.stupremee.mela.event.Dispatcher;
 import com.github.stupremee.mela.event.EventBus;
 import com.github.stupremee.mela.event.annotations.EventExecutor;
@@ -9,8 +11,6 @@ import com.github.stupremee.mela.event.subscriber.SubscriberRegistry;
 import com.google.inject.Inject;
 
 import java.util.concurrent.Executor;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * @author Stu (https://github.com/Stupremee)

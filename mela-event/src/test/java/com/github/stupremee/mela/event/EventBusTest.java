@@ -3,7 +3,6 @@ package com.github.stupremee.mela.event;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.github.stupremee.mela.event.annotations.Subscribe;
-import com.github.stupremee.mela.event.subscriber.Subscriber;
 import com.google.inject.*;
 
 import java.util.ArrayList;
@@ -11,7 +10,6 @@ import java.util.List;
 
 import com.google.inject.Module;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;

@@ -123,6 +123,9 @@ public final class EventModule extends AbstractModule {
       return this;
     }
 
+    /**
+     * Builds a new {@link EventModule}.
+     */
     public EventModule build() {
       checkNotNull(dispatcher, "dispatcher can't be null.");
       checkNotNull(eventExecutor, "eventExecutor can't be null.");
